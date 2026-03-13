@@ -1,0 +1,20 @@
+src
+|
+|___controllers
+|   |_________expense_tracker.controller.js
+|
+|___models
+|   |_____expense_tracker.model.js
+|
+|___middlewares
+|   |__________expense_tracker.js
+|
+|___routes
+|   |_____expense_tracker.route.js
+|
+|___services
+|   |______expense_tracker.service.js
+|
+|___database.js
+|
+|___server.js
