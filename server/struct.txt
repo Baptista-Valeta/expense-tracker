@@ -1,20 +1,37 @@
 src
 |
+|___config
+|   |_____database.js
+|   |_____.env
+|
 |___controllers
-|   |_________expense_tracker.controller.js
+|   |__________auth.controller.js
+|   |__________transaction.controller.js
+|   |__________category.controller.js
+|   |__________report.controller.js
 |
 |___models
-|   |_____expense_tracker.model.js
+|   |_____user.model.js
+|   |_____transaction.model.js
+|   |_____category.model.js
 |
 |___middlewares
-|   |__________expense_tracker.js
+|   |__________authentication.js
+|   |__________errorHandler.js
 |
 |___routes
-|   |_____expense_tracker.route.js
+|   |_____auth.route.js
+|   |_____transaction.route.js
+|   |_____category.route.js
+|   |_____report.route.js
 |
 |___services
-|   |______expense_tracker.service.js
+|   |______auth.service.js
+|   |______transation.service.js
+|   |__________report.service.js
 |
-|___database.js
+|___utils
+|   |____token.js
+|   |____validators.js
 |
 |___server.js
