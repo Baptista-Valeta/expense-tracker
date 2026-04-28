@@ -4,19 +4,19 @@ import bcrypt from "bcrypt"  // usado para encriptar passwords e comparar passwo
 const Users = new mongoose.Schema({
     name: {
         type: String,
-        require: true,
+        required: true,
         trim: true // remove espaços antes/depois
     },
     email: {
         type: String,
-        require: true,
+        required: true,
         unique: true,  // não permite emails duplicados
         lowercase: true,
         trim: true
     },
     password: {
         type: String,
-        require: true,
+        required: true,
         minlength: 6,
         select: false // não retorna a senha nas consultas
     },

@@ -4,14 +4,16 @@
   "description": "Gerenciamento de gastos pessoal (mvp)",
   "license": "ISC",
   "author": "Baptista Valeta",
-  "type": "commonjs",
+  "type": "module",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon src/server.js"
+    "start": "nodemon src/server.js"
   },
   "dependencies": {
+    "dotenv": "^17.4.2",
     "dotnet": "^1.1.4",
     "express": "^5.2.1",
+    "mongodb": "^7.2.0",
     "mongoose": "^9.3.0",
     "nodemon": "^3.1.14"
   }

@@ -1,25 +1,14 @@
-import { MongoClient, ServerApiVersion } from "mongodb";
+import mongoose from 'mongoose';
 
-const uri = "mongodb://127.0.0.1:27017"; 
-
-const client = new MongoClient(uri,  {
-        serverApi: {
-            version: ServerApiVersion.v1,
-            strict: true,
-            deprecationErrors: true,
-        }
-    }
-);
+// Url do banco com o respectivo nome
+const uri = "mongodb://127.0.0.1:27017/expenseTracker";
 
 export const connectDB = async () => {
   try {
-    await client.connect();
-    console.log("MongoDB conectado com sucesso!");
+    await mongoose.connect(uri);
+    console.log("MongoDB conectado com sucesso.");
   }catch (error) {
-    console.error('Erro ao conectar com MongoDB');
-    process.exit;
+    console.error("Erro ao conectar com MongoDB", error.message);
+    process.exit(1);
   }
-}
-run().catch(console.dir);
-
-export default client;
+};
