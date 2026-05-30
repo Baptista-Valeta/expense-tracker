@@ -1,11 +1,12 @@
-import dotenv from "dotenv"
-dotenv.config()
+// import dotenv from "dotenv"
+// dotenv.config()
 
 import express from "express";
 import { connectDB } from "./config/database.js";
-import userModel from "./models/user.model.js";
+import categoryRoute from "./routes/category.route.js";
 
 const app = express();
+app.use(express.json());
 
 app.set("port", 5000);
 await connectDB(); // conecta ao banco
@@ -18,16 +19,7 @@ app.get("/", (req, res) => {
     });
 });
 
-// Lista os users
-app.get("/users", (req, res) => {
-    userModel.find().select()
-        .then(result => {
-            res.json(result);
-        })
-        .catch(error => {
-            res.sendStatus(404).send(error.message);
-        });
-});
+categoryRoute();
 
 app.listen(app.get("port"), () => {
     console.log("Servidor rodando na porta", app.get("port"));

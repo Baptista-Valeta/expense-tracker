@@ -2,7 +2,7 @@ src
 |
 |___config
 |   |_____database.js
-|   |_____.env
+|
 |
 |___controllers
 |   |__________auth.controller.js
@@ -34,4 +34,5 @@ src
 |   |____token.js
 |   |____validators.js
 |
+|___.env
 |___server.js
