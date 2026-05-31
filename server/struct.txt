@@ -5,7 +5,7 @@ src
 |
 |
 |___controllers
-|   |__________auth.controller.js
+|   |__________users.controller.js
 |   |__________transaction.controller.js
 |   |__________category.controller.js
 |   |__________report.controller.js
@@ -20,7 +20,7 @@ src
 |   |__________errorHandler.js
 |
 |___routes
-|   |_____auth.route.js
+|   |_____user.route.js
 |   |_____transaction.route.js
 |   |_____category.route.js
 |   |_____report.route.js
@@ -28,7 +28,7 @@ src
 |___services
 |   |______auth.service.js
 |   |______transation.service.js
-|   |__________report.service.js
+|   |______report.service.js
 |
 |___utils
 |   |____token.js
