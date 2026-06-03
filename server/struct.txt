@@ -20,19 +20,16 @@ src
 |   |__________errorHandler.js
 |
 |___routes
+|   |_____auth.route.js
 |   |_____user.route.js
 |   |_____transaction.route.js
 |   |_____category.route.js
-|   |_____report.route.js
 |
 |___services
 |   |______auth.service.js
 |   |______transation.service.js
 |   |______report.service.js
 |
-|___utils
-|   |____token.js
-|   |____validators.js
 |
 |___.env
 |___server.js

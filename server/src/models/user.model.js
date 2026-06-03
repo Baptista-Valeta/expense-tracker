@@ -17,7 +17,7 @@ const Users = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        minlength: 6,
+        minlength: 8,
         select: false // não retorna a senha nas consultas
     },
     // Tipo de usuário

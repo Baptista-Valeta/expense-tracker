@@ -3,11 +3,11 @@ import transactionController from "../controllers/transaction.controller.js";
 
 const router = Router();
 
-router.route("/transaction")
+router.route("/api/transactions")
     .post(transactionController.createTransaction)
     .get(transactionController.getAllTransaction)
 
-router.route("/transaction/:id")
+router.route("/api/transactions/:id")
     .get(transactionController.getIdTransaction)
     .put(transactionController.updateTransaction)
     .delete(transactionController.deleteTransaction)

@@ -2,7 +2,7 @@ import { Router } from "express";
 
 const router = Router();
 
-router.get("/", (req, res) => {
+router.get("/api/", (req, res) => {
     res.json({
         status: "online",
         name_server: "Expense-Tracker",
