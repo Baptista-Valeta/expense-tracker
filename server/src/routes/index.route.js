@@ -6,7 +6,8 @@ router.get("/api/", (req, res) => {
     res.json({
         status: "online",
         name_server: "Expense-Tracker",
-        timestamp: true
+        server: "Nodejs + Express",
+        database: "MongoDB Local"
     });
 })
 
