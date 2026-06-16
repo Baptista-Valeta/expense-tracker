@@ -6,7 +6,7 @@ const transactionController = {
         try{
             transaction = await transactionModel.create(req.body);
                 
-            return res.status(201).json(transaction);
+            return res.status(201).json({message: `Transação criada para ${req.user.name}`, transaction: transaction});
         }catch (err) {
             return res.status(500).json(err.message);
         }
@@ -14,12 +14,12 @@ const transactionController = {
 
     getAllTransaction: async (req, res) => {
         try{
-            transaction = await transactionModel.findOne({user: req.user.id});
+            transaction = await transactionModel.find({user: req.user._id});
 
-            if(!transaction)
-                return res.status(404).json({message: "Nenhuma transação encontrada"});
+            if(!transaction[0])
+                return res.status(404).json({message: `Nenhuma transação encontrada para ${req.user.name}`});
 
-            return res.status(200).json({message: "Transações encontradas", transaction: transaction});
+            return res.status(200).json({message: `Transações encontradas para ${req.user.name}`, transaction: transaction});
         }catch (err) {
             return res.status(500).json({message: "Erro ao buscar transações", error: err.message});
         }
@@ -30,9 +30,9 @@ const transactionController = {
             transaction = await transactionModel.findById(req.params.id);
 
             if(!transaction)
-                return res.status(404).json({message: "Transação não encontrada!"});
+                return res.status(404).json({message: `Transação não encontrada para ${req.user.name}`});
 
-            return res.status(200).json({message: "Transação encontrada", transaction: transaction});
+            return res.status(200).json({message: `Transação encontrada para ${req.user.name}`, transaction: transaction});
         }catch (err) {
             return res.status(500).json({message: "Erro ao buscar uma transação", error: err.message});
         };
@@ -40,15 +40,14 @@ const transactionController = {
 
     updateTransaction: async (req, res) => {
         try {
-            const { amount, type, description } = req.body;
 
-            if(!amount || !type) {
-                return res.status(400).json({message: "amount e type são obrigatórios"});
+            if(!req.body) {
+                return res.status(400).json({message: "Preencha os campos a atualizar"});
             };
 
             transaction = await transactionModel.findByIdAndUpdate(
                 req.params.id,
-                {amount, type},
+                req.body,
                 {
                     new: true
                 }

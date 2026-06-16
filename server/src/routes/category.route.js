@@ -5,7 +5,8 @@ import { authMiddeware } from "../middlewares/auth.middleware.js";
 const router = Router();
 
 // rota para vários registros
-router.route("/api/categories", authMiddeware)   
+router.route("/api/categories")
+    .all(authMiddeware)
     .post(categoryController.createCategories)
     .get(categoryController.getAllCategories)
 

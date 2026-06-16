@@ -6,11 +6,6 @@ const Transaction = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    type: {
-        type: String,
-        enum: ['expense', 'income'], // entrada ou saida
-        required: true,
-    },
     category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category",

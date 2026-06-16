@@ -1,6 +1,8 @@
 import bcrypt from "bcrypt";
 import userModel from "../models/user.model.js";
 import { tokenGenerate } from "../config/jwt.js";
+import categoryModel from "../models/category.model.js";
+import transactionModel from "../models/transaction.model.js";
 
 export const registerUser = async (req, res) => {
     try {
@@ -70,5 +72,39 @@ export const loginUser = async (req, res) => {
         
     } catch (err) {
         return res.status(500).json({message: "Erro ao fazer login", error: err.message});
+    };
+};
+
+export const updateUser = async (req, res) => {
+    try {
+        const user = await userModel.findById(req.user._id);
+
+        if(!user) {
+            return res.status(404).json({message: "Usuário não encontrado!"});
+        };
+
+        console.log(`Usuário ${user.name} deletado`)
+
+        return res.status(200).json({message: "Usuário atualizado", user: user});
+    }catch (err) {
+        return res.status(500).json({message: "Erro ao atualizar perfil", error: err.message});
+    }
+};
+
+export const deleteIdUser = async (req, res) => {
+    try{
+        const user = await userModel.findByIdAndDelete(req.user._id);
+        
+        if(!user)
+            return res.status(404).json({message: "Usuário não encontrado!"});
+        
+        await categoryModel.deleteMany({user: req.user._id});
+        await transactionModel.deleteMany({user: req.user._id});
+
+        console.log(`Usuário ${user.name} deletado`)
+        
+        return res.status(200).json({ message: "Usuário deletado!" });
+    }catch(err) {
+        return res.status(500).json({message: "Erro ao deletar usuário", error: err.message});
     };
 };
