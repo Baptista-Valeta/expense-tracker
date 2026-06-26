@@ -1,0 +1,59 @@
+<div id="container">
+    <form id="form" class="form-control p-5" [formGroup]="registerForm" (ngSubmit)="onSubmitRegister()">
+        <h2 class="text-center fw-bold">Registrar</h2>
+
+        <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInput" formControlName="name" placeholder="UserName">
+            <label for="floatingPassword">Username</label>
+            @if (registerForm.get("name")?.invalid && (registerForm.get('name')?.touched || registerForm.get('name')?.dirty)) {
+                <div class="text-danger" >
+                    <small>Nome é obrigatório!</small>
+                </div>
+            }
+
+        </div>
+       
+        <div class="form-floating">
+          <input type="email" class="form-control" id="floatingInput" formControlName="email" placeholder="name@example.com">
+          <label for="floatingInput">Email address</label>
+
+          @if (registerForm.get('email')?.invalid && (registerForm.get('email')?.touched || registerForm.get('email')?.dirty)) {
+            @if (registerForm.get('email')?.hasError('required')) {
+            <div class="text-danger" >
+                <small>Email é obrigatório!</small>
+            </div>
+            }@else if(registerForm.get('email')?.hasError('email')) {
+                <div class="text-danger" >
+                    <small>Email Inválido!</small>
+                </div>
+            }
+          }
+
+        </div>
+       
+        <div class="form-floating">
+          <input type="password" class="form-control" id="floatingPassword" formControlName="password" placeholder="Password">
+          <label for="floatingPassword">Password</label>
+
+          @if (registerForm.get('password')?.invalid && (registerForm.get('password')?.touched || registerForm.get('password')?.dirty)) {
+            @if (registerForm.get('password')?.hasError('required')) {
+                <div class="text-danger" >
+                <small>Password é obrigatória!</small>
+              </div>
+            }@else if(registerForm.get('password')?.hasError('minlength')) {
+                <div class="text-danger" >
+                  <small>Password precisa ter no mínimo {{validatorPasswordCaracter}} caracteres!</small>
+                </div>
+            }
+          }
+
+        </div>
+
+        <button type="submit" id="form-button" class="w-100 p-3 fw-bold" [disabled]="!registerForm.valid" >Criar conta</button>
+
+        <div id="footer-form">
+            <span>Já tem uma conta?</span>
+            <span><a routerLink="/login">Fazer login</a></span>
+        </div>
+    </form>
+</div>

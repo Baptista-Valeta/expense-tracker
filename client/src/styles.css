@@ -1,0 +1,80 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+    --bg-body: #1509bc;
+    --form-bg-color: #f1f1f1f1;
+    --button-form: #0b0bf1;
+    --button-form-hover: #1f0ed6;
+}
+
+
+.logo {
+    position: absolute;
+    margin: 2% 0 0 3%;
+    color: var(--form-bg-color);
+    font-weight: bolder;
+    font-size: 2rem
+}
+
+main {
+    background-color: var(--bg-body);
+    width: 100%;
+    height: 100vh;
+}
+
+
+#container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+#form {
+    width: 550px;
+    height: 550px;
+    min-height: 550px;
+    box-shadow: 0;
+    -webkit-box-shadow: -1px -3px 300px 5px #f1f1f1;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    gap: 6%;
+}
+
+#form .alert {
+    height: 30px;
+    display: flex;
+    align-items: center;
+}
+
+#form-button {
+    border: none;
+    background-color: var(--button-form);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+#form-button:hover {
+    background-color: var(--button-form-hover);
+}
+
+#form input {
+    margin-bottom: -5px;
+}
+
+#footer-form {
+    display: flex;
+    gap: 4px;
+    justify-content: space-between;
+}
+
+#footer-form a {
+    text-decoration: none;
+}
+
+#footer-form a:hover {
+    text-decoration: underline;
+}

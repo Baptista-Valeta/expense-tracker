@@ -1,0 +1,46 @@
+<div id="container">
+    <form id="form" [formGroup]="login" (ngSubmit)="onSubmitLogin()" class="form-control p-5">
+        <h2 class="text-center fw-bold">Login</h2>
+        
+        <div class="form-floating">
+          <input type="email" class="form-control" id="floatingInput" formControlName="email" placeholder="example@gmail.com">
+          <label for="floatingInput">Email address</label>
+          @if (login.get("email")?.invalid && (email?.touched || email?.dirty)) {
+            @if (login.get("email")?.hasError('required')) {
+              <div class="text-danger" >
+                  <small>Email é origatório</small>
+              </div>
+            }@else if(login.get("email")?.hasError('email')){
+              <div class="text-danger" >
+                  <small>Email inválido</small>
+              </div>
+            }
+          }
+
+        </div>
+        
+        <div class="form-floating">
+          <input type="password" class="form-control" id="floatingPassword" formControlName="password" placeholder="Password">
+          <label for="floatingPassword">Password</label>
+          
+          @if (login.get('password')?.invalid && (password?.touched || password?.dirty)) {
+            @if (login.get('password')?.hasError('required')) {
+              <div class="text-danger" >
+                  <small>Password é obrigatória!</small>
+              </div>
+            }@else if(login.get('password')?.hasError('minlength')) {
+                <div class="text-danger" >
+                  <small>A password precisa ter no mínimo {{validatorPasswordCaracter}} caracteres!</small>
+                </div>
+            }
+          }
+
+        </div>
+        <button type="submit" id="form-button" class="w-100 p-3 fw-bold" [disabled]="!login.valid">Logar</button>
+
+        <div id="footer-form">
+            <span>Já tem uma conta?</span>
+            <span><a routerLink="/register">Clique aqui</a> para registrar</span>
+        </div>
+    </form>
+</div>

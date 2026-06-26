@@ -1,0 +1,16 @@
+Fluxo de execução do sistema
+
+1. Components
+    -LoginComponent
+    -RegisterComponent
+
+2. Services
+    -AuthService
+    -AuthGuard
+    -Interceptor
+
+3. DashboardComponent
+
+4. Expenses
+
+5. Profile

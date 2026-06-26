@@ -1,0 +1,60 @@
+app
+|
+|___components
+|   |___dashboard
+|   |   |___dashoard.css
+|   |   |___dashboard.html
+|   |   |___dashboard.ts
+|   |
+|   |___expenses
+|   |   |___expenses.css
+|   |   |___expenses.html
+|   |   |___expenses.ts
+|   |
+|   |___login
+|   |   |___login.css
+|   |   |___login.html
+|   |   |___login.ts
+|   |
+|   |___register
+|   |   |___resgister.css
+|   |   |___register.html
+|   |   |___register.ts
+|   |   
+|   |___profile
+|       |___profile.css
+|       |___profile.html
+|       |___profile.ts
+|
+|___core
+|   |___services
+|   |   |___auth.service.ts
+|   |   |___transaction.service.ts  
+|   |
+|   |___guards
+|   |   |___auth.guard.ts
+|   |   
+|   |___interceptores
+|       |___interceptor.ts
+|
+|___shared
+|   |___navbar
+|   |   |___navbar.css
+|   |   |___navbar.html
+|   |   |___navber.ts
+|   |
+|   |___sidebar
+|
+|___app.config.ts
+|___app.css
+|___app.html
+|___app.routes.ts {
+        dashboard.route.ts  ----> protegida
+        expense.route       ----> protegida
+        login.route.ts
+        register.route.ts
+        profile.route.ts    ----> protegida
+    }
+|___app.ts
+|
+|
