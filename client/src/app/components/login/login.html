@@ -1,5 +1,5 @@
 <div id="container">
-    <form id="form" [formGroup]="login" (ngSubmit)="onSubmitLogin()" class="form-control p-5">
+    <form id="form" [formGroup]="login" (ngSubmit)="onSubmitLogin(this.login.value)" class="form-control p-5">
         <h2 class="text-center fw-bold">Login</h2>
         
         <div class="form-floating">
