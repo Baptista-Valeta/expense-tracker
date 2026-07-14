@@ -1,6 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, catchError, throwError, tap, finalize, map, Observable } from 'rxjs';
+import { Router } from '@angular/router';
+
+import { User } from '../models/user';
+import { TokenService } from './token';
+
+interface Token {
+  message: string,
+  token: string
+};
 
 @Injectable({
   providedIn: 'root',
@@ -8,27 +17,44 @@ import { BehaviorSubject } from 'rxjs';
 
 export class AuthService {
   apiUrl: string = 'http://localhost:5000/api/';
-  token: any;
+  user: any | User;
 
+  constructor(
+    private http: HttpClient, 
+    private routeService: Router,
+    private tokenService: TokenService
+  ) {};
 
-  constructor(private http: HttpClient) {}
+  ngOnInit() {
 
-  postLoginUser(payload: any) {
-    console.log("Dados do login", payload)
-    this.http.post(this.apiUrl+'auth/login', payload).subscribe(res => {
-      console.log("Retorno da api:", res);
-
-      this.token = res;
-
-      console.log("token retornado", this.token.token);
-    });
-  };
-
-
-  postRegisterUser(payload: any) {
-    this.http.post(this.apiUrl+'auth/register', payload).subscribe(res => {
-      console.log("Retorno da api",res);
-    })
   }
 
+  postLoginUser(payload: any) {
+    return this.http.post<Token>(this.apiUrl+'auth/login', payload).pipe(
+      map(response => {
+        return response.token;
+      }),
+    );
+  };
+  
+  postRegisterUser(payload: any) {
+    return this.http.post<User>(this.apiUrl+'auth/register', payload).pipe(
+      tap(response => {
+        console.log("Registrado", response.user);
+        this.user = response.user;
+      }),
+      map(response => {
+        return response.user;
+      })
+    );
+  };
+
+  isLogged() {
+    return this.tokenService.getToken();
+  };
+
+  logout() {
+    console.log('logout')
+    return this.tokenService.removeToken();
+  };
 };

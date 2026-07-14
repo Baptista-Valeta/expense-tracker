@@ -2,10 +2,10 @@ src
 |
 |___config
 |   |_____database.js
-|
+|   |_____jwt.ts
 |
 |___controllers
-|   |__________users.controller.js
+|   |__________auth.controller.js
 |   |__________transaction.controller.js
 |   |__________category.controller.js
 |   |__________report.controller.js
@@ -17,17 +17,15 @@ src
 |
 |___middlewares
 |   |__________authentication.js
-|   |__________errorHandler.js
 |
 |___routes
 |   |_____auth.route.js
-|   |_____user.route.js
 |   |_____transaction.route.js
 |   |_____category.route.js
+|   |_____index.route.js
+|   |_____report.route.js
 |
-|___services
-|   |______auth.service.js
-|   |______transation.service.js
+|___services   
 |   |______report.service.js
 |
 |

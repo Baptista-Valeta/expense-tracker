@@ -18,9 +18,11 @@ const categoryController = {
     // buscar vários registros
     getAllCategories: async  (req, res) => {
         try {
+            if(!req.user) return res.status(404).send("Perfil inexistente"); 
+
             categories = await categoryModel.find({user: req.user._id});
 
-            if(!categories) {
+            if(!categories[0]) {
                 return res.status(404).json({message: `Nenhuma categoria encontrada para ${req.user.name}`,});
             }
             
@@ -33,6 +35,7 @@ const categoryController = {
     // para um registro específico
     getIdCategory: async (req, res) => {
         try {
+            if(!req.user) return res.status(404).send("Perfil inexistente"); 
             categories = await categoryModel.findById(req.params.id);
 
             if(!categories)
@@ -46,10 +49,8 @@ const categoryController = {
 
     updateIdCategory: async (req, res) => {
         try {
-            const { name, type, user } = req.body;
-
-            if(!name && !type && !user) {
-                return res.status(400).json({message: "Preencha os campos a atualizar!"});
+            if(!req.body.name) {
+                return res.status(400).json({message: "informe o nome da categoria"});
             };
 
             categories = await categoryModel.findByIdAndUpdate(req.params.id, req.body, {new: true});

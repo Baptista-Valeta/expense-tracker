@@ -1,0 +1,14 @@
+.layout {
+    width: auto;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#navbar {
+    height: 8vh;
+}
+
+#sidebar {
+    height: calc(100vh - 8vh);
+    background-color: aqua;
+}

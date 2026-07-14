@@ -1,4 +1,5 @@
 import { Router } from "express";
+
 import transactionController from "../controllers/transaction.controller.js";
 import { authMiddeware } from "../middlewares/auth.middleware.js";
 
@@ -12,7 +13,6 @@ router.route("/api/transactions")
 router.route("/api/transactions/:id")
     .all(authMiddeware)
     .get(transactionController.getIdTransaction)
-    .put(transactionController.updateTransaction)
     .delete(transactionController.deleteTransaction)
 
 export default router;

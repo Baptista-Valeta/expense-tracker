@@ -1,4 +1,5 @@
 import { Router } from "express";
+
 import categoryController from "../controllers/category.controller.js";
 import { authMiddeware } from "../middlewares/auth.middleware.js";
 

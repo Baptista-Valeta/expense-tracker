@@ -2,7 +2,11 @@ Fluxo de execução do sistema
 
 1. Components
     -LoginComponent
+        -Redireciona para login se não autenticado
+
     -RegisterComponent
+        -Login automático após o cadastro
+
 
 2. Services
     -AuthService

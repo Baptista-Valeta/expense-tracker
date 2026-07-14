@@ -29,7 +29,8 @@ app
 |___core
 |   |___services
 |   |   |___auth.service.ts
-|   |   |___transaction.service.ts  
+|   |   |___transaction.service.ts
+|   |   |___token.service.ts
 |   |
 |   |___guards
 |   |   |___auth.guard.ts
@@ -38,12 +39,14 @@ app
 |       |___interceptor.ts
 |
 |___shared
-|   |___navbar
-|   |   |___navbar.css
-|   |   |___navbar.html
-|   |   |___navber.ts
-|   |
 |   |___sidebar
+|   |   |___sidebar.html
+|   |   |___sidebar.ts
+|   |
+|   |___navbar
+|   |   |____navbar.html
+|   |   |____navbar.ts
+|   
 |
 |___app.config.ts
 |___app.css

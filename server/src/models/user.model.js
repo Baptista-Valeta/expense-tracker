@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-import bcrypt from "bcrypt"  // usado para encriptar passwords e comparar passwords para login;
 
 const Users = new mongoose.Schema({
     name: {
@@ -20,7 +19,22 @@ const Users = new mongoose.Schema({
         minlength: 8,
         select: false // não retorna a senha nas consultas
     },
-    // Tipo de usuário
+    saldo: {
+        type: Number,
+        require: true,
+        min: 0
+    },
+    saldoTotalEntrado: {
+        type: Number,
+        require: true,
+        min: 0
+    },
+    saldoTotalSaido: {
+        type: Number,
+        require: true,
+        min: 0
+    },
+//   Tipo de usuário
     role: {
         type: String,
         enum: ["admin", "user"],

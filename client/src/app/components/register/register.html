@@ -19,9 +19,9 @@
 
           @if (registerForm.get('email')?.invalid && (registerForm.get('email')?.touched || registerForm.get('email')?.dirty)) {
             @if (registerForm.get('email')?.hasError('required')) {
-            <div class="text-danger" >
-                <small>Email é obrigatório!</small>
-            </div>
+                <div class="text-danger" >
+                    <small>Email é obrigatório!</small>
+                </div>
             }@else if(registerForm.get('email')?.hasError('email')) {
                 <div class="text-danger" >
                     <small>Email Inválido!</small>
@@ -38,11 +38,11 @@
           @if (registerForm.get('password')?.invalid && (registerForm.get('password')?.touched || registerForm.get('password')?.dirty)) {
             @if (registerForm.get('password')?.hasError('required')) {
                 <div class="text-danger" >
-                <small>Password é obrigatória!</small>
+                    <small>Password é obrigatória!</small>
               </div>
             }@else if(registerForm.get('password')?.hasError('minlength')) {
                 <div class="text-danger" >
-                  <small>Password precisa ter no mínimo {{validatorPasswordCaracter}} caracteres!</small>
+                    <small>Password precisa ter no mínimo {{validatorPasswordCaracter}} caracteres!</small>
                 </div>
             }
           }

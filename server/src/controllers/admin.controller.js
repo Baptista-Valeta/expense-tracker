@@ -12,6 +12,7 @@ export const getAllUsers = async (req, res) => {
             
             if(!allUsers[0]) return res.status(404).send("Nenhum usuário encontrado");
             
+            console.log('Total users '+allUsers.length);
             return res.status(200).json({message: `Admin ${req.user.name}`, allUsers: allUsers});
         };
         

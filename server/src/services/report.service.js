@@ -2,10 +2,10 @@ import userModel from "../models/user.model.js";
 
 export const reportValidServiceAndUpdate = (valor, type, user) => {
     if (!valor || !type || !user) {
-        console.log("valor, tipo e user são obrigatórios!");
+        console.log("valor, tipo e user são obrigatórios e devem ser válidos!");
         return;
     };
-
+    
     const reports = {
         saldo: user.saldo, 
         saldoTotalEntrado: user.saldoTotalEntrado,
@@ -25,6 +25,11 @@ export const reportValidServiceAndUpdate = (valor, type, user) => {
     };
 
     console.log(reports);
+
+    reports.saldo = reports.saldo.toFixed(2);
+    reports.saldoTotalEntrado = reports.saldoTotalEntrado.toFixed(2);
+    reports.saldoTotalSaido = reports.saldoTotalSaido.toFixed(2);
+
 
     return userModel.findByIdAndUpdate(user._id, reports, {new: true})
         .then(result =>  {

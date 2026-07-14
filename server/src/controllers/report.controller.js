@@ -8,7 +8,7 @@ export const report = async (req, res) => {
 
         console.log(req.user);
 
-        res.status(200).json({message: "Dados financeiros:", reports: {
+        res.status(200).json({message: "Dados financeiros:", dados: {
             saldo: req.user.saldo,
             total_Entrado: req.user.saldoTotalEntrado,
             total_Saido: req.user.saldoTotalSaido
