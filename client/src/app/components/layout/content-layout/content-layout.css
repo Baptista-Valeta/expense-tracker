@@ -1,0 +1,23 @@
+.layout {
+    width: auto;
+    height: 100vh;
+    overflow: hidden;
+    background-color: var(--border);
+}
+
+.layout * {
+    margin: 10px;
+}
+
+#navbar {
+    height: 10vh;
+    background-color: var(--navbar);
+    color: var(--primary);
+    border-radius: var(--layout-border-radius);
+}
+
+#sidebar {
+    height: calc(100vh - 12.5vh);
+    background: var(--border);
+    margin-top: -25px;
+}
