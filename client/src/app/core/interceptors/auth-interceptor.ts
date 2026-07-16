@@ -26,8 +26,11 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       if(error.status === 401) {
         console.error('Acesso negado', error);
         toast.error('Usuário invalidado!');
-        authService.logout();
-        routeService.navigate(['login']);
+
+        setTimeout(() => {
+          authService.logout();
+          routeService.navigate(['auth/login']);
+        }, 2700)
       };
 
       console.error('Erro interceptado:', error);
@@ -35,11 +38,3 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     })
   );
 };
-
-
-/**
- * 1- Adicionar token no cabeçalho
- * 2- Se o servidor responder 401:
- *    -Efetuar o logout, remover o token do localstorage
- *    -Redirecionar para login
- */

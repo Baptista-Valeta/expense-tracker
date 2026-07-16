@@ -55,11 +55,11 @@ export class Register {
         this.toast.success(`Cadastrado ${user.name}`, 'Sucesso');
         this.registerForm.reset();
 
-        // setTimeout(() => {
-        //   console.log('Login automático');
-        //   console.log('Navegando para dashboard');
-        //   this.loginComponent.onSubmitLogin({email: registerData.email, password: registerData.password});
-        // },1500);
+        setTimeout(() => {
+          console.log('Login automático');
+          console.log('Navegando para dashboard');
+          this.loginComponent.onSubmitLogin({email: registerData.email, password: registerData.password});
+        },1500);
 
         return user;
       },

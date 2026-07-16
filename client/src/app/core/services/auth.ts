@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject, catchError, throwError, tap, finalize, map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -17,16 +17,28 @@ interface Token {
 
 export class AuthService {
   apiUrl: string = 'http://localhost:5000/api/';
-  user: any | User;
 
   constructor(
     private http: HttpClient, 
-    private routeService: Router,
     private tokenService: TokenService
   ) {};
 
   ngOnInit() {
+  }
 
+  getDataUser() {
+    return this.http.get<User>(this.apiUrl+'auth/profile').pipe(
+      tap(response => {
+        console.log('Dados do usuário: '+ response.user.name);
+      }),
+      map(response => {
+        return response.user;
+      }),
+      catchError(error => {
+        console.error('Erro ao buscar dados do usuário: ' + error)
+        return throwError (() => error);
+      })
+    )
   }
 
   postLoginUser(payload: any) {
@@ -41,7 +53,6 @@ export class AuthService {
     return this.http.post<User>(this.apiUrl+'auth/register', payload).pipe(
       tap(response => {
         console.log("Registrado", response.user);
-        this.user = response.user;
       }),
       map(response => {
         return response.user;

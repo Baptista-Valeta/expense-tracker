@@ -1,4 +1,4 @@
-<div id="container">
+<div id="container" class="bg-red">
     <form id="form" [formGroup]="login" (ngSubmit)="onSubmitLogin(this.login.value)" class="form-control p-5">
         <h2 class="text-center fw-bold">Login</h2>
         
@@ -40,7 +40,7 @@
 
         <div id="footer-form">
             <span>Já tem uma conta?</span>
-            <span><a routerLink="/register">Clique aqui</a> para registrar</span>
+            <span><a routerLink="/auth/register">Clique aqui</a> para registrar</span>
         </div>
     </form>
 </div>

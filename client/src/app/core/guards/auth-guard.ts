@@ -1,9 +1,7 @@
 import { CanActivateFn, Router } from '@angular/router';
+import { inject } from '@angular/core';
 
 import { AuthService } from '../services/auth';
-import { TokenService } from '../services/token';
-import { inject } from '@angular/core';
-import { authInterceptor } from '../interceptors/auth-interceptor';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const routeService = new Router();
@@ -18,6 +16,6 @@ export const authGuard: CanActivateFn = (route, state) => {
   };
 
   console.log('Usuário não autenticado. Redirecionando para login!');
-  routeService.navigate(['login']);
+  routeService.navigate(['auth/login']);
   return false;
 };

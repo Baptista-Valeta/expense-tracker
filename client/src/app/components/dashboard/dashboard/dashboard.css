@@ -1,0 +1,43 @@
+.dashboard {
+    padding: var(--dashboard-padding);
+}
+
+#cards-container {
+    margin: var(--dashboard-padding);
+    display: flex;
+    justify-content: space-between;
+}
+
+.cards {
+    background-color: var(--cards);
+    border: 1px solid var(--border);
+    border-radius: var(--layout-border-radius);
+    box-shadow: var(--dashboard-shadow);
+    padding: var(--dashboard-padding);
+    width: 300px;
+}
+
+#graficos {
+    margin: var(--dashboard-padding);
+    display: flex;
+    gap: var(--dashboard-padding);
+    height: calc(100% - 130px);
+}
+
+#graficos div {
+    border-radius: var(--layout-border-radius);
+    width: 50%;
+}
+
+#angular {
+    background-color: var(--cards);
+    box-shadow: var(--dashboard-shadow);
+    border: 1px solid var(--border);
+
+}
+
+#barras {
+    background-color: var(--cards);
+    box-shadow: var(--dashboard-shadow);
+    border: 1px solid var(--border);
+}

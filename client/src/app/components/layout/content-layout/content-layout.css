@@ -1,12 +1,8 @@
 .layout {
     width: auto;
     height: 100vh;
-    overflow: hidden;
+    /* overflow: hidden; */
     background-color: var(--border);
-}
-
-.layout * {
-    margin: 10px;
 }
 
 #navbar {
@@ -14,10 +10,25 @@
     background-color: var(--navbar);
     color: var(--primary);
     border-radius: var(--layout-border-radius);
+    margin: 0 10px;
 }
 
 #sidebar {
     height: calc(100vh - 12.5vh);
     background: var(--border);
-    margin-top: -25px;
+    /* border: 1px solid; */
+    margin: 10px;
+}
+
+#sidebar-content {
+    height: 100%;
+    background-color: var(--sidebar);
+    border-radius: var(--layout-border-radius);
+    margin-right: 5px;
+}
+
+#content {
+    background-color: var(--navbar);
+    border-radius: var(--layout-border-radius);
+    margin-left: 5px;
 }

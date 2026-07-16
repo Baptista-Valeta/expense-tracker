@@ -1,7 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { AuthService } from '../../../core/services/auth';
-import { User } from '../../../core/models/user';
+import { TransactionService } from '../../../core/services/transaction';
+
+interface Reports {
+  saldo: number,
+  total_Entrado: number,
+  total_Saido: number
+}
 
 @Component({
   selector: 'app-dashboard',
@@ -10,11 +16,22 @@ import { User } from '../../../core/models/user';
   styleUrl: './dashboard.css',
 })
 export class Dashboard {
-  user: any; 
+  reports = signal<Reports|null>(null);
 
-  constructor () {}
+  constructor (private transacionService: TransactionService, private authService: AuthService) {}
 
   ngOnInit() {
 
+    this.onReports();
   };
-}
+
+
+  onReports() {
+    this.transacionService.getReportsSummary().subscribe({
+      next: (reports => {
+        this.reports.set(reports);
+        console.log('Signal Reports', this.reports());
+      })
+    });
+  };
+};
