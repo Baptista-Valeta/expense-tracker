@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+
+import { TransactionService } from '../../../../core/services/transaction';
 
 @Component({
   selector: 'app-category-chart',
@@ -9,19 +11,36 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
   styleUrl: './category-chart.css',
 })
 export class CategoryChart {
-  results = [
-    {name: 'Alimentação', value: 50000},
-    {name: 'Electrónicos', value: 378000},
-    {name: 'Viaturas', value: 156000},
-    {name: 'Viagens', value: 750000},
-    {name: 'Roupas', value: 17500},
-    {name: 'Lanches', value: 12300},
-    {name: 'Formações', value: 2450000},
-  ];
+  results = signal<any|null>(null);
+
   view: [number, number] = [700, 500];
   animations = true;
   labels = true;
   legend = true;
   doughnuts = true;
   title = 'Categorias';
+
+  constructor(private transactionService: TransactionService) {}
+
+  ngOnInit() {
+    this.chartCategoryPie();
+  }
+  
+  chartCategoryPie() {    
+    return this.transactionService.getReportsChartDataCategory().subscribe({
+      next: (data) => {
+        if(data === false) {
+          console.log('Sem dados para construir o gráfico');
+          return;
+        }
+        console.log('Data',data)
+        
+        this.results.set(data);
+        console.log(this.results())
+      },
+      error: (err) => {
+        console.error('Erro em chart-data', err)
+      }
+    });
+  };
 };
