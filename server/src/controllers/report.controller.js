@@ -19,10 +19,9 @@ export const report = async (req, res) => {
     }
 };
 
-export const getChartData = async (req, res) => {
+export const getChartDataCategory = async (req, res) => {
     try {
         if(!req.user) return res.status(401).json({message: 'Não autorizado'});
-        const al = 'alimentação'
         const transaction = await transactionModel.aggregate(
             [
                 {
@@ -45,17 +44,64 @@ export const getChartData = async (req, res) => {
         if(!transaction) {
             res.status(404).json({message: 'Sem dados para gráfico'});
         };
-        const chartData = []
-        for (let data of transaction) {
+
+        const chartData = [];
+        for (let data of transaction) { 
             let category = await categoryModel.findById(data._id);
+            // console.log('Categoria', category);
+            if (!category) {
+                console.info('Categoria inexistente!');
+            };
             chartData.push({category: category.name, total: data.total});
         };
 
-        console.log('ChartData:',chartData);
+        console.log('Chart-Data-Category:',chartData);
 
-        return res.status(200).json({message: 'Chart-data', data: chartData});
+        return res.status(200).json({message: 'Gastos por categoria', data: chartData});
     }catch (err) {
-        console.error('Erro ao buscar dados do gráfico: ' + err.message);
-        return res.status(500).json({message: 'Erro ao buscar chart-data', error: err.message})
-    }
-} ;
+        console.error('Erro ao buscar dados dos gastos por categoria: ' + err.message);
+        return res.status(500).json({message: 'Erro buscar dados para o gráfico de gastos por categoria', error: err.message})
+    };
+};
+
+export const getChartDataMounthly = async (req, res) => {
+    try {
+        if(!req.user) return res.status(401).json({message: 'Não autorizado'});
+        const transactions = await transactionModel.aggregate(
+            [
+                {
+                    $match: {
+                        user: req.user._id,
+                        type: 'expense'
+                    }
+                },
+                {
+                    $group: {
+                        _id: {
+                            mounthly: {
+                                $month: '$createdAt',
+                            },
+                            year: {
+                                $year: '$createdAt',
+                            }
+                        },
+                        total: {
+                            $sum: '$amount'
+                        }
+                    }
+                }
+            ]
+        );
+
+        if(!transactions) {
+            res.status(404).json({message: 'Sem dados para gráfico'});
+        };
+
+        console.log('Chart-Data-Mounthly:', transactions);
+        
+        return res.status(200).json({message: 'Gastos mensais', data: transactions});
+    }catch(err) {
+        console.error('Erro buscar dados dos gastos mensais', err.message);
+        return res.status(500).json({message: 'Erro ao buscar dados para o gráfico de gastos mensais', error: err.message});
+    };
+};
