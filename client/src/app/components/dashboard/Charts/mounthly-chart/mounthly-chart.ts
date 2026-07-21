@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { TransactionService } from '../../../../core/services/transaction';
 
 @Component({
   selector: 'app-mounthly-chart',
@@ -9,22 +10,9 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
   styleUrl: './mounthly-chart.css',
 })
 export class MounthlyChart {
-  results = [
-    {name: 'Janeiro', value: 64500},
-    {name: 'Fevereiro', value: 22500},
-    {name: 'Março', value: 23450},
-    {name: 'Abril', value: 15000},
-    {name: 'Maio', value: 75000},
-    {name: 'Junho', value: 183000},
-    {name: 'Julho', value: 30000},
-    {name: 'Agosto', value: 64500},
-    {name: 'Setembro', value: 22500},
-    {name: 'Outubro', value: 23450},
-    {name: 'Novembro', value: 15000},
-    {name: 'Dezembro', value: 75000},
-  ];
+  results = signal<any|null>(null);
   view: [number, number] = [700, 500];
-  legend = true;
+  legend = false; 
   showXAxis = true;
   showYAxis = true;
   showXAxisLabel = true;
@@ -32,8 +20,27 @@ export class MounthlyChart {
   xAxisLabel = 'Meses';
   yAxisLabel = 'Valor (kz)';
   animations = true;
-  titleLegend = 'Ano 2026'
-  autoFocus = true;
+  // titleLegend = 'Ano 2026'
+  autoScale = false;
   roundDomais = true;
   showGrideLines = true;
+
+  constructor(private transactionService: TransactionService) {};
+
+  ngOnInit() {
+    this.chartMounthlyBar();
+  };
+
+  chartMounthlyBar() {
+    this.transactionService.getReportsChartDataMountly().subscribe({
+      next: (data) => {
+        if(data.data === false) {
+          console.log('Sem dados para o gráfico!');
+          return;
+        };
+        this.results.set(data);
+        console.log('Chart-Data-Mounthly', this.results());
+      }
+    });
+  };  
 };
