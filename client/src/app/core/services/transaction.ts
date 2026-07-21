@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { AuthService } from './auth';
 import { HttpClient } from '@angular/common/http';
-import { map, tap } from 'rxjs';
+import { catchError, map, tap, throwError } from 'rxjs';
 
 interface Reports {
   message: string,
@@ -11,6 +11,29 @@ interface Reports {
     total_Saido: number
   }
 };
+
+interface ReportsChartDataCategory {
+  message: string,
+  data: [
+    {
+      category: string,
+      total: number
+    }
+  ]
+};
+
+interface ReportsChartDataMouthly {
+  message: string;
+  data: [
+    {
+      total: number, // gasto total em cada mês
+      _id: {
+        mounthly: number,
+        year: number
+      }
+    }
+  ]
+}
 
 @Injectable({
   providedIn: 'root',
@@ -23,12 +46,97 @@ export class TransactionService {
   
   getReportsSummary() {
     return this.http.get<Reports>(this.apiUrl+'reports/summary').pipe(
-      tap(reports => {
-        console.log(reports.message+' : '+reports.reports);
-      }),
       map(reports => {
         return reports.reports;
+      }),
+      catchError(error => {
+        console.log('Erro ao buscar dados para de reports!', error);
+        return throwError(() => error);
       })
-    )
-  }
-}
+    );
+  };
+
+  getReportsChartDataCategory() {
+    return this.http.get<ReportsChartDataCategory>(this.apiUrl+'reports/chart-data-category').pipe(
+      map(data => {
+        if (!data.data[0]) {
+          return false
+        };
+        let chartData: any = [];
+        data.data.forEach(categories => {
+          chartData.push({
+            name: categories.category,
+            value: categories.total
+          });
+        })
+        return chartData;
+      }),
+      catchError(error => {
+        console.error('Erro em buscar dados para o gráfico de gastos por categoria!', error);
+        return throwError(() => error);
+      })
+    );
+  };
+
+  getReportsChartDataMountly() {
+    return this.http.get<ReportsChartDataMouthly>(this.apiUrl+'reports/chart-data-mounthly').pipe(
+      map(data => {
+        if(!data.data[0]) {
+          return false
+        };
+        let chartData: any = [];
+        let mounthlyValues: any = [];
+        let month: string;
+        data.data.forEach((values, index) => {
+          switch(values._id.mounthly) {
+            case 1: // Janeiro
+              month = 'Janeiro';
+              break;
+            case 2: // Fevereiro
+              month = 'Fevereiro';
+              break;
+            case 3: // Março
+              month = 'Março';
+              break;
+            case 4: // Abril
+              month = 'Abril';
+              break;
+            case 5: // Maio
+              month = 'Maio';
+              break;
+            case 6: // Junho
+              month = 'Junho';
+              break;
+            case 7: // Julho
+              month = 'Julho';
+              break;
+            case 8: // Agosto
+              month = 'Agosto';          
+              break;
+            case 9: // Setembro
+              month = 'Setembro';
+              break;
+            case 10: // Outubro
+              month = 'Outubro';
+              break;
+            case 11: // Novembro
+              month = 'Novembro';
+              break;
+            default: // Dezembro
+              month = 'Dezembro';
+              break;
+          };
+
+          mounthlyValues.push({name: month, value: values.total});
+          chartData.push({name: `Ano ${values._id.year}`, series: mounthlyValues});
+        });
+        // console.log('Chart-Data-Mounthly',chartData);
+        return chartData;
+      }),
+      catchError(error => {
+        console.log('Erro ao buscar dados para o gráfico de gastos mensal!', error);
+        return throwError(() => error);
+      })
+    );
+  };
+};
