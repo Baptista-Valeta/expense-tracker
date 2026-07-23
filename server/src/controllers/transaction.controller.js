@@ -6,7 +6,7 @@ let transaction = null;
 const transactionController = {
     createTransaction: async (req, res) => {        
         try{
-            if(!req.body) return res.status(400).send("Campos vazio");
+            if(!req.body) return res.status(400).send("Campos invalidos");
 
             if (typeof req.body.amount !== 'number' || req.body.amount < 0) {
                 console.log("O saldo da transação deve ser number positivo!");
@@ -22,10 +22,14 @@ const transactionController = {
                 username: req.user
             });
 
-            if(reportValidServiceAndUpdate(transaction.amount, transaction.type, req.user) === true) {
+            const report = await reportValidServiceAndUpdate(transaction.amount, transaction.type, req.user);
+            console.log(report);
+
+            if(report === true) {
                 console.log("Transação realizada");
             }else {
                 console.log("Ocorreu algum erro durante a atualização do saldo");
+                return res.status(500).json({message: 'Erro ao atualizar o saldo durante a transação'});
             }
 
             return res.status(201).json({message: `Transação realizada por ${req.user.name}`, transaction: transaction});
@@ -35,15 +39,47 @@ const transactionController = {
     },
 
     getAllTransaction: async (req, res) => {
+        console.log('[GET] /api/transactions')
         try{
-            if(!req.user) return res.status(404).send("Perfil inexistente"); 
-            transaction = await transactionModel.find({user: req.user._id});
+            if(!req.user) return res.status(401).send("Não autorizado"); 
+            transaction = await transactionModel.aggregate(
+                [
+                    {
+                        $match: {
+                            user: req.user._id
+                        }
+                    }
+                ]
+            );
 
             if(!transaction[0])
                 return res.status(404).json({message: `Nenhuma transação realizada por ${req.user.name}`});
 
-            return res.status(200).json({message: `Transações realizadas por ${req.user.name}`, transaction: transaction});
+
+            let transactionsType;
+            let newObjectTransactions = [];
+            for (let transactionElement of transaction) {
+                let category = await categoryModel.findById(transactionElement.category)
+
+                transactionsType = (transactionElement.type === 'income'?'receita':'despesa')
+                newObjectTransactions.push(
+                    {
+                        _id: transactionElement._id,
+                        amount: transactionElement.amount,
+                        category: category.name,
+                        type: transactionsType,
+                        description: transactionElement.description,
+                        date: transactionElement.date,
+                        createdAt: transactionElement.createdAt,
+                        updatedAt: transactionElement.updatedAt
+                    }
+                );
+            };
+            
+            console.log('Transações',newObjectTransactions);
+            return res.status(200).json({message: `Transações realizadas por ${req.user.name}`, transaction: newObjectTransactions});
         }catch (err) {
+            console.log('Erro ao buscar transações:', err.message);
             return res.status(500).json({message: "Erro ao buscar transações", error: err.message});
         }
     },
