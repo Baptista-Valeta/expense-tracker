@@ -1,0 +1,23 @@
+form {
+    height: 320px;
+    /* border: 1px solid; */
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: end;
+    gap: 5px;
+}
+
+.form-buttons button {
+    padding: 6px 15px;
+
+}
+
+#add {
+    background-color: var(--sidebar);
+}
+
+#add:hover {
+    background-color: var(--primary);
+}
