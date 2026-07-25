@@ -33,6 +33,22 @@ interface ReportsChartDataMouthly {
       }
     }
   ]
+};
+
+interface Transactions {
+  message: string;
+  transaction: [
+    {
+      _id: string,
+      amount: number,
+      category: string,
+      type: string,
+      description: string,
+      date: Date,
+      createdAt: Date,
+      updatedAt: Date
+    }
+  ]
 }
 
 @Injectable({
@@ -135,6 +151,25 @@ export class TransactionService {
       }),
       catchError(error => {
         console.log('Erro ao buscar dados para o gráfico de gastos mensal!', error);
+        return throwError(() => error);
+      })
+    );
+  };
+
+  createCategory(name: string) {
+    return this.http.post(this.apiUrl+'', name);
+  };
+
+  getTransactions() {
+    return this.http.get<Transactions>(this.apiUrl+'transactions').pipe(
+      map(transactions => {
+        return transactions.transaction;
+      }),
+      catchError(error => {
+        if(error.status === 404) {
+          // console.error('Nenhuma transação encontrada:', error);
+          return throwError(() => "Nenhuma transação encontrada");
+        }
         return throwError(() => error);
       })
     );
