@@ -1,0 +1,121 @@
+.transactions {
+    padding: var(--dashboard-padding);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+header {
+    /* background-color: var(--transactions); */
+    border: 1px solid var(--border);
+    border-radius: var(--layout-border-radius);
+    display: flex;
+    padding: var(--dashboard-padding);
+    margin: 0 0 10px;
+    justify-content: space-between;
+    /* height: 75px; */
+}
+
+
+
+header div button {
+    border: none;
+    border-radius: var(--layout-border-radius);
+    background-color: var(--sidebar);
+    padding: 10px 15px;
+    color: var(--bg);
+    cursor: pointer;
+    transition: background-color .2s ease;
+}
+
+header div button:hover {
+    background-color: var(--primary);
+}
+
+
+.filters {
+    border: none;
+    /* border: 1px solid var(--border); */
+    border-radius: var(--layout-border-radius);
+    display: flex;
+    justify-content: space-between;
+    /* padding: var(--dashboard-padding); */
+    margin: 0 0 10px;
+}
+
+.filter {
+    display: flex;
+    border: 1px solid black;
+    border-radius: var(--layout-border-radius);
+    align-items: center;
+    overflow: hidden;
+}
+
+.filter :first-child {
+    color: var(--bg);
+    background-color: var(--sidebar);
+}
+
+.filter > * {
+    /* background-color: var(--sidebar); */
+    width: 120px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid;
+    border-color: transparent transparent transparent black;
+}
+
+
+.search {
+    display: flex;
+    gap: 7px;
+}
+
+.search input {
+    border-radius: var(--layout-border-radius);
+}
+
+.search button {
+    border: none;
+    color: white;
+    background-color: var(--sidebar);
+    border-radius: var(--layout-border-radius);
+    transition: .3s;
+}
+
+.search button:hover {
+    background-color: var(--primary);
+}
+
+
+.transactions-list {
+    height: calc(100% - 137.59px);
+    border: 1px solid var(--border);
+    padding: var(--dashboard-padding);
+    border-radius: var(--layout-border-radius);
+}
+
+.container-table {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    /* border: 1px solid; */
+}
+
+.message {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+table {
+    /* display: none; */
+    width: 100%;
+    /* height: 10%; */
+}
+
+table, th, td {
+    padding: 5px;
+    border: 1px solid;
+}

@@ -8,7 +8,7 @@
         <div class="modal-body p-4">
 
             <!-- Formulário de transações -->
-            <form class="row g-1" [formGroup]="transactionsForm" (ngSubmit)="getTransactionsForm()">
+            <form class="row g-1" [formGroup]="transactionsForm" (ngSubmit)="createTransaction()">
                 <div class="col-md-7">
                     <label for="amount" class="form-label">Montante</label>
                     <input type="number" class="form-control" id="amount" formControlName="amount" placeholder="Montante" required>
@@ -18,29 +18,32 @@
                 <div class="col-md-5">
                     <label for="type" class="form-label">Tipo</label>
                     <select class="form-select" id="type" formControlName="type" required>
-                        <option value="receita">Receita</option>
-                        <option value="despesa">Despesa</option>
+                        <option selected value="income">Receita</option>
+                        <option value="expense">Despesa</option>
                     </select>
 
                 </div>
-
-
-                <!-- <div class="form-floating mb-3">
-    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-    <label for="floatingInput">Email address</label>
-    </div> -->
 
                 <div class="col-md-12">
                     <label for="category" class="form-label">Categoria</label>
                     <select class="form-select" id="category" formControlName="category" required>
                         <option value="" disabled>Selecione a categoria</option>
-                        <option value="0">Salario</option>
-                        <option value="1">Alimentação</option>
-                        <option value="2">Transporte</option>
-                    </select>            
+
+                        @for (categories of categoryList(); track $index) {
+                            <option [value]="categories._id"> {{categories.name}} </option>
+                        }
+
+                        <option value="Outra">Outra</option>
+                    </select>
+                    @if (category() === 'Outra') {
+                        <div class="col-md">
+                            <label for="newCategory">Nova categoria</label>
+                            <input type="text" id="newCategory" class="form-control" formControlName="newCategory">
+                        </div>
+                    }        
                 </div>
                 
-                <div class="col-md">
+                <div class="col-md mb-4">
                     <label for="description">Descrição</label>
                     <textarea class="form-control" id="description" formControlName="description" placeholder=""></textarea>
                 </div>
@@ -48,6 +51,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn text-light" id="add">Adicionar</button>
                 </div>
+
             </form>
 
         </div>
