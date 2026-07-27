@@ -7,10 +7,21 @@ const categoryController = {
     // criar categoria
     createCategories: async (req, res) => {
         try {
+            console.log('[POST] /categories');
+
+            const {name, user} = req.body;
+            console.log(name, user);
+            if(!name || !user) {
+                console.error('name ou userId Inválido');
+                return res.status(400).json({message: 'O campo name e userId são obrigatórios!'})
+            };
             categories = await categoryModel.create(req.body);
             
-            return res.status(201).json({message: "Categoria criada", categoria: categories});
+            console.log('Categoria criada:', categories);
+
+            return res.status(201).json({message: "Categoria criada", categories: categories});
         }catch (err) {
+            console.error('Erro ao criar categoria', err.message);
             return res.status(500).json({message: "Erro ao criar categoria", err: err.message});
         };
     },
@@ -18,6 +29,8 @@ const categoryController = {
     // buscar vários registros
     getAllCategories: async  (req, res) => {
         try {
+            console.log('[GET] /categories');
+
             if(!req.user) return res.status(404).send("Perfil inexistente"); 
 
             categories = await categoryModel.find({user: req.user._id});
