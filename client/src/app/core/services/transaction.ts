@@ -49,7 +49,27 @@ interface Transactions {
       updatedAt: Date
     }
   ]
-}
+};
+
+interface Categories {
+  message: string;
+  categories: [
+    {
+      _id: string,
+      name: string,
+      user: string
+    }
+  ]
+};
+
+interface createdCategory {
+  message: string;
+  categories: {
+    _id: string,
+    name: string,
+    user: string
+  }
+};
 
 @Injectable({
   providedIn: 'root',
@@ -156,8 +176,36 @@ export class TransactionService {
     );
   };
 
-  createCategory(name: string) {
-    return this.http.post(this.apiUrl+'', name);
+  createCategory(payload: any) {
+    return this.http.post<Categories['categories'][0]>(this.apiUrl+'categories', payload).pipe(
+      map(category => {
+        console.log('Create Category', category);
+        return category;
+      }),
+      catchError(error => {
+        if(error.status === 400) {
+          console.error('Erro ao criar categoria', error);
+          return throwError(() => 'Campo Inválido');
+        };
+        return throwError(() => error.message);
+      })
+    );
+  };
+
+  getAllCategory() {
+    return this.http.get<Categories>(this.apiUrl+'categories').pipe(
+      map(categories => {
+        console.log('Todas as categorias', categories.categories);
+        return categories.categories;
+      }),
+      catchError(error => {
+        if(error.status === 404) {
+          return throwError(() => 'Nenhuma categoria encontrada');
+        };
+        console.error('Erro ao buscar categoria:', error)
+        return throwError(() => error);
+      })
+    );
   };
 
   getTransactions() {
