@@ -12,16 +12,25 @@
                 <div class="col-md-7">
                     <label for="amount" class="form-label">Montante</label>
                     <input type="number" class="form-control" id="amount" formControlName="amount" placeholder="Montante" required>
-    
+
+                    @if (transactionsForm.get('amount')?.invalid && (amount?.touched || amount?.dirty)) {
+                        @if(transactionsForm.get('amount')?.hasError('required')) {
+                            <small class="text-danger fs-6">Montante é obrigatório</small>
+                        }@else if(transactionsForm.get('amount')?.hasError('min')) {
+                            <small class="text-danger fs-6">Montante deve ser maior que 1</small>
+                        }
+                    }
                 </div>
 
                 <div class="col-md-5">
                     <label for="type" class="form-label">Tipo</label>
-                    <select class="form-select" id="type" formControlName="type" required>
+                    <select class="form-select" id="type" formControlName="type" placeholder="ef" required>
                         <option selected value="income">Receita</option>
                         <option value="expense">Despesa</option>
                     </select>
-
+                    @if(type?.invalid) {
+                        <small class="text-danger fs-6">O tipo é obrigatório</small>
+                    }
                 </div>
 
                 <div class="col-md-12">
@@ -35,25 +44,34 @@
 
                         <option value="Outra">Outra</option>
                     </select>
-                    @if (category() === 'Outra') {
+                    @if (transactionsForm.get('category')?.invalid && category?.touched) {
+                        <small class="text-danger fs-6">A categoria é obrigatória</small>
+                    }
+                    @if (category?.value === 'Outra') {
                         <div class="col-md">
                             <label for="newCategory">Nova categoria</label>
                             <input type="text" id="newCategory" class="form-control" formControlName="newCategory">
+
+                            @if (transactionsForm.get('newCategory')?.invalid && (newCategory?.touched || newCategory?.dirty)) {
+                                @if(transactionsForm.get('newCategory')?.hasError('minlength')) {
+                                    <small class="text-danger fs-6">A nova categoria deve der pelo menos três caracteres</small>     
+                                }@else {   
+                                    <small class="text-danger fs-6">Insira uma nova categoria</small>     
+                                }
+                            }
                         </div>
-                    }        
+                    }  
                 </div>
                 
                 <div class="col-md mb-4">
                     <label for="description">Descrição</label>
-                    <textarea class="form-control" id="description" formControlName="description" placeholder=""></textarea>
+                    <textarea class="form-control" id="description" formControlName="description" placeholder="Descrição da transação (Opcional)"></textarea>
                 </div>
                 <div class="form-buttons">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" (click)="closeForm()" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn text-light" id="add">Adicionar</button>
                 </div>
-
             </form>
-
         </div>
     </div>
 </div>
