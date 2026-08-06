@@ -1,11 +1,12 @@
-import { Component, signal } from '@angular/core';
-import { FormControl, FormGroup, ɵInternalFormsSharedModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, signal, Input, inject } from '@angular/core';
+import { FormControl, FormGroup, ɵInternalFormsSharedModule, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
 
 import * as bootstrap from 'bootstrap';
 
 import { TransactionService } from '../../../core/services/transaction';
 import { AuthService } from '../../../core/services/auth';
 import { Transactions } from '../transactions';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-form-transactions',
@@ -15,10 +16,15 @@ import { Transactions } from '../transactions';
 })
 export class FormTransactions {
   categoryList = <any|null>signal([]);
-  user: any;
   modal = 'static'; 
 
-  transactionsForm = new FormGroup({
+  titleForm = 'Adicionar nova transação';
+  buttonText = 'Adicionar';
+
+  fb = inject(FormBuilder); // pra inserir valor a partir de outro componente
+
+  transactionsForm: FormGroup = this.fb.group({
+    id: new FormControl(''),
     amount: new FormControl('', [
       Validators.required,
       Validators.min(1)
@@ -56,12 +62,16 @@ export class FormTransactions {
     return this.transactionsForm.get<string>('description');
   }
 
-  constructor(private transactionService: TransactionService, private authService: AuthService, private transactions: Transactions) {}
+  constructor(
+    private transactionService: TransactionService, 
+    private authService: AuthService, 
+    private toast: ToastrService  
+  ) {};
 
   ngOnInit() {
     this.getUserId();
     this.getAllCategories();
-
+    
     // console.log('[ONE]', this.categoryId())
   };
 
@@ -77,78 +87,132 @@ export class FormTransactions {
   }
 
   getUserId() {
-    this.authService.getDataUser().subscribe({
-      next: (user) => {
-        this.user = user;
-      }
-    })
-  }
+    this.authService.getDataUser().subscribe((user) => {
+      this.authService.user.set(user);
+    });
+  };
 
-  createTransaction () {
-    this.transactions.closeModal();
-    
+  createCategory(isCategory: string, payload: any, amount: number, type: string, description: string) {
+    this.newCategory?.markAsTouched();
+
+
+    if(this.newCategory?.invalid) {
+      console.log('[NewCategory] Invalid');
+      return;
+    };
+
+    isCategory = this.newCategory?.value;
+
+    this.transactionService.createCategory({name: isCategory, user: this.authService.user()._id}).subscribe({
+      next: (category) => {
+        let categoryId: any = category;
+        
+        payload = {
+          amount:  amount,
+          category: categoryId._id,
+          type: type,
+          user: this.authService.user()._id,
+          description: description
+        };
+        
+        console.log('[PAYLOAD]', payload);
+        
+        // Criar transação quando não existe categoria
+        this.transactionService.createTransaction(payload).subscribe({
+          next: transaction => {
+            this.toast.success('Transação realizada');
+          },
+          error: err => {
+            if(err === 'Saldo insuficiente') {
+              this.toast.error('Saldo insuficiente!');
+            };
+          }
+        });
+        this.transactionService.getTransactions().subscribe(data => {
+          this.transactionService.transactions.set(data);// Atualiza a lista de transações
+        });
+      }
+    });
+    this.getUserId();
+    console.log('[USER DATA', this.authService.user().saldo);
+    this.getAllCategories(); // Atualiza a lista de categorias
+    this.closeForm();
+    this.transactionService.closeModal();  // Fechar o modal
+
+    return;
+  };
+
+  createTransaction () {    
+    console.log('[_ID]',this.transactionsForm.get('id')?.value,!this.transactionsForm.get('id')?.value)
+    console.log('[FORM VALUE]',this.transactionsForm.value);
+    console.log('[USER DATA', this.authService.user().saldo);
+
     this.amount?.markAsTouched();
     this.type?.markAsTouched();
     this.category?.markAsTouched();
-
+    
+    let isCategory: string = this.category?.value;
+    let amount = this.amount?.value;
+    let type = this.type?.value;
+    let description = this.description?.value;
+    let payload: any;
+    
     if(this.amount?.invalid || this.type?.invalid || this.category?.invalid) {
       console.info('Formulário inválido');
       return;
     };
-      
-    let isCategory: string = this.category?.value;
-    let payload: any;
 
-    if(this.category?.value === 'Outra') {
-      this.newCategory?.markAsTouched();
-      if(this.newCategory?.invalid) {
-        console.log('[NewCategory] Invalid');
+    if(!this.transactionsForm.get('id')?.value) {
+      // Create Transaction
+      console.log('[Payload 2]', amount,type,description,isCategory);
+      
+      if(this.category?.value === 'Outra') {
+        // Criar categoria primeiro
+        this.createCategory(isCategory, payload, amount, type, description);
+        return;
+      };
+      
+      payload = {
+        amount:  amount,  
+        category: isCategory,
+        type: type,
+        user: this.authService.user()._id,
+        description: description
+      };
+      
+      console.log('[PAYLOAD]', payload);
+      
+      // Criar transação quando existe categoria
+      this.transactionService.createTransaction(payload).subscribe({
+        next: transaction => {
+          this.toast.success('Transação realizada');
+        },
+        error: err => {
+          if(err === 'Saldo insuficiente') {
+            this.toast.error('Saldo insuficiente!');
+          };
+        }
+      });
+      
+      this.getUserId(); // Atualiza saldo do usuário      
+      console.log('[USER DATA', this.authService.user().saldo);
+      this.transactionService.getTransactions().subscribe(data => {
+        this.transactionService.transactions.set(data); // Atualiza a lista de transações
+      });
+    }else {
+      // Update Transaction
+      console.log('[UPDATE]',this.transactionsForm.value);
+      console.log('[UPDATE]',this.category?.value);
+
+      if(this.category?.value === 'Outra') {
+        // Criar categoria primeiro
+
         return;
       };
 
-      isCategory = this.newCategory?.value;
-      // Criar categoria primeiro
-      this.transactionService.createCategory({name: isCategory, user: this.user._id}).subscribe({
-        next: (category) => {
-          let categoryId: any = category;
-          
-          payload = {
-            amount:  Number(this.amount?.value),
-            category: categoryId._id,
-            type: this.type?.value,
-            user: this.user._id,
-            description: this.description?.value
-          };
-
-          console.log('[PAYLOAD]', payload);
-
-          // Criar transação quando não existe categoria
-          this.transactionService.createTransaction(payload).subscribe({
-            next: transaction => {}
-          });
-          this.transactions.ngOnInit(); // Atualiza a lista de transações
-        }
-      });
-      this.getAllCategories(); // Atualiza a lista de categorias
-      this.closeForm();
-      return;
     };
-
-    payload = {
-      amount:  Number(this.amount?.value),
-      category: isCategory,
-      type: this.type?.value,
-      user: this.user._id,
-      description: this.description?.value
-    };
-    
-    console.log('[CATEGORYID]: ', isCategory, '\n [USERID] ' + this.user._id);   
-    console.log('[PAYLOAD]', payload);
-    // Criar transação quando existe categoria
-    this.transactionService.createTransaction(payload).subscribe({
-      next: transaction => {}
-    });
-    this.transactions.ngOnInit(); // Atualiza a lista de transações
+    this.closeForm();
+    this.transactionService.closeModal();
   };
 
   closeForm() {

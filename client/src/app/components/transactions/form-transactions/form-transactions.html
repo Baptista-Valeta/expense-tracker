@@ -1,7 +1,7 @@
 <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
         <div class="modal-header text-light p-4"  style="background-color: var(--sidebar);">
-            <h1 class="fs-4 text-center fw-bold" id="form-title">Adicionar nova transação</h1>
+            <h1 class="fs-4 text-center fw-bold" id="form-title"> {{titleForm}} </h1>
         <!-- <input type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"/> -->
         </div>
     
@@ -11,7 +11,7 @@
             <form class="row g-1" [formGroup]="transactionsForm" (ngSubmit)="createTransaction()">
                 <div class="col-md-7">
                     <label for="amount" class="form-label">Montante</label>
-                    <input type="number" class="form-control" id="amount" formControlName="amount" placeholder="Montante" required>
+                    <input type="number" class="form-control" id="amount" formControlName="amount" placeholder="0" required>
 
                     @if (transactionsForm.get('amount')?.invalid && (amount?.touched || amount?.dirty)) {
                         @if(transactionsForm.get('amount')?.hasError('required')) {
@@ -68,8 +68,8 @@
                     <textarea class="form-control" id="description" formControlName="description" placeholder="Descrição da transação (Opcional)"></textarea>
                 </div>
                 <div class="form-buttons">
-                    <button type="button" (click)="closeForm()" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn text-light" id="add">Adicionar</button>
+                    <button type="button" (click)="closeForm()" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn text-light" id="add"> {{buttonText}} </button>
                 </div>
             </form>
         </div>
