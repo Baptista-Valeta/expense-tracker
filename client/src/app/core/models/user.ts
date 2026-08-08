@@ -7,9 +7,9 @@ export interface User {
     saldo: number,
     totalEntrado: number,
     totalSaido: number,
-    isActive: boolean,
-    role: string,
-    createdAt: string,
-    updatedAt: string
+    isActive?: boolean,
+    role?: string,
+    createdAt?: string,
+    updatedAt?: string
   };
 }
