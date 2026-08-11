@@ -9,10 +9,10 @@ header {
     /* background-color: var(--transactions); */
     border: 1px solid var(--border);
     border-radius: var(--layout-border-radius);
-    display: flex;
     padding: var(--dashboard-padding);
-    margin: 0 0 10px;
-    justify-content: space-between;
+    /* margin: 0 0 10px; */
+    /* display: flex;
+    justify-content: space-between; */
     /* height: 75px; */
 }
 
@@ -118,4 +118,9 @@ table {
 table, th, td {
     padding: 5px;
     border: 1px solid;
+    border-color: rgba(173, 216, 230, 0.219);
+}
+
+tbody tr:nth-child(even) {
+    background-color: rgba(173, 216, 230, 0.219);
 }

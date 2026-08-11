@@ -1,12 +1,17 @@
 <div class="transactions">
-    <header>
-        <h3>Transações</h3>
-        <div class="add-transactions">
+    <header class="mb-2 d-flex justify-content-between items-center">
+        <h3 style="color: var(--primary);">Transações</h3>
 
-        <!-- Botão do modal -->
-        <button type="button" (click)="openModal(null)" class="btn btn-primary" >
-            Adicionar
-        </button>
+        <div class="saldo">
+            <small class="fs-6"><span>Saldo: </span></small>
+            <span class="fw-bold" style="color: var(--primary);">AOA {{authService.user()?.saldo}} </span>
+        </div>
+
+        <div class="add-transactions">
+            <!-- Botão do modal -->
+            <button type="button" (click)="openModal(null)" class="btn btn-primary" >
+                Adicionar
+            </button>
         </div>
 
         <!-- Modal -->
@@ -24,7 +29,7 @@
         </div>
         <div class="search">
             <input type="text" class="fs-6 p-2" placeholder="Pesquisar">
-            <button class="fs-6 p-2">Pesquisar</button>
+            <button class="fs-6 p-2"><i class="bi-search"></i> Pesquisar</button>
         </div>
     </div>
 
@@ -48,8 +53,9 @@
 
                    @for (transaction of transactionService.transactions(); track $index) {
                        <tr>
-                            <td class="text-center"> {{ $index+1 }} </td>
-                            <td> {{ transaction.date | date: 'dd/MM/yyyy' }} </td>
+                           <!-- <td> {{ $index }} </td> -->
+                            <td class="text-center"> {{ (transactionService.transactions()?.length! - $index) }} </td>
+                            <td> {{ transaction.updatedAt | date: 'dd/MM/yyyy' }} </td>
                             <td> {{ transaction.category }} </td>
                             @if(transaction.type === 'receita') {
                                 <td> {{ transaction.type }} <span class="text-success"><i class="bi bi-arrow-up"></i></span> </td>
@@ -63,7 +69,7 @@
                                 <button (click)="openModal(transaction)" class="border btn">
                                     <i class="bi bi-pencil"></i>
                                 </button>
-                                <button class="border btn text-danger">
+                                <button (click)="deleteTransaction(transaction._id)" class="border btn text-danger">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </td>
