@@ -1,0 +1,61 @@
+<div class="categories" style="padding: var(--dashboard-padding); height: 100%">
+    <header class="mb-2 d-flex justify-content-between">
+        <h3 style="color: var(--primary);">Categorias</h3>    
+
+        <div class="fw-bold">
+            <span>Categorias total</span> <span style="color: var(--primary);">: {{ categoryService.categories()?.length }}</span>
+        </div>
+    </header>
+
+    <div class="categories-list">
+        <div class="container-list rounded-3" style="height: 100%; overflow-y: auto;">
+            @if (categoryService.categories()) {
+                <table>
+                    <thead>
+                        <tr class="text-center text-light" style="background-color: var(--sidebar);">
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+            
+                    <tbody>
+                        @for (category of categoryService.categories(); track $index) {
+                            <tr>
+                                <td class="text-center"> {{$index+1}} </td>
+                                <td> {{category.name}} </td>
+                                <td class="d-flex justify-content-center gap-5">
+                                    <button (click)="showForm(category)" class="border btn"><i class="bi-pencil"></i></button>
+                                    <button (click)="deleteCategories(category._id, category.name)" class="border btn text-danger"><i class="bi-trash"></i></button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }@else {
+                <div class="d-flex justify-content-center" style="color: var(--primary); height: 100%; align-items: center;">
+                    <h2 style="color: var(--primary);">Vazio</h2>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<form  class="text-bg-light p-4 " style="display: none; position: absolute; top: 40%; left: 39%; border-radius: var(--dashboard-padding); box-shadow: 1px 1px 9px grey;" id="formCategory">
+    <div>
+        <label class="form-label" for="name">Nome</label>
+        <input type="text" id="name" class="form-control" [formControl]="name" placeholder="Insira um novo nome para a categoria">
+    </div>
+    @if(name.invalid && (name.dirty || name.touched)) {
+      @if(name.hasError('required')) {
+        <small class="text-danger fs-6">O novo nome é obrigatório</small>
+      }@else if (name.hasError('minlength')) {
+        <small class="text-danger fs-6">O nome ter pelo menos 2 caracteres</small>
+      }
+    }
+
+    <div class="d-flex justify-content-end gap-1 mt-3">
+        <button type="button" class="btn border text-bg-danger" (click)="closeForm($event)">Cancelar</button>
+        <button type="submit" class="btn border text-light" (click)="updateCategory($event, payload)" style="background-color: var(--sidebar);">Renomear</button>
+    </div>
+</form>

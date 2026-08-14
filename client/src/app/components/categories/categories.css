@@ -1,0 +1,35 @@
+/* .categories {
+    padding: var(--dashboard-padding);
+    height: 100%;
+} */
+
+header {
+    /* background-color: var(--transactions); */
+    border: 1px solid var(--border);
+    border-radius: var(--layout-border-radius);
+    padding: var(--dashboard-padding);
+}
+
+.categories-list {
+    border: 1px solid var(--border); 
+    height: calc(100% - 86px);
+    padding: var(--dashboard-padding); 
+    border-radius: var(--layout-border-radius);
+}
+
+
+table {
+    /* display: none; */
+    width: 100%;
+    /* height: 10%; */
+}
+
+table, th, td {
+    padding: 5px;
+    border: 1px solid;
+    border-color: rgba(173, 216, 230, 0.219);
+}
+
+tbody tr:nth-child(even) {
+    background-color: rgba(173, 216, 230, 0.219);
+}
