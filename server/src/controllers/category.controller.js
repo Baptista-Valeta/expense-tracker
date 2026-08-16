@@ -26,7 +26,7 @@ const categoryController = {
     },
 
     // buscar vários registros
-    getAllCategories: async  (req, res) => {
+    getAllCategories: async (req, res) => {
         try {
             console.log('[GET] /categories');
 
@@ -38,10 +38,53 @@ const categoryController = {
                 return res.status(404).json({message: `Nenhuma categoria encontrada para ${req.user.name}`,});
             }
             
+            console.log(`Categorias encontradas para ${req.user.name}`);
             return res.status(200).json({categories: categories});
         }catch(err) {
-            console.error('Erro ao buscar categorias', err);
             return res.status(500).json({message: "Erro ao buscar categorias", err: err.message});
+        };
+    },
+
+    getCategoriesStatistics: async (req, res) => {
+        try{
+            console.log('[GET] /categories/statistics');
+
+            if(!req.user) return res.status(404).send("Perfil inexistente"); 
+
+            const transactions = await transactionModel.aggregate([
+                {
+                    $match: {
+                        user: req.user._id,
+                        type: 'expense'
+                    },
+                },
+                {             
+                    $group: {
+                        _id: '$category',
+                        gastos: {
+                            $sum: '$amount'
+                        },
+                        transactions: {
+                            $count: {}
+                        }
+                    }
+                },
+            ]);
+
+            const categoryData = [];
+            for (const transaction of transactions) {
+                categories = await categoryModel.findById(transaction._id);
+                
+                categoryData.push({_id: categories._id, name: categories.name, gastos: transaction.gastos, transactions: transaction.transactions})
+            };
+
+            console.info('Transações',transactions);
+            console.info('Categories', categoryData);
+            
+            return res.status(200).json(categoryData);
+        } catch(err) {
+            console.error('Erro ao buscar estatísticas com categoria', err.message);
+            return res.status(500).json({message: "Erro ao buscar estatísticas com categoria", err: err.message});
         };
     },
 
@@ -56,9 +99,10 @@ const categoryController = {
             if(!categories)
                 return res.status(404).json({message: "Categoria não encontrada"});
             
+            console.log("Categoria encontrada");
             return res.status(200).json({categories: categories});
         }catch (err) {
-            console.error('Erro ao buscar categoria', err);
+            console.error('Erro ao buscar categoria', err.message);
             return res.status(500).json({message: "Erro ao buscar categoria", err: err.message});
         };
     },
@@ -71,17 +115,15 @@ const categoryController = {
                 return res.status(400).json({message: "informe o nome da categoria"});
             };
 
-            categories = await categoryModel.findByIdAndUpdate(req.params.id, req.body, {returnDocument: 'after'});
+            categories = await categoryModel.findByIdAndUpdate(req.params.id, req.body, {new: true});
 
             if(!categories)
                 return res.status(404).json({message: "Erro ao atualizar. categoria não encontrado"});
 
-            console.log(req.body);
-            console.log(categories);
             console.log("Categoria atualizada");
             return res.status(200).json({categories: categories});
         } catch(err) {
-            console.error('Erro ao atualizar categoria', err.message)
+            console.log('Erro ao atualizar categoria', err.message)
             return res.status(500).json({message: 'Erro ao atualizar categoria', error: err});
         };
     },
