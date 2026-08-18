@@ -1,0 +1,54 @@
+<div class="reports" style="padding: var(--dashboard-padding); height: 100%;">
+    <header class="mb-2 d-flex justify-content-between" style="border: 1px solid var(--border); border-radius: var(--layout-border-radius); padding: var(--dashboard-padding);">
+        <div class="mt-auto mb-auto" style="align-items: center;">
+            <h3 class="" style="color: var(--primary);">RELATÓRIO</h3>
+            <small>Analise o seu <span class="fw-bold" style="color: var(--primary);">desempenho</span> financeiro</small>
+        </div>
+
+        <div class="cards d-flex gap-5 justify-content-around w-75">
+            <div class="card w-25 p-2 border-success">
+                <span class="fs-6">RECEITAS</span>
+                <span > <strong class="text-success">{{reportService.reports()?.total_Entrado}}</strong> kz</span>
+                <!-- <small class="fs-6">8.5%</small> -->
+            </div>
+            <div class="card w-25 p-2 border-danger">
+                <span class="fs-6">DESPESAS</span>
+                <span > <strong class="text-danger">{{reportService.reports()?.total_Saido}}</strong> kz</span>
+                <!-- <small class="fs-6">8.5%</small> -->
+            </div>
+            <div class="card w-25 p-2 border-primary">
+                <span class="fs-6">SALDO</span>
+                <span > <strong class="text-primary">{{reportService.reports()?.saldo}}</strong> kz</span>
+                <!-- <small class="fs-6">8.5%</small> -->
+            </div>
+        </div>
+    </header>
+
+    <div class="categories border w-100" style="border-radius: var(--layout-border-radius); padding: var(--dashboard-padding);">
+        <div>
+            <h4>Gastos por categoria</h4>
+        </div>
+        <div>
+            <table class="table border fs-5 fs-6" style="width: 600px;">
+                <thead>
+                    <tr>
+                        <th class="text-center">Categoria</th>
+                        <th class="text-center">Valor</th>
+                        <th class="text-center">Transações</th>
+                        <th class="text-center">Porcentual</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(datas of expenseReports(); track $index) {
+                        <tr>
+                            <td> {{datas.category}} </td>
+                            <td> {{datas.total}} kz</td>
+                            <td class="text-center"> {{datas.transactions}} </td>
+                            <td class="text-center"> {{datas.percentage}}% </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
