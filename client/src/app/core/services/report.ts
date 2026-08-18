@@ -1,0 +1,62 @@
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable, signal } from '@angular/core';
+import { map, catchError, throwError } from 'rxjs';
+
+import { Reports, ReportsChartDataCategory, ReportsChartDataMouthly } from '../../core/models/reports';
+import { AuthService } from './auth';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ReportService {
+  apiUrl = inject(AuthService).apiUrl;
+  reports = signal<Reports['reports']|null>(null);
+
+  constructor(private http: HttpClient,) {};
+
+  getReportsSummary() {
+    return this.http.get<Reports>(this.apiUrl+'reports/summary').pipe(
+      map(reports => {
+        return reports.reports;
+      }),
+      catchError(error => {
+        console.log('Erro ao buscar dados para de reports!', error);
+        return throwError(() => error);
+      })
+    );
+  };
+
+
+  getReportsChartDataCategory() {
+    return this.http.get<ReportsChartDataCategory>(this.apiUrl+'reports/chart-data-category').pipe(
+      map(data => {
+        if (!data.data[0]) {
+          return false
+        };
+        console.log('Chart category', data)
+        return data.data;
+      }),
+      catchError(error => {
+        console.error('Erro em buscar dados para o gráfico de gastos por categoria!', error);
+        return throwError(() => error);
+      })
+    );
+  };
+
+  getReportsChartDataMountly() {
+    return this.http.get<ReportsChartDataMouthly>(this.apiUrl+'reports/chart-data-mounthly').pipe(
+      map(data => {
+        if(!data.data[0]) {
+          return false
+        };
+        console.log('Chart mounth', data)
+        // console.log('Chart-Data-Mounthly',chartData);
+        return data.data;
+      }),
+      catchError(error => {
+        console.log('Erro ao buscar dados para o gráfico de gastos mensal!', error);
+        return throwError(() => error);
+      })
+    );
+  };
+};
