@@ -3,18 +3,46 @@
         <h3 style="color: var(--primary);">Categorias</h3>    
 
         <div class="fw-bold">
-            <span>Categorias total</span> <span style="color: var(--primary);">: {{ categoryService.categories()?.length }}</span>
+            <span>Categoria total</span> <span style="color: var(--primary);">: {{ categoryService.categories()?.length }}</span>
         </div>
     </header>
 
-    <div class="categories-list">
-        <div class="container-list rounded-3" style="height: 100%; overflow-y: auto;">
+    <div class="categories-list p-5" style="overflow-y: auto;">
+        <div class="container-list rounded-3" style="height: 100%;">
             @if (categoryService.categories()) {
-                <table>
+                @for (category of categoryService.categories(); track $index) {
+                    <div class="border p-4 rounded-3" style="width: 300px;">
+                        <h4 class="text-center pb-3 border-2 border-bottom mb-3"> {{category.name}} </h4>
+
+                        <div class="border-2 border-bottom mb-4">
+                            <small class="d-flex justify-content-between">
+                                <span>Criação</span>
+                                <span> {{category?.createdAt | date: 'dd-MM-yyyy'}} </span>
+                            </small>
+                            <small class="d-flex justify-content-between mb-2 mt-2">
+                                <span>Atualizado</span>
+                                <span> {{category?.updatedAt | date: 'dd-MM-yyyy'}}</span>
+                            </small>
+                            <small class="d-flex justify-content-between">
+                                <span>Transação associada</span>
+                                <span> {{category.transactions}} </span>
+                            </small>
+                        </div>
+
+                        <div class="d-flex gap-3">
+                            <button (click)="showForm(category)" class="border btn w-50"><i class="bi-pencil"></i></button>
+                            <button (click)="deleteCategories(category._id, category.name)" class="border btn text-danger w-50"><i class="bi-trash"></i></button>
+                        </div>
+                    </div>
+                }
+
+                <!-- <table>
                     <thead>
                         <tr class="text-center text-light" style="background-color: var(--sidebar);">
                             <th>ID</th>
                             <th>Nome</th>
+                            <th>Total gasto</th>
+                            <th>Transações</th>
                             <th>Ação</th>
                         </tr>
                     </thead>
@@ -24,14 +52,14 @@
                             <tr>
                                 <td class="text-center"> {{$index+1}} </td>
                                 <td> {{category.name}} </td>
+                                <td>0.00kz</td>
+                                <td>0</td>
                                 <td class="d-flex justify-content-center gap-5">
-                                    <button (click)="showForm(category)" class="border btn"><i class="bi-pencil"></i></button>
-                                    <button (click)="deleteCategories(category._id, category.name)" class="border btn text-danger"><i class="bi-trash"></i></button>
                                 </td>
                             </tr>
                         }
                     </tbody>
-                </table>
+                </table> -->
             }@else {
                 <div class="d-flex justify-content-center" style="color: var(--primary); height: 100%; align-items: center;">
                     <h2 style="color: var(--primary);">Vazio</h2>

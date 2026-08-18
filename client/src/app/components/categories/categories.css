@@ -11,12 +11,26 @@ header {
 }
 
 .categories-list {
-    border: 1px solid var(--border); 
+    border: 25px solid transparent; 
+    box-shadow: var(--dashboard-shadow);
     height: calc(100% - 86px);
-    padding: var(--dashboard-padding); 
+    /* padding: var(--dashboard-padding);  */
     border-radius: var(--layout-border-radius);
+    display: flex;
+    justify-content: center;
 }
 
+.container-list {
+    /* width: 100%; */
+    /* border: 1px solid; */
+    /* justify-content: center; */
+    /* flex: 1; */
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    flex-wrap: wrap;
+    gap: 20px;
+}
 
 table {
     /* display: none; */

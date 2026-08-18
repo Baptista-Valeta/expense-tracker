@@ -1,27 +1,33 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormControl, Validators, ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms';
 
 import * as bootstrap from 'bootstrap';
 import { ToastrService } from 'ngx-toastr';
 
 import { CategoryService } from '../../core/services/category';
-import { Categories } from '../../core/models/category';
+import { AllCategories, Categories, CategoryStatistics } from '../../core/models/category';
+import { TransactionService } from '../../core/services/transaction';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-categories',
-  imports: [ɵInternalFormsSharedModule, ReactiveFormsModule],
+  imports: [ɵInternalFormsSharedModule, ReactiveFormsModule, DatePipe],
   templateUrl: './categories.html',
   styleUrl: './categories.css',
 })
 export class CategoriesComponent {
   payload: any;
+  categoryStatistics = signal<CategoryStatistics['categories']|null>(null);
 
   name: FormControl = new FormControl('', [
     Validators.minLength(2),
     Validators.required
   ]);
   
-  constructor(protected categoryService: CategoryService, private toast: ToastrService) {};
+  constructor(
+    protected categoryService: CategoryService, 
+    protected transactionService: TransactionService,
+    private toast: ToastrService) {};
 
   ngOnInit () {
     this.categoryService.getAllCategory().subscribe(categories => {
@@ -43,7 +49,7 @@ export class CategoriesComponent {
         },
         error: error => {
           if(!error.status) {
-            this.toast.info(error);
+            this.toast.info(error.transactions,error.message);
           }
         }
       });
