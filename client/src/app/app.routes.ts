@@ -5,6 +5,9 @@ import { authGuard } from './core/guards/auth-guard';
 import { Dashboard } from './components/dashboard/dashboard/dashboard';
 import { AuthLayout } from './components/layout/auth-layout/auth-layout';
 import { ContentLayout } from './components/layout/content-layout/content-layout';
+import { Transactions } from './components/transactions/transactions';
+import { CategoriesComponent } from './components/categories/categories';
+import { ReportsComponent } from './components/reports/reports';
 
 export const routes: Routes = [
     {
@@ -46,6 +49,24 @@ export const routes: Routes = [
                 path: 'dashboard',
                 component: Dashboard,
                 title: 'Dashboard',
+                canActivate: [authGuard]
+            },
+            {
+                path: 'transactions',
+                component: Transactions,
+                title: 'Transações',
+                canActivate: [authGuard],
+            },
+            {
+                path: 'categories',
+                component: CategoriesComponent,
+                title: 'Categorias',
+                canActivate: [authGuard]
+            },
+            {
+                path: 'reports',
+                component: ReportsComponent,
+                title: 'Relatório',
                 canActivate: [authGuard]
             }
         ]
