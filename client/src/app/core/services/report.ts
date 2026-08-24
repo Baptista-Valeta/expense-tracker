@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { map, catchError, throwError } from 'rxjs';
 
-import { Reports, ReportsChartDataCategory, ReportsChartDataMouthly } from '../../core/models/reports';
+import { ReportBigExpense, Reports, ReportsChartDataCategory, ReportsChartDataMouthly } from '../../core/models/reports';
 import { AuthService } from './auth';
 
 @Injectable({
@@ -59,4 +59,27 @@ export class ReportService {
       })
     );
   };
+
+  getIncomeCategory() {
+    return this.http.get<ReportsChartDataCategory>(this.apiUrl+'reports/category-income').pipe(
+      map(datas => {
+        return datas.data;
+      }),
+      catchError(error => {
+        return throwError(() => error);
+      })
+    );
+  };
+
+  getBigExpense() {
+    return this.http.get<ReportBigExpense>(this.apiUrl+'reports/average').pipe(
+      catchError(error => {
+        if(error.status == 404) {
+          return throwError(() => 'Sem dados para média das transações');
+        }
+        return throwError(() => error);
+      })
+    )
+  };
 };
+ 
