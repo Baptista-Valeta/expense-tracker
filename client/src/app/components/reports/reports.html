@@ -24,31 +24,169 @@
         </div>
     </header>
 
-    <div class="categories border w-100" style="border-radius: var(--layout-border-radius); padding: var(--dashboard-padding);">
+    <div class="border mb-2 d-flex justify-content-around w-100" style="flex-direction: row-reverse; border-radius: var(--layout-border-radius); padding: var(--dashboard-padding); box-shadow: var(--dashboard-shadow);">
         <div>
-            <h4>Gastos por categoria</h4>
-        </div>
-        <div>
-            <table class="table border fs-5 fs-6" style="width: 600px;">
-                <thead>
-                    <tr>
-                        <th class="text-center">Categoria</th>
-                        <th class="text-center">Valor</th>
-                        <th class="text-center">Transações</th>
-                        <th class="text-center">Porcentual</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for(datas of expenseReports(); track $index) {
+            <div class="border-bottom">
+                <h4>Gastos</h4>
+            </div>
+            <div style="overflow-y: auto; overflow-x: hidden; height: 350px;">
+                <table class="table fs-5 fs-6" style="width: 600px;">
+                    <thead>
                         <tr>
-                            <td> {{datas.category}} </td>
-                            <td> {{datas.total}} kz</td>
-                            <td class="text-center"> {{datas.transactions}} </td>
-                            <td class="text-center"> {{datas.percentage}}% </td>
+                            <th class="text-center">Categoria</th>
+                            <th class="text-center">Valor</th>
+                            <th class="text-center">Transações</th>
+                            <th class="text-center">Porcentual</th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        @for(datas of expenseReports(); track $index) {
+                            <tr>
+                                <td> {{datas.category}} </td>
+                                <td> <span class="text-danger">-{{datas.total}} </span> kz</td>
+                                <td class="text-center"> {{datas.transactions}} </td>
+                                <td class="text-center"><i class="bi bi-arrow-down"></i> {{datas.percentage}}% </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div>
+            <div class="border-bottom">
+                <h4>Entradas</h4>
+            </div>
+            <div style="overflow-y: auto; overflow-x: hidden; height: 350px;">
+                <table class="table fs-6" style="width: 600px;">
+                    <thead>
+                        <tr>
+                            <th>Categoria</th>
+                            <th>Valor</th>
+                            <th>Transações</th>
+                            <th>Porcentual</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(datas of incomeReports(); track $index) {
+                            <tr>
+                                <td> {{datas.category}} </td>
+                                <td> <span class="text-success">+{{datas.total}} </span> kz</td>
+                                <td class="text-center"> {{datas.transactions}} </td>
+                                <td class="text-center"><i class="bi bi-arrow-up"></i> {{datas.percentage}}% </td>
+                            </tr>
+                        }                    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="fs-6 d-flex justify-content-around border p-2 rounded-4" style="align-items: center; height: calc(100% - 550px); padding: var(--dashboard-padding); box-shadow: var(--dashboard-shadow); flex-direction: row-reverse;">
+        <div class="d-flex gap-5 border p-5 rounded-4">
+            <div class="border p-3 h-50 rounded-4">
+                <p>TRANSAÇÕES</p>
+                <span> {{average()?.transactions}} </span>
+            </div>
+            <div class="border p-3 h-50 rounded-4">
+                <p>MÉDIA/DESPESAS</p>
+                <span> {{average()?.average}} </span>
+            </div>
+            <div class="border p-3 h-50 rounded-4">
+                <p>MAIOR DESPESA</p>
+                <span> {{average()?.bigExpense}} </span>
+            </div>
+        </div>
+
+        <div class="border p-4 rounded-4" style="min-width: 600px;">
+            <h5 class="mb-4">Comparação com mês anterior</h5>
+            <div class="d-flex justify-content-between">
+                <div class="comparison">
+                    <p>RECEITAS</p>
+                    <p>DESPESAS</p>
+                    <p>SALDO</p>
+                </div>
+                <div class="comparison">
+                    <p>-></p>
+                    <p>-></p>
+                    <p>-></p>
+                </div>
+                <div class="comparison">
+                    @if (comparisonMonthsIncomeData()?.prev) {
+                        @if (comparisonMonthsIncomeData()?.prev!.total > comparisonMonthsIncomeData()?.current!.total) {
+                            <p> {{comparisonMonthsIncomeData()?.prev!.total}}kz (<span class="text-success"> <i class="bi bi-arrow-up"></i>{{((comparisonMonthsIncomeData()?.prev!.total / authService.user()?.saldoTotalEntrado!)*100).toFixed(2)}}%</span>) </p>
+                        }@else if(comparisonMonthsIncomeData()?.prev!.total < comparisonMonthsIncomeData()?.current!.total) {
+                            <p> {{comparisonMonthsIncomeData()?.prev!.total}}kz (<span class="text-danger"> <i class="bi bi-arrow-down"></i>{{((comparisonMonthsIncomeData()?.prev!.total / authService.user()?.saldoTotalEntrado!)*100).toFixed(2)}}%</span>) </p>
+                        }@else {
+                            <p> {{comparisonMonthsIncomeData()?.prev!.total}}kz (<span>{{((comparisonMonthsIncomeData()?.prev!.total / authService.user()?.saldoTotalEntrado!)*100).toFixed(2)}}%</span>) </p>
+                        }
+                    }@else {
+                        <p> 0.00kz (0.00%) </p>
                     }
-                </tbody>
-            </table>
+                    @if(comparisonMounth()[this.indexPrev]) {
+                        @if (comparisonMounth()[this.indexCurrent]?.total > comparisonMounth()[this.indexPrev]?.total) {
+                            <p> {{comparisonMounth()[this.indexPrev]?.total}}kz (<span class="text-danger"> <i class="bi bi-arrow-down"></i> {{((comparisonMounth()[this.indexPrev]?.total! / authService.user()?.saldoTotalEntrado!)*100).toFixed(2)}}%</span>)</p>
+                        }@else if(comparisonMounth()[this.indexCurrent]?.total < comparisonMounth()[this.indexPrev]?.total) {
+                            <p> {{comparisonMounth()[this.indexPrev]?.total}}kz (<span class="text-success"> <i class="bi bi-arrow-up"></i> {{((comparisonMounth()[this.indexPrev]?.total! / authService.user()?.saldoTotalEntrado!)*100).toFixed(2)}}%</span>)</p>
+                        }@else {
+                            <p> {{comparisonMounth()[this.indexPrev]?.total}}.00kz (<span>{{((comparisonMounth()[this.indexPrev]?.total! / authService.user()?.saldoTotalEntrado!)*100).toFixed(2)}}%</span>)</p>
+                        }
+                    }@else {
+                        <p> 0.00kz (0.00%) </p>
+                    }
+                    @if(comparisonMonthsIncomeData()?.prev && comparisonMounth()[this.indexPrev]) {
+                        @if((comparisonMonthsIncomeData()?.prev!.total - comparisonMounth()[this.indexPrev]?.total) > (comparisonMonthsIncomeData()?.current!.total - comparisonMounth()[this.indexCurrent]?.total)) {
+                            <p> {{comparisonMonthsIncomeData()?.prev!.total - comparisonMounth()[this.indexPrev]?.total}}kz (<span class="text-success"><i class="bi bi-arrow-up"></i>{{(((comparisonMonthsIncomeData()?.prev!.total - comparisonMounth()[this.indexPrev]?.total) / authService.user()?.saldoTotalEntrado!)*100).toFixed(2)}}%</span>) </p>
+                        }@else if((comparisonMonthsIncomeData()?.prev!.total - comparisonMounth()[this.indexPrev]?.total) < (comparisonMonthsIncomeData()?.current!.total - comparisonMounth()[this.indexCurrent]?.total)) {
+                            <p> {{comparisonMonthsIncomeData()?.prev!.total - comparisonMounth()[this.indexPrev]?.total}}kz (<span class="text-danger"><i class="bi bi-arrow-down"></i>{{(((comparisonMonthsIncomeData()?.prev!.total - comparisonMounth()[this.indexPrev]?.total) / authService.user()?.saldoTotalEntrado!)*100).toFixed(2)}}%</span>) </p>
+                        }@else {
+                            <p> {{comparisonMonthsIncomeData()?.prev!.total - comparisonMounth()[this.indexPrev]?.total}}kz (<span>{{(((comparisonMonthsIncomeData()?.prev!.total - comparisonMounth()[this.indexPrev]?.total) / authService.user()?.saldoTotalEntrado!)*100).toFixed(2)}}%</span>) </p>
+                        }
+                    }@else {
+                        <p> 0.00kz (0.00%) </p>
+                    }
+                </div>
+                <div class="comparison">
+                    <p>-></p>
+                    <p>-></p>
+                    <p>-></p>
+                </div>
+                <div class="comparison">
+                    @if (comparisonMonthsIncomeData()?.current) {
+                        @if (comparisonMonthsIncomeData()?.prev!.total > comparisonMonthsIncomeData()?.current!.total) {
+                            <p> {{comparisonMonthsIncomeData()?.current!.total}}kz (<span class="text-danger"> <i class="bi bi-arrow-down"></i>{{((comparisonMonthsIncomeData()?.current!.total / authService.user()?.saldoTotalEntrado!)*100).toFixed(2)}}%</span>) </p>
+                        }@else if(comparisonMonthsIncomeData()?.prev!.total < comparisonMonthsIncomeData()?.current!.total) {
+                            <p> {{comparisonMonthsIncomeData()?.current!.total}}kz (<span class="text-success"> <i class="bi bi-arrow-up"></i>{{((comparisonMonthsIncomeData()?.current!.total / authService.user()?.saldoTotalEntrado!)*100).toFixed(2)}}%</span>) </p>
+                        }@else {
+                            <p> {{comparisonMonthsIncomeData()?.current!.total}}kz (<span>{{((comparisonMonthsIncomeData()?.current!.total / authService.user()?.saldoTotalEntrado!)*100).toFixed(2)}}%</span>) </p>
+                        }
+                    }@else {
+                        <p> 0.00kz (0.00%) </p>
+                    }
+                    @if(comparisonMounth()[this.indexCurrent]) {
+                        @if (comparisonMounth()[this.indexCurrent]?.total > comparisonMounth()[this.indexPrev]?.total) {
+                            <p> {{comparisonMounth()[this.indexCurrent]?.total}}kz (<span class="text-success"> <i class="bi bi-arrow-up"></i> {{((comparisonMounth()[this.indexCurrent]?.total! / authService.user()?.saldoTotalEntrado!)*100).toFixed(2)}}%</span>)</p>
+                        }@else if(comparisonMounth()[this.indexCurrent]?.total < comparisonMounth()[this.indexPrev]?.total) {
+                            <p> {{comparisonMounth()[this.indexCurrent]?.total}}kz (<span class="text-danger"> <i class="bi bi-arrow-down"></i> {{((comparisonMounth()[this.indexCurrent]?.total! / authService.user()?.saldoTotalEntrado!)*100).toFixed(2)}}%</span>)</p>
+                        }@else {
+                            <p> {{comparisonMounth()[this.indexCurrent]?.total}}.00kz (<span>{{((comparisonMounth()[this.indexCurrent]?.total! / authService.user()?.saldoTotalEntrado!)*100).toFixed(2)}}%</span>)</p>
+                        }
+                    }@else {
+                        <p> 0.00kz (0.00%) </p>
+                    }
+                    @if(comparisonMonthsIncomeData()?.current && comparisonMounth()[this.indexCurrent]) {
+                        <!-- <p> {{comparisonMonthsIncomeData()?.current!.total - comparisonMounth()[this.indexCurrent]?.total}}kz ({{(((comparisonMonthsIncomeData()?.current!.total - comparisonMounth()[this.indexCurrent]?.total) / authService.user()?.saldoTotalEntrado!)*100).toFixed(2)}}%) </p> -->
+                        @if((comparisonMonthsIncomeData()?.prev!.total - comparisonMounth()[this.indexPrev]?.total) > (comparisonMonthsIncomeData()?.current!.total - comparisonMounth()[this.indexCurrent]?.total)) {
+                            <p> {{comparisonMonthsIncomeData()?.current!.total - comparisonMounth()[this.indexCurrent]?.total}}kz (<span class="text-danger"><i class="bi bi-arrow-down"></i>{{(((comparisonMonthsIncomeData()?.current!.total - comparisonMounth()[this.indexCurrent]?.total) / authService.user()?.saldoTotalEntrado!)*100).toFixed(2)}}%</span>) </p>
+                        }@else if((comparisonMonthsIncomeData()?.prev!.total - comparisonMounth()[this.indexPrev]?.total) < (comparisonMonthsIncomeData()?.current!.total - comparisonMounth()[this.indexCurrent]?.total)) {
+                            <p> {{comparisonMonthsIncomeData()?.current!.total - comparisonMounth()[this.indexCurrent]?.total}}kz (<span class="text-success"><i class="bi bi-arrow-up"></i>{{(((comparisonMonthsIncomeData()?.current!.total - comparisonMounth()[this.indexCurrent]?.total) / authService.user()?.saldoTotalEntrado!)*100).toFixed(2)}}%</span>) </p>
+                        }@else {
+                            <p> {{comparisonMonthsIncomeData()?.current!.total - comparisonMounth()[this.indexCurrent]?.total}}kz (<span>{{(((comparisonMonthsIncomeData()?.current!.total - comparisonMounth()[this.indexCurrent]?.total) / authService.user()?.saldoTotalEntrado!)*100).toFixed(2)}}%</span>) </p>
+                        }
+                    }@else {
+                        <p> 0.00kz (0.00%) </p>
+                    }                </div>
+            </div>
         </div>
     </div>
 </div>
