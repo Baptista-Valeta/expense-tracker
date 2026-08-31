@@ -1,13 +1,23 @@
 <div class="profile" style="padding: var(--dashboard-padding); height: 100%;">
-    <div class="h-75 d-flex rounded-top-4 border overflow-hidden">
-        <form [formGroup]="editProfile" (ngSubmit)="openForm(editProfile.get('name')?.value, editProfile.get('email')?.value)" class="dados h-100 w-25 p-3 fs-6">
+    <div class="h-75 d-flex rounded-top-4 border overflow-hidden" style="box-shadow: 1px -7px 15px var(--border);">
+        <form [formGroup]="editProfile" (ngSubmit)="UpdateProfile()" class="dados h-100 w-25 p-3 fs-6">
             <div class="mb-5 h-25 w-50 rounded-5 m-auto d-flex justify-content-center" style="align-items: center;">
                 <span class="text-center" style="transform: scale(6);"><i class="bi bi-person-circle text-secondary" style="transform: scale(3);"></i></span>
             </div>
 
             <div class="justify-content-center text-center">
-                <input type="text" class="form-control border mb-3" formControlName="name">
-                <input type="text" class="form-control border" formControlName="email">                 
+                <input type="text" class="form-control border" formControlName="name">
+                @if(name()?.invalid && (name()?.touched || name()?.dirty)) {
+                    <small class="fs-6 text-danger">O nome não pode ser vazio</small>
+                }
+                <input type="text" class="form-control border mt-3" formControlName="email">                 
+                @if(email()?.invalid && (email()?.touched || email()?.dirty)) {
+                    @if(email()?.hasError('require')) {
+                        <small class="text-danger fs-6">O email é obrigatório</small>
+                    }@else {
+                        <small class="text-danger fs-6">Email inválido</small>
+                    }
+                }
             </div>
 
             <div class="pt-5 text-center">
@@ -19,32 +29,73 @@
             <h3 class="mb-5">PREFERÊNCIAS</h3>
             <p>Aparência</p>
 
-            <div class="border mb-3">
+            <div class="mb-3 fs-6 border-bottom d-flex justify-content-between">
                 <p>Claro</p>
-                <p>Activo</p>
+                <input type="radio" class="form-check-input mt-2 border-dark" name="mod" [checked]="true">
             </div>
-            <div class="border">
+            <div class="3 fs-6 border-bottom d-flex justify-content-between">
                 <p>Escuro</p>
-                <p>Desativado</p>
+                <input type="radio" class="form-check-input border-dark mt-2" name="mod">
             </div>
         </div>
     </div>
 
-    <div class="border border-top-0 rounded-bottom-4 h-25 p-4">
+    <div class="border border-top-0 rounded-bottom-4 h-25 p-4" style="box-shadow: 1px 7px 15px var(--border);">
         <h3>CONTA</h3>
 
+        <div class="mt-4">
+            <!-- Button trigger modal -->    
+            <div class="btn border text-light" (click)="openForm()" style="background-color: var(--sidebar);">Alterar palavra-passe</div >
+            <p class="mt-4 ms-2">********</p>
+        </div>
+        
         <div>
-            <p>Alterar palavra-passe</p>
-            <p>********</p>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalToggle" tabindex="-1" aria-labelledby="exampleModalToggleLabel" data-bs-backdrop="static" aria-hidden="server">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Alterar palavra-passe</h1>
+                        </div>
+                            
+                        <form class="modal-body" [formGroup]="ChangePasswordForms" (ngSubmit)="changePassword()">
+                            <div class="mb-3 text-secondary">
+                                <label class="fs-6" for="current">Palavra-passe</label>
+                                <input type="password" id="current" class="form-control" formControlName="currentPassword" placeholder="Insira sua palavra passe atual">
+                                @if (current()?.invalid && (current()?.touched || current()?.dirty)) {
+                                    @if (current()?.hasError('minlength')) {
+                                        <small class="text-danger fs-6">A palavra-passe deve conter pelo menos 4 caracteres</small>
+                                    }@else {
+                                        <small class="text-danger fs-6">Este campo é obrigatório</small>
+                                    }
+                                }
+                            </div>
+                            <div class="mb-3 text-secondary">
+                                <label class="fs-6" for="confirm">Confirmar</label>
+                                <input type="password" class="form-control" id="confirm" formControlName="confirm" placeholder="Confirma a palavra passe">
+                                @if (confirm()?.invalid && confirm()?.touched) {
+                                    <small class="text-danger fs-6">Este campo é obrigatório</small>
+                                }
+                            </div>
+                            <div class="mb-3 text-secondary"><label class="fs-6" for="new-password">Nova</label>
+                                <input type="password" class="form-control absolute pe-5" id="new-password" formControlName="newPassword" placeholder="Palavra passe nova">
+                                @if (newPassword()?.invalid && (newPassword()?.touched || newPassword()?.dirty)) {
+                                    @if (newPassword()?.hasError('minlength')) {
+                                        <small class="text-danger fs-6">A nova palavra-passe deve ter pelo menos 4 caracteres</small>
+                                    }@else {
+                                        <small class="text-danger fs-6">Este campo é obrigatório</small>
+                                    }
+                                }
+                            </div>
+                            
+                            <div class="d-flex gap-3">
+                                <button type="button" class="btn btn-secondary w-50" (click)="resetForm()" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-primary w-50" (click)="changePassword()">Confirmar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-
-<div class="border d-none d-flex justify-content-center w-100 h-100" style="position: absolute; top: 0; left: 0; align-items: center;">
-    <form class="border w-25 h-50 bg-light">
-        <h4>Editar Perfil</h4>
-        <div class="">
-            a
-        </div>
-    </form>
 </div>
