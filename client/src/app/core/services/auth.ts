@@ -7,7 +7,6 @@ import { User } from '../models/user';
 import { TokenService } from './token';
 
 interface Token {
-  message: string,
   token: string
 };
 
@@ -17,14 +16,14 @@ interface Token {
 
 export class AuthService {
   apiUrl: string = 'http://localhost:5000/api/';
+  user= signal<User['user']|null>(null);
 
   constructor(
     private http: HttpClient, 
     private tokenService: TokenService
   ) {};
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   getDataUser() {
     return this.http.get<User>(this.apiUrl+'auth/profile').pipe(
@@ -35,7 +34,7 @@ export class AuthService {
         return response.user;
       }),
       catchError(error => {
-        console.error('Erro ao buscar dados do usuário: ' + error)
+        console.error('Erro ao buscar dados do usuário: ' + error);
         return throwError (() => error);
       })
     )
@@ -46,6 +45,12 @@ export class AuthService {
       map(response => {
         return response.token;
       }),
+      catchError(error => {
+          if(error.status === 400) {
+            console.log('Credenciais inválidas', error);
+          };
+        return throwError(() => error);
+      })
     );
   };
   
@@ -57,6 +62,12 @@ export class AuthService {
       map(response => {
         return response.user;
       })
+    );
+  };
+
+  putProfile(payload: {name: string, email: string}) {
+    return this.http.put<User>(this.apiUrl+'auth/profile', payload).pipe(
+      catchError(error => throwError(() => error))
     );
   };
 
