@@ -39,7 +39,7 @@ export class Profile {
       Validators.required
     ])
   });
-  
+
   name () {
     return this.editProfile.get('name');
   };
@@ -88,7 +88,7 @@ export class Profile {
   changePassword() {
     this.ChangePasswordForms.markAllAsTouched();
 
-    console.log(this.ChangePasswordForms.value, this.email()?.value);
+    // console.log(this.ChangePasswordForms.value, this.email()?.value);
     if(this.ChangePasswordForms.invalid) {
       return;
     };
@@ -102,6 +102,10 @@ export class Profile {
           this.authService.putProfile({password: this.newPassword()?.value}).subscribe(response => {
             console.log('UPDATE PASSWORD', response);
             this.toastr.success('Palavra-passe alterada');
+
+            const modal = bootstrap.Modal.getInstance(document.getElementById('exampleModalToggle')!)!;
+            modal.hide();
+            this.resetForm();
           });
         }else {
           this.toastr.error('A confirmação está incorreta');
@@ -112,13 +116,14 @@ export class Profile {
       }
     });
   };
-
+  
   openForm() {
     const modal = new bootstrap.Modal(document.getElementById('exampleModalToggle') as HTMLElement);
-    modal.show();
+    // modal.show();
+    modal.toggle()
   };
 
   resetForm() {
     this.ChangePasswordForms.reset();
-  }
+  };
 }
