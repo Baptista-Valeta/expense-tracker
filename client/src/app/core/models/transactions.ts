@@ -25,32 +25,3 @@ export interface AllTransactions {
     }
   ]
 };
-
-export interface Reports {
-  reports: {
-    saldo: number,
-    total_Entrado: number,
-    total_Saido: number
-  }
-};
-
-export interface ReportsChartDataMouthly {
-  data: [
-    {
-      total: number, // gasto total em cada mês
-      _id: {
-        mounthly: number,
-        year: number
-      }
-    }
-  ]
-};
-
-export interface ReportsChartDataCategory {
-  data: [
-    {
-      category: string,
-      total: number
-    }
-  ]
-};

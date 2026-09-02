@@ -1,6 +1,9 @@
-<div class="categories" style="padding: var(--dashboard-padding); height: 100%">
+<div class="categories" style="color: var(--text); padding: var(--dashboard-padding); height: 100%">
     <header class="mb-2 d-flex justify-content-between">
-        <h3 style="color: var(--primary);">Categorias</h3>    
+        <div>
+            <h3 style="color: var(--text-title);">CATEGORIAS</h3>    
+            <small>Organize suas <span class="fw-bold">movimentações</span> com categorias</small>
+        </div>
 
         <div class="fw-bold">
             <span>Categoria total</span> <span style="color: var(--primary);">: {{ categoryService.categories()?.length }}</span>
@@ -8,8 +11,8 @@
     </header>
 
     <div class="categories-list p-5" style="overflow-y: auto;">
+        @if (categoryService.categories()) {
         <div class="container-list rounded-3" style="height: 100%;">
-            @if (categoryService.categories()) {
                 @for (category of categoryService.categories(); track $index) {
                     <div class="border p-4 rounded-3" style="width: 300px;">
                         <h4 class="text-center pb-3 border-2 border-bottom mb-3"> {{category.name}} </h4>
@@ -24,52 +27,27 @@
                                 <span> {{category?.updatedAt | date: 'dd-MM-yyyy'}}</span>
                             </small>
                             <small class="d-flex justify-content-between">
-                                <span>Transação associada</span>
+                                <span>Transação</span>
                                 <span> {{category.transactions}} </span>
                             </small>
                         </div>
 
                         <div class="d-flex gap-3">
-                            <button (click)="showForm(category)" class="border btn w-50"><i class="bi-pencil"></i></button>
+                            <button (click)="showForm(category)" class="border btn w-50" style="color: var(--text)"><i class="bi-pencil"></i></button>
                             <button (click)="deleteCategories(category._id, category.name)" class="border btn text-danger w-50"><i class="bi-trash"></i></button>
                         </div>
                     </div>
                 }
-
-                <!-- <table>
-                    <thead>
-                        <tr class="text-center text-light" style="background-color: var(--sidebar);">
-                            <th>ID</th>
-                            <th>Nome</th>
-                            <th>Total gasto</th>
-                            <th>Transações</th>
-                            <th>Ação</th>
-                        </tr>
-                    </thead>
-            
-                    <tbody>
-                        @for (category of categoryService.categories(); track $index) {
-                            <tr>
-                                <td class="text-center"> {{$index+1}} </td>
-                                <td> {{category.name}} </td>
-                                <td>0.00kz</td>
-                                <td>0</td>
-                                <td class="d-flex justify-content-center gap-5">
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table> -->
-            }@else {
-                <div class="d-flex justify-content-center" style="color: var(--primary); height: 100%; align-items: center;">
-                    <h2 style="color: var(--primary);">Vazio</h2>
-                </div>
-            }
-        </div>
+            </div>
+        }@else {
+            <div class="text-center m-auto" style="color: var(--primary);">
+                <h2 style="color: var(--primary);">Sem Categorias</h2>
+            </div>
+        }
     </div>
 </div>
 
-<form  class="text-bg-light p-4 " style="display: none; position: absolute; top: 40%; left: 39%; border-radius: var(--dashboard-padding); box-shadow: 1px 1px 9px grey;" id="formCategory">
+<form  class="p-4" style="background-color: var(--bg); color: var(--text); display: none; position: absolute; top: 40%; left: 39%; border-radius: var(--dashboard-padding); box-shadow: 1px 1px 9px grey;" id="formCategory">
     <div>
         <label class="form-label" for="name">Nome</label>
         <input type="text" id="name" class="form-control" [formControl]="name" placeholder="Insira um novo nome para a categoria">
@@ -82,8 +60,8 @@
       }
     }
 
-    <div class="d-flex justify-content-end gap-1 mt-3">
-        <button type="button" class="btn border text-bg-danger" (click)="closeForm($event)">Cancelar</button>
-        <button type="submit" class="btn border text-light" (click)="updateCategory($event, payload)" style="background-color: var(--sidebar);">Renomear</button>
+    <div class="d-flex justify-content-end gap-1 mt-3" id="rename-btns">
+        <button type="button" class="btn border-0 text-bg-danger" (click)="closeForm($event)">Cancelar</button>
+        <button type="submit" class="btn border-0 text-light" (click)="updateCategory($event, payload)" style="background-color: var(--sidebar);">Renomear</button>
     </div>
 </form>

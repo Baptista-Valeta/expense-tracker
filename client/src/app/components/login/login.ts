@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ɵInternalFormsSharedModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from "@angular/router";
 
+import { ToastrService } from 'ngx-toastr';
 
 import { AuthService } from '../../core/services/auth';
-import { ToastrService } from 'ngx-toastr';
 import { TokenService } from '../../core/services/token';
 
 @Component({
@@ -43,7 +43,7 @@ export class Login {
   ) {};
   
   ngOnInit() {
-
+    this.authService.logout();
   };
 
   onSubmitLogin(dados: any) {
@@ -64,18 +64,11 @@ export class Login {
         }, 1500); 
       },
       error: (err) => {
-        if ((err.status === 400) || (err.status === 401)) {
-          this.toast.error('Email ou senha inválida!');
-          console.error('Credenciais Inválidas', err);
-          return;
-        }else if(err.status === 500){
-          this.toast.error('Ocorreu um erro ao fazer login!', 'Erro');
-          console.error("Erro Interno do Servidor:", err);
+        if(err.status === 400 || err.status === 401) {
+          this.toast.error('Email ou senha Inválida');
           return;
         };
-        
-        this.toast.error('Servidor Fora de Serviço! Tente novamente mais tarde', 'Erro');
-        console.error('Servidor Offline ou fora de Serviço', err);
+        console.log('Erro ao fazer login', err);
       }
     });
 

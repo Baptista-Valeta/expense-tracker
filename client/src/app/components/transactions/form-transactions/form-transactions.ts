@@ -5,9 +5,10 @@ import * as bootstrap from 'bootstrap';
 
 import { TransactionService } from '../../../core/services/transaction';
 import { AuthService } from '../../../core/services/auth';
-import { Transactions } from '../transactions';
 import { ToastrService } from 'ngx-toastr';
 import { AllCategories } from '../../../core/models/category';
+import { Transactions } from '../transactions';
+import { CategoryService } from '../../../core/services/category';
 
 @Component({
   selector: 'app-form-transactions',
@@ -65,6 +66,7 @@ export class FormTransactions {
 
   constructor(
     private transactionService: TransactionService, 
+    private categoryService: CategoryService,
     private authService: AuthService, 
     private toast: ToastrService  
   ) {};
@@ -77,7 +79,7 @@ export class FormTransactions {
   };
 
   getAllCategories() {
-    this.transactionService.getAllCategory().subscribe({
+    this.categoryService.getAllCategory().subscribe({
       next: (categories) => {
         this.categoryList.set(categories);
       },
@@ -103,7 +105,7 @@ export class FormTransactions {
 
     isCategory = this.newCategory?.value;
 
-    this.transactionService.createCategory({name: isCategory, user: this.authService.user()?._id}).subscribe({
+    this.categoryService.createCategory({name: isCategory, user: this.authService.user()?._id}).subscribe({
       next: (category) => {
         let categoryId: any = category;
         
@@ -233,7 +235,7 @@ export class FormTransactions {
       this.transactionService.updateTransaction(_id, payload).subscribe({
         next: data => {
           console.log('[PUT]', data);
-          this.toast.success('Transação realizada');
+          this.toast.success('Transação atualizada');
         },
         error: error => {
           if(!error.status ) {
@@ -251,7 +253,6 @@ export class FormTransactions {
   };
 
   closeForm() {
-    // this.modal?.hide();
     this.transactionsForm.reset();
     this.type?.setValue('income');
     this.category?.setValue('');

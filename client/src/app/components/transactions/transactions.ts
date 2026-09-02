@@ -7,10 +7,13 @@ import { TransactionService } from '../../core/services/transaction';
 import { FormTransactions } from './form-transactions/form-transactions';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../core/services/auth';
+import { AllTransactions } from '../../core/models/transactions';
+import { Form, FormControl, FormGroup, ReactiveFormsModule, ɵInternalFormsSharedModule } from "@angular/forms";
+import { CategoryService } from '../../core/services/category';
 
 @Component({
   selector: 'app-transactions',
-  imports: [ DatePipe, FormTransactions ],
+  imports: [DatePipe, FormTransactions, ɵInternalFormsSharedModule, ReactiveFormsModule],
   // providers: [FormTransactions],
   templateUrl: './transactions.html',
   styleUrl: './transactions.css',
@@ -18,18 +21,31 @@ import { AuthService } from '../../core/services/auth';
 export class Transactions {
   @ViewChild(FormTransactions) formTransaction!: FormTransactions;
 
+  filterType: FormControl = new FormControl('', []);
+  filterCategory: FormControl = new FormControl('', []);
+  filterDate: FormControl = new FormControl('', []);
+
   constructor(
-    public transactionService: TransactionService,
-    public authService: AuthService,
-    private toast: ToastrService
+    protected transactionService: TransactionService,
+    protected authService: AuthService,
+    private toast: ToastrService,
+    protected categoryService: CategoryService
   ) {};  
 
   ngOnInit() {
     this.userData();
     this.transactionService.getTransactions().subscribe((transactions) => {
       this.transactionService.transactions.set(transactions);
+
+      const allDate = transactions.filter(transaction => transaction.date);
+
+      let categories: any = [...new Set(allDate.map(t => t.date))]
+      const dat = new Date().getDate()
       // console.log('Transações',this.transactions())
     });
+
+    // Lista de todas as categorias, para o filtro
+    this.categoryService.getAllCategory().subscribe(categories => this.categoryService.categories.set(categories));
   };
 
   userData() {
@@ -43,7 +59,7 @@ export class Transactions {
     if(confirmDelete) {
       // Remove transação
       this.transactionService.RemoveTransaction(id).subscribe(message => {
-        this.toast.show(message);
+        this.toast.info(message);
         
       });
 
@@ -68,9 +84,17 @@ export class Transactions {
       this.formTransaction.buttonText = 'Atualizar'
 
       const type = transactions.type === 'receita'?'income':'expense';
-      const indexCategory = this.formTransaction.categoryList().findIndex((category: any) => category.name === transactions.category);
       
-      const categoryId = this.formTransaction.categoryList()[indexCategory]._id;
+      let indexCategory;
+      let categoryId;
+    
+      if(!transactions.category) {
+        categoryId = '';
+      }else {
+        indexCategory = this.formTransaction.categoryList().findIndex((category: any) => category.name === transactions.category);
+        categoryId = this.formTransaction.categoryList()[indexCategory]._id;
+      };
+      
 
       this.formTransaction.transactionsForm.setValue({
         id: transactions._id,
@@ -84,6 +108,14 @@ export class Transactions {
     
     const modal = new bootstrap.Modal(document.getElementById('staticBackdrop')!);
     modal.show();
+  };
+
+  filters(e: Event) {
+
+    console.log('TYPE', this.filterType.value);
+    console.log('DATE', this.filterDate.value);
+    console.log('CATEGORY', this.filterCategory.value);
+
   };
 
 }

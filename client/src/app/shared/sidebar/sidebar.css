@@ -5,14 +5,14 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    color: white;
+    color: var(--text-button);
 }
 
 .sidebar a {
     width: 100%;
     text-decoration: none;
     cursor: pointer;
-    color: white;
+    color: var(--text-button);
 }
 
 
@@ -23,8 +23,10 @@ ul {
 
 li{
     transition: background-color .2s;
-    border-radius: var(--layout-border-radius);
-    padding: 10px;
+    border-radius: 13px;
+    padding: 10px 5px;
+    display: flex;
+    gap: 10px;
 }
 
 li:hover {

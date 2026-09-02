@@ -1,5 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { FormControl, Validators, ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 import * as bootstrap from 'bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -7,7 +8,6 @@ import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from '../../core/services/category';
 import { AllCategories, Categories, CategoryStatistics } from '../../core/models/category';
 import { TransactionService } from '../../core/services/transaction';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-categories',

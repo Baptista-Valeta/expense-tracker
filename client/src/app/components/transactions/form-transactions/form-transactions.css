@@ -1,7 +1,6 @@
-/* form {
-    height: 320px;
-    border: 1px solid;
-} */
+form * input, select, textarea {
+    background-color: var(--border);
+}
 
 .form-buttons {
     display: flex;

@@ -30,3 +30,23 @@ export interface Reports {
     total_Saido: number
   }
 };
+
+export interface ReportBigExpense {
+  transactions: number,
+  average: number,
+  bigExpense: number
+};
+
+export interface ComparisonMonths {
+  current: {
+    total: number,
+    month?: number,
+    year?: number
+  };
+  prev?: {
+    total: number,
+    month?: number,
+    year?: number
+  }
+}
+

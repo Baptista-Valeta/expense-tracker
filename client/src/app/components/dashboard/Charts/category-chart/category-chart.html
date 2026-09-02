@@ -1,15 +1,15 @@
-<h1 class="fs-2 mb-5" style="color: var(--primary)">Gastos por Categoria</h1>
+<h1 class="fs-2 mb-5" style="color: var(--text-title)">Gastos por Categoria</h1>
 
-<ngx-charts-pie-chart  
-    [results]="results()"
-    [view]="view"
-    [labels]="labels"
-    [animations]="animations"
-    [legend]="legend"
-    [legendTitle]="title"
-    [doughnut]="doughnuts" 
-></ngx-charts-pie-chart>
-
-<!-- @for (item of results().data; track $index) {
-    <div> {{ item.category }} </div>
-}    -->  
+@if(results()) {
+    <div style="color: white">
+        <ngx-charts-pie-chart
+        [results]="results()"
+        [view]="view"
+        [labels]="labels"
+        [animations]="animations"
+        [legend]="legend"
+        [legendTitle]="title"
+        [doughnut]="doughnuts"
+        ></ngx-charts-pie-chart>
+    </div>
+}

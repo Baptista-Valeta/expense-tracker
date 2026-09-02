@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { map, catchError, throwError } from 'rxjs';
+import { map, catchError, throwError, tap } from 'rxjs';
 
-import { ReportBigExpense, Reports, ReportsChartDataCategory, ReportsChartDataMouthly } from '../../core/models/reports';
+import { ComparisonMonths, ReportBigExpense, Reports, ReportsChartDataCategory, ReportsChartDataMouthly } from '../../core/models/reports';
 import { AuthService } from './auth';
 
 @Injectable({
@@ -81,5 +81,16 @@ export class ReportService {
       })
     )
   };
+
+  ReportComparisonIncome() {
+    return this.http.get<ComparisonMonths>(this.apiUrl+'reports/comparison-income').pipe(
+      catchError(error => {
+        if(error.status === 404) {
+          return throwError(() => 'Sem dados de comparação mensal');          
+        }
+        return throwError(() => error);
+      })
+    )
+  }
 };
  

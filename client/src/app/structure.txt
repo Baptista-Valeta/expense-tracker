@@ -2,14 +2,33 @@ app
 |
 |___components
 |   |___dashboard
-|   |   |___dashoard.css
-|   |   |___dashboard.html
-|   |   |___dashboard.ts
-|   |
-|   |___expenses
-|   |   |___expenses.css
-|   |   |___expenses.html
-|   |   |___expenses.ts
+|   |   |___dashboard
+|   |   |   |___dashboard.css
+|   |   |   |___dashboard.html
+|   |   |   |___dashboard.ts
+|   |   |
+|   |   |___Charts
+|   |       |___category-Chart
+|   |       |   |___category-chart.html
+|   |       |   |___category-chart-ts
+|   |       |
+|   |       |___mounthly-chart
+|   |           |___mounthly-chart.html
+|   |           |___mounthly-chart.ts
+|   |   
+|   |___layout
+|   |   |___content-layout
+|   |   |   |___content-layout.html
+|   |   |   |___content-layout.ts
+|   |   |
+|   |   |___auth-layout
+|   |       |___auth-layout.html
+|   |       |___auth-layout.ts
+|   |   
+|   |___transactions
+|   |   |___transaction.css
+|   |   |___transaction.html
+|   |   |___transaction.ts
 |   |
 |   |___login
 |   |   |___login.css
@@ -21,16 +40,25 @@ app
 |   |   |___register.html
 |   |   |___register.ts
 |   |   
+|   |___reports   
+|   |   |___reports.css
+|   |   |___reports.html
+|   |   |___reports.ts
+|   |   
 |   |___profile
-|       |___profile.css
-|       |___profile.html
-|       |___profile.ts
+|   |   |___profile.css
+|   |   |___profile.html
+|   |   |___profile.ts
+|      
 |
 |___core
 |   |___services
 |   |   |___auth.service.ts
+|   |   |___category.service.ts
+|   |   |___report.service.ts
 |   |   |___transaction.service.ts
 |   |   |___token.service.ts
+|   |   |___theme.service.ts
 |   |
 |   |___guards
 |   |   |___auth.guard.ts
@@ -42,22 +70,11 @@ app
 |   |___sidebar
 |   |   |___sidebar.html
 |   |   |___sidebar.ts
-|   |
-|   |___navbar
-|   |   |____navbar.html
-|   |   |____navbar.ts
-|   
 |
 |___app.config.ts
 |___app.css
 |___app.html
-|___app.routes.ts {
-        dashboard.route.ts  ----> protegida
-        expense.route       ----> protegida
-        login.route.ts
-        register.route.ts
-        profile.route.ts    ----> protegida
-    }
+|___app.routes.ts
 |___app.ts
 |
 |

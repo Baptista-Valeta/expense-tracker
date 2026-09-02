@@ -1,34 +1,36 @@
 .layout {
     width: auto;
-    height: 100vh;
+    height: 100%;
     /* overflow: hidden; */
-    background-color: var(--border);
+    /* background-color: var(--border); */
+    background: var(--bg-layout);
 }
 
 #navbar {
-    height: 10vh;
-    background-color: var(--navbar);
+    height: 10%;
+    background-color: var(--bg);
     color: var(--primary);
-    border-radius: var(--layout-border-radius);
     margin: 0 10px;
 }
 
 #sidebar {
-    height: calc(100vh - 12.5vh);
-    background: var(--border);
+    height: calc(100% - 12.5%);
+    background: transparent;
     /* border: 1px solid; */
     margin: 10px;
 }
 
 #sidebar-content {
+    width: 250px;
     height: 100%;
-    background-color: var(--sidebar);
+    background-color: var(--bg-sidebar);
     border-radius: var(--layout-border-radius);
     margin-right: 5px;
 }
 
 #content {
-    background-color: var(--navbar);
+    background-color: var(--bg);
     border-radius: var(--layout-border-radius);
     margin-left: 5px;
+    height: 100%;
 }

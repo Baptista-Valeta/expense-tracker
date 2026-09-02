@@ -1,11 +1,12 @@
 .dashboard {
     padding: var(--dashboard-padding);
+    color: var(--text);
 }
 
 #cards-container {
     margin: var(--dashboard-padding);
-    display: flex;
-    justify-content: space-between;
+    /* display: flex;
+    justify-content: space-between; */
 }
 
 .cards {
@@ -17,27 +18,36 @@
     width: 300px;
 }
 
+.cards
+
+.text-tracker {
+    font-size: 16px;
+}
+
 #graficos {
     margin: var(--dashboard-padding);
     display: flex;
     gap: var(--dashboard-padding);
     height: calc(100% - 130px);
+    border-top: 1px solid var(--border);
 }
 
 #graficos div {
     border-radius: var(--layout-border-radius);
     width: 50%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
 
-#angular {
+#circular {
     background-color: var(--cards);
     box-shadow: var(--dashboard-shadow);
-    border: 1px solid var(--border);
-
+    /* border: 1px solid var(--border); */
 }
 
-#barras {
+#linear {
     background-color: var(--cards);
     box-shadow: var(--dashboard-shadow);
-    border: 1px solid var(--border);
+    /* border: 1px solid var(--border); */
 }

@@ -1,16 +1,16 @@
-<div class="sidebar">
-    <div class="side">
+<div class="sidebar fs-6">
+    <div>
         <ul>
-            <a routerLink="/expense-tracker/dashboard"><li>Dashboard</li></a>
-            <a href=""><li>Receitas</li></a>
-            <a href=""><li>Despesas</li></a>
-            <a href=""><li>Relatórios</li></a>
-            <a href=""><li>Perfil</li></a>
+            <a routerLink="/expense-tracker/dashboard"><li> <i class="bi-house-fill"></i> Dashboard</li></a>
+            <a routerLink="/expense-tracker/transactions"><li><i class="bi bi bi-credit-card-fill"></i> Transação</li></a>
+            <a routerLink="/expense-tracker/categories"><li> <i class="bi-list-ul"></i> Categoria</li></a>
+            <!-- <a routerLink=""><li>Despesas</li></a>  -->
+            <a routerLink="/expense-tracker/reports"><li> <i class="bi-bar-chart-line-fill"></i> Relatórios</li></a>
         </ul>
     </div>
     <div class="logout">
         <ul>
-            <a routerLink=""><li>Configurações</li></a>
+            <a routerLink="/expense-tracker/profile"><li> <i class="bi bi-person-circle"></i> Perfil</li></a>
             <a routerLink="/auth"><li>Sair</li></a>
         </ul>
     </div>

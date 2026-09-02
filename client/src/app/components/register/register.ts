@@ -64,18 +64,9 @@ export class Register {
         return user;
       },
       error: (err) => {
-        switch(err.status) {
-          case 400:
-            console.error('Email já cadastrado!', err);
-            this.toast.error(err.error.message);
-            break;
-          case 500: 
-            this.toast.error('Ocorreu um erro ao registrar', 'Erro');
-            console.error('Erro interno do servidor', err);
-            break;
-          default: 
-            this.toast.error('Servidor fora de serviço', 'Erro');
-            console.error('Servidor offline', err);
+        if(err.status === 400) {
+          console.error('Email já cadastrado!', err);
+          this.toast.error(err.error.message);
         };
       }
     });

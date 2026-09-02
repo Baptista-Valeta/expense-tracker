@@ -2,7 +2,7 @@ import { Component, signal } from '@angular/core';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
-import { TransactionService } from '../../../../core/services/transaction';
+import { ReportService } from '../../../../core/services/report';
 
 @Component({
   selector: 'app-category-chart',
@@ -12,7 +12,7 @@ import { TransactionService } from '../../../../core/services/transaction';
 })
 export class CategoryChart {
   results = signal<any|null>(null);
-
+  style = 'white'
   view: [number, number] = [700, 500];
   animations = true;
   labels = true;
@@ -20,27 +20,28 @@ export class CategoryChart {
   doughnuts = true;
   title = 'Categorias';
 
-  constructor(private transactionService: TransactionService) {}
+  constructor(private reportService: ReportService) {}
 
   ngOnInit() {
     this.chartCategoryPie();
   }
   
   chartCategoryPie() {    
-    return this.transactionService.getReportsChartDataCategory().subscribe({
+    return this.reportService.getReportsChartDataCategory().subscribe({
       next: (data) => {
         if(data === false) {
           console.log('Sem dados para construir o gráfico');
           return;
-        }
-        console.log('Data',data)
-        
-        this.results.set(data);
-        console.log(this.results())
+        };
+        let chartData: any = [];
+        data.forEach(categories => {
+          chartData.push({
+            name: categories.category,
+            value: categories.total
+          });
+        })
+        this.results.set(chartData);
       },
-      error: (err) => {
-        console.error('Erro em chart-data', err)
-      }
     });
   };
 };

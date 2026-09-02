@@ -1,12 +1,12 @@
-<div class="reports" style="padding: var(--dashboard-padding); height: 100%;">
-    <header class="mb-2 d-flex justify-content-between" style="border: 1px solid var(--border); border-radius: var(--layout-border-radius); padding: var(--dashboard-padding);">
+<div class="reports" style="padding: var(--dashboard-padding); height: 100%; width: 100%; color: var(--text);">
+    <header class="mb-2 d-flex justify-content-between" style="border-bottom: 1px solid var(--border); padding: var(--dashboard-padding);">
         <div class="mt-auto mb-auto" style="align-items: center;">
-            <h3 class="" style="color: var(--primary);">RELATÓRIO</h3>
+            <h3 class="" style="color: var(--text-title);">RELATÓRIO</h3>
             <small>Analise o seu <span class="fw-bold" style="color: var(--primary);">desempenho</span> financeiro</small>
         </div>
 
         <div class="cards d-flex gap-5 justify-content-around w-75">
-            <div class="card w-25 p-2 border-success">
+            <div class="card w-25 p-2 border border-success">
                 <span class="fs-6">RECEITAS</span>
                 <span > <strong class="text-success">{{reportService.reports()?.total_Entrado}}</strong> kz</span>
                 <!-- <small class="fs-6">8.5%</small> -->
@@ -24,13 +24,13 @@
         </div>
     </header>
 
-    <div class="border mb-2 d-flex justify-content-around w-100" style="flex-direction: row-reverse; border-radius: var(--layout-border-radius); padding: var(--dashboard-padding); box-shadow: var(--dashboard-shadow);">
-        <div>
+    <div class="mb-2 d-flex gap-5 justify-content-around w-100" style="width: 100%; flex-direction: row-reverse; border-radius: var(--layout-border-radius); padding: var(--dashboard-padding); box-shadow: var(--dashboard-shadow);">
+        <div class="w-50">
             <div class="border-bottom">
                 <h4>Gastos</h4>
             </div>
-            <div style="overflow-y: auto; overflow-x: hidden; height: 350px;">
-                <table class="table fs-5 fs-6" style="width: 600px;">
+            <div class="table-content" style="overflow-y: auto; overflow-x: hidden; height: 350px;">
+                <table class="fs-6 w-100">
                     <thead>
                         <tr>
                             <th class="text-center">Categoria</th>
@@ -53,12 +53,12 @@
             </div>
         </div>
 
-        <div>
+        <div class="w-50">
             <div class="border-bottom">
                 <h4>Entradas</h4>
             </div>
-            <div style="overflow-y: auto; overflow-x: hidden; height: 350px;">
-                <table class="table fs-6" style="width: 600px;">
+            <div class="table-content" style="overflow-y: auto; overflow-x: hidden; height: 350px; width: 100%">
+                <table class="fs-6 w-100">
                     <thead>
                         <tr>
                             <th>Categoria</th>
@@ -82,7 +82,7 @@
         </div>
     </div>
 
-    <div class="fs-6 d-flex justify-content-around border p-2 rounded-4" style="align-items: center; height: calc(100% - 550px); padding: var(--dashboard-padding); box-shadow: var(--dashboard-shadow); flex-direction: row-reverse;">
+    <div class="fs-6 d-flex justify-content-around p-2 rounded-4" style="align-items: center; height: calc(100% - 550px); padding: var(--dashboard-padding); box-shadow: var(--dashboard-shadow); flex-direction: row-reverse;">
         <div class="d-flex gap-5 border p-5 rounded-4">
             <div class="border p-3 h-50 rounded-4">
                 <p>TRANSAÇÕES</p>

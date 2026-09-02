@@ -8,6 +8,7 @@ import { ContentLayout } from './components/layout/content-layout/content-layout
 import { Transactions } from './components/transactions/transactions';
 import { CategoriesComponent } from './components/categories/categories';
 import { ReportsComponent } from './components/reports/reports';
+import { Profile } from './components/profile/profile';
 
 export const routes: Routes = [
     {
@@ -68,6 +69,12 @@ export const routes: Routes = [
                 component: ReportsComponent,
                 title: 'Relatório',
                 canActivate: [authGuard]
+            },
+            {
+                path: 'profile',
+                component: Profile,
+                title: 'Perfil',
+                // canActivate: [authGuard]
             }
         ]
     }

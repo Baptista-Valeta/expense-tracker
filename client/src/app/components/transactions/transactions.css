@@ -1,4 +1,5 @@
 .transactions {
+    color: var(--text);
     padding: var(--dashboard-padding);
     display: flex;
     flex-direction: column;
@@ -10,6 +11,7 @@ header {
     border: 1px solid var(--border);
     border-radius: var(--layout-border-radius);
     padding: var(--dashboard-padding);
+    align-items: center;
     /* margin: 0 0 10px; */
     /* display: flex;
     justify-content: space-between; */
@@ -23,7 +25,7 @@ header div button {
     border-radius: var(--layout-border-radius);
     background-color: var(--sidebar);
     padding: 10px 15px;
-    color: var(--bg);
+    color: var(--text-button);
     cursor: pointer;
     transition: background-color .2s ease;
 }
@@ -45,54 +47,28 @@ header div button:hover {
 
 .filter {
     display: flex;
-    border: 1px solid black;
+    width: auto;
+    /* border: 1px solid black; */
     border-radius: var(--layout-border-radius);
     align-items: center;
-    overflow: hidden;
+    gap: 3px;
+    /* overflow: hidden; */
 }
 
-.filter :first-child {
-    color: var(--bg);
-    background-color: var(--sidebar);
-}
-
-.filter > * {
+.filter > select, .filter > input[type=button] {
     /* background-color: var(--sidebar); */
-    width: 120px;
-    padding: 5px;
-    text-align: center;
-    border: 1px solid;
-    border-color: transparent transparent transparent black;
+    padding: 7px;
+    border-radius: 7px;
+    /* border: 1px solid; */
+    /* border-color: transparent transparent transparent black; */
 }
-
-
-.search {
-    display: flex;
-    gap: 7px;
-}
-
-.search input {
-    border-radius: var(--layout-border-radius);
-}
-
-.search button {
-    border: none;
-    color: white;
-    background-color: var(--sidebar);
-    border-radius: var(--layout-border-radius);
-    transition: .3s;
-}
-
-.search button:hover {
-    background-color: var(--primary);
-}
-
 
 .transactions-list {
-    height: calc(100% - 137.59px);
+    height: calc(100% - 159.59px);
     border: 1px solid var(--border);
     padding: var(--dashboard-padding);
     border-radius: var(--layout-border-radius);
+    box-shadow: var(--dashboard-shadow);
 }
 
 .container-table {
@@ -102,6 +78,19 @@ header div button:hover {
     /* border: 1px solid; */
 }
 
+/* Motores Webkit (Chrome, Safari, Edge, Opera) */
+::-webkit-scrollbar {
+  width: 6px;               /* Largura da barra vertical */
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);       /* Cor de fundo da pista */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;          /* Cor do indicador de rolagem */
+  border-radius: 5px;        /* Bordas arredondadas */
+}
 .message {
     height: 100%;
     display: flex;
@@ -115,11 +104,13 @@ table {
     /* height: 10%; */
 }
 
+/* background-color: var(--primary); */
 table, th, td {
     padding: 5px;
     border: 1px solid;
     border-color: rgba(173, 216, 230, 0.219);
 }
+
 
 tbody tr:nth-child(even) {
     background-color: rgba(173, 216, 230, 0.219);

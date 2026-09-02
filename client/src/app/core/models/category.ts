@@ -2,8 +2,21 @@ export interface Categories {
   categories: {
     _id: string,
     name: string,
-    user: string
+    user: string,
+    createAt?: Date,
+    updateAt?: Date
   }
+};
+
+export interface CategoryStatistics {
+  categories: [
+    {    
+      _id: string,
+      name: string,
+      gastos: number,
+      transactions: number
+    },
+  ]
 };
 
 export interface AllCategories {
@@ -11,7 +24,10 @@ export interface AllCategories {
     {
       _id: string,
       name: string,
-      user: string
+      user: string,
+      transactions: number,
+      createdAt?: Date,
+      updatedAt?: Date
     }
   ]
 };

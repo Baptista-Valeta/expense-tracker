@@ -1,36 +1,36 @@
 <div class="dashboard w-100 h-100">
 
-    <div id="cards-container">
+    <div class="d-flex justify-content-between" id="cards-container">
         <div class="cards border-success">
-            <div>
-                Receitas
+            <div class="text-tracker">
+                Receita total
             </div>
             <div class="text-success">
-                AOA {{ reports()?.total_Entrado }}
+                <strong>AOA {{ reportService.reports()?.total_Entrado }}</strong>
             </div>
         </div>
 
         <div class="cards border-danger">
-            <div>Despesas</div>
+            <div class="text-tracker">Despesa total</div>
 
-            <div class="text-danger">AOA {{ reports()?.total_Saido }} </div>
+            <div class="text-danger"><strong>AOA {{ reportService.reports()?.total_Saido }} </strong></div>
         </div>
 
         <div class="cards border-primary">
-            <div>Saldo atual</div>
+            <div class="text-tracker">Saldo</div>
 
-            <div class="text-primary">AOA {{ reports()?.saldo }} </div>
+            <div class="text-primary"><strong>AOA {{ reportService.reports()?.saldo }}</strong> </div>
 
         </div>
     </div>
 
     <div id="graficos">
-        <div id="angular">
-            <h1>Grafico angular</h1>
+        <div id="circular">
+            <app-category-chart></app-category-chart>
         </div>
 
-        <div id="barras">
-            <h1>Grafico de barras</h1>
+        <div id="linear">
+            <app-mounthly-chart></app-mounthly-chart>
         </div>
     </div>
 </div>

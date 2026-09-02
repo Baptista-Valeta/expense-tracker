@@ -8,8 +8,6 @@ export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService)
   const isLogged = !!authService.isLogged();
 
-  console.log('GUARDS TOKEN', isLogged)
-
   if(isLogged) {
     console.log('Usuário autenticado. Acesso ao dashboard');
     return true;

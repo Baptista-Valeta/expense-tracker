@@ -1,11 +1,11 @@
-<div class="modal-dialog modal-dialog-centered">
+<div class="modal-dialog modal-dialog-centered rounded-3">
     <div class="modal-content">
-        <div class="modal-header text-light p-4"  style="background-color: var(--sidebar);">
+        <div class="modal-header border-0 text-light p-4"  style="background-color: var(--sidebar);">
             <h1 class="fs-4 text-center fw-bold" id="form-title"> {{titleForm}} </h1>
         <!-- <input type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"/> -->
         </div>
     
-        <div class="modal-body p-4">
+        <div class="modal-body p-4" style="background-color: var(--bg); color: var(--text);">
 
             <!-- Formulário de transações -->
             <form class="row g-1" [formGroup]="transactionsForm" (ngSubmit)="createTransaction()">

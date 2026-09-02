@@ -2,35 +2,27 @@ import { Component, signal } from '@angular/core';
 
 import { AuthService } from '../../../core/services/auth';
 import { TransactionService } from '../../../core/services/transaction';
-
-interface Reports {
-  saldo: number,
-  total_Entrado: number,
-  total_Saido: number
-}
+import { CategoryChart } from '../Charts/category-chart/category-chart';
+import { MounthlyChart } from '../Charts/mounthly-chart/mounthly-chart';
+import { ReportService } from '../../../core/services/report';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [],
+  imports: [ CategoryChart, MounthlyChart ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
 export class Dashboard {
-  reports = signal<Reports|null>(null);
-
-  constructor (private transacionService: TransactionService, private authService: AuthService) {}
+  constructor (protected reportService: ReportService, private authService: AuthService) {}
 
   ngOnInit() {
-
     this.onReports();
   };
 
-
   onReports() {
-    this.transacionService.getReportsSummary().subscribe({
+    this.reportService.getReportsSummary().subscribe({
       next: (reports => {
-        this.reports.set(reports);
-        console.log('Signal Reports', this.reports());
+        this.reportService.reports.set(reports);
       })
     });
   };

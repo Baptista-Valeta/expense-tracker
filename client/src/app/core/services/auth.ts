@@ -40,7 +40,7 @@ export class AuthService {
     )
   }
 
-  postLoginUser(payload: any) {
+  postLoginUser(payload: {email: string, password: string}) {
     return this.http.post<Token>(this.apiUrl+'auth/login', payload).pipe(
       map(response => {
         return response.token;
@@ -65,7 +65,7 @@ export class AuthService {
     );
   };
 
-  putProfile(payload: {name: string, email: string}) {
+  putProfile(payload: {name?: string, email?: string, password?: string}) {
     return this.http.put<User>(this.apiUrl+'auth/profile', payload).pipe(
       catchError(error => throwError(() => error))
     );

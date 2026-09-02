@@ -1,3 +1,36 @@
 .comparison p{
     margin-bottom: 7px;
 }
+
+.cards .card{
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+.table-content {
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+.table-content > table, th, td {
+    padding: 8px;
+}
+
+.table-content > th, tr {
+    border-bottom: 1px solid var(--border);
+}
+
+
+/* Motores Webkit (Chrome, Safari, Edge, Opera) */
+::-webkit-scrollbar {
+  width: 6px;               /* Largura da barra vertical */
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);       /* Cor de fundo da pista */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;          /* Cor do indicador de rolagem */
+  border-radius: 5px;        /* Bordas arredondadas */
+}

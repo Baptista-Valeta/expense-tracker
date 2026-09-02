@@ -1,7 +1,7 @@
-<h1 class="fs-2 mb-5" style="color: var(--primary);">Gastos Mensais</h1>
+<h1 class="fs-2 mb-5" style="color: var(--text-title);">Gastos Mensais</h1>
 
 @if (results()) {
-    <ngx-charts-line-chart style="display: flex; flex-direction: column;"
+    <ngx-charts-line-chart style="display: flex; flex-direction: column; color: white;"
         [results]="results()"
         [view]="view"
         [legend]="legend"
@@ -14,8 +14,4 @@
         [roundDomains]="roundDomais"
         [autoScale]="autoScale"
     ></ngx-charts-line-chart>
-}@else {
-    <div>
-        <h3 class="text-center">Sem dados para o gráfico</h3>
-    </div>
 }

@@ -1,6 +1,4 @@
 /* .categories {
-    padding: var(--dashboard-padding);
-    height: 100%;
 } */
 
 header {
@@ -8,16 +6,32 @@ header {
     border: 1px solid var(--border);
     border-radius: var(--layout-border-radius);
     padding: var(--dashboard-padding);
+    align-items: center;
 }
 
 .categories-list {
     border: 25px solid transparent; 
     box-shadow: var(--dashboard-shadow);
-    height: calc(100% - 86px);
+    height: calc(100% - 116px);
     /* padding: var(--dashboard-padding);  */
     border-radius: var(--layout-border-radius);
     display: flex;
     justify-content: center;
+    scrollbar-color: var(--bg);
+}
+
+/* Motores Webkit (Chrome, Safari, Edge, Opera) */
+::-webkit-scrollbar {
+  width: 6px;               /* Largura da barra vertical */
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);       /* Cor de fundo da pista */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;          /* Cor do indicador de rolagem */
+  border-radius: 5px;        /* Bordas arredondadas */
 }
 
 .container-list {
@@ -46,4 +60,8 @@ table, th, td {
 
 tbody tr:nth-child(even) {
     background-color: rgba(173, 216, 230, 0.219);
+}
+
+#rename-btns button:hover {
+    opacity: .8
 }

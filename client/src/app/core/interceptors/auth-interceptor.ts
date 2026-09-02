@@ -16,24 +16,24 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     headers: req.headers.append('Authorization', `Bearer ${token}`)
   });
   
-  console.log('Authorization: '+newRequest.headers.get('Authorization'));
-
   return next(newRequest).pipe(
     tap(response => {
       console.log('INTERCEPTOR',response)
     }),
     catchError(error => {
       if(error.status === 401) {
-        console.error('Acesso negado', error);
-        toast.error('Usuário invalidado!');
+        console.error('Usuário invalidado', error);
 
-        setTimeout(() => {
-          authService.logout();
-          routeService.navigate(['auth/login']);
-        }, 2700)
+        authService.logout();
+        routeService.navigate(['auth/login']);
+      }else if(error.status === 0) {
+        console.error('Servidor offline', error);
+        toast.error('Servidor fora de serviço!');
+      }else if(error.status === 500) {
+        console.error('Erro do servidor', error);
+        toast.error('Ups! Ocorreu algum problema no servidor');
       };
 
-      console.error('Erro interceptado:', error);
       return throwError(() => error);
     })
   );

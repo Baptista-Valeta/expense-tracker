@@ -4,30 +4,50 @@
 :root {
     --bg-body: #1509bc;
     --form-bg-color: #f1f1f1f1;
-    --button-form: #0b0bf1;
-    --button-form-hover: #1f0ed6;
     --font: 20px;
-
-    --bg: #F8FAFC;
+    --text-button: #f1f1f1;
+    --text: #000000;
+    --text-title: #2563EB;
+    --bg: #FFFFFF;
     --primary: #2563EB;
-    --primary-text: #1F2937;
-    --secondary-text: #6B7280;
-    --border: #E5E7EB;
-    --cards: #fff;
+    --border: #E5E7EB; /* use components: layout, container-sidebar*/
     --sidebar: #1E3A8A;
+    --bg-sidebar: #1E3A8A;
     --navbar: #FFFFFF;
     --receita: #22C55E;
     --despesas: #EF4444;
-    --saldo: #2563EB;
-    --alert: #F59E0B;
-    
     --dashboard: #F8FAFC;
     --dashboard-padding: 18px;
-    --dashboard-shadow: 1px 1px 5px var(--border);
+    --dashboard-shadow: 3px 3px 15px var(--bg);
     --layout-border-radius: 15px;
-    
+    --bg-layout: #E5E7EB;
+
+    --transactions: rgba(0, 89, 255, 0.137);
 }
 
+.dark-theme {
+    --bg-body: #1E293B;
+    --form-bg-color: #1E293B;
+    --font: 20px;
+    --text-button: #f1f1f1;
+    --text: #FFFFFF;
+    --text-title: #FFFFFF;
+    --bg: #1E293B;
+    --primary: #2563EB;
+    --border: #E5E7EB; /* use components: layout, container-sidebar*/
+    --sidebar: #1E3A8A;
+    --bg-sidebar: #1E293B;
+    --navbar: #FFFFFF;
+    --receita: #22C55E;
+    --despesas: #EF4444;
+
+    --dashboard: #F8FAFC;
+    --dashboard-padding: 18px;
+    --dashboard-shadow: 3px 3px 15px var(--bg);
+    --layout-border-radius: 15px;
+    --bg-layout: #7576778e;
+
+    --transactions: rgba(0, 89, 255, 0.137);}
 
 body {
     background-color: var(--form-bg-color);
@@ -67,15 +87,15 @@ body {
 
 #form-button {
     border: none;
-    background-color: var(--button-form);
+    background-color: var(--primary);
     color: white;
     border-radius: 5px;
     cursor: pointer;
-    transition: .2s;
 }
 
 #form-button:hover {
-    background-color: var(--button-form-hover);
+    transition: .2s;
+    opacity: .8
 }
 
 
