@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import { AuthService } from '../../core/services/auth';
 import { Login } from '../login/login';
+import { theme, ThemeService } from '../../core/services/theme';
 
 @Component({
   selector: 'app-profile',
@@ -40,6 +41,10 @@ export class Profile {
     ])
   });
 
+  STORAGE_KEY = inject(ThemeService).STORAGE_KEY;
+  lightTheme = localStorage.getItem(this.STORAGE_KEY) === 'light';
+  darkTheme = localStorage.getItem(this.STORAGE_KEY) === 'dark';
+
   name () {
     return this.editProfile.get('name');
   };
@@ -60,7 +65,7 @@ export class Profile {
     return this.ChangePasswordForms.get('newPassword');
   };
   
-  constructor(protected authService: AuthService, private toastr: ToastrService) {};
+  constructor(protected authService: AuthService, private toastr: ToastrService, protected themeService: ThemeService) {};
   
   ngOnInit() {
     this.authService.getDataUser().subscribe(data => {
@@ -69,6 +74,8 @@ export class Profile {
         email: data.email,
       });
     });
+
+
   };
 
   UpdateProfile() {
@@ -125,5 +132,10 @@ export class Profile {
 
   resetForm() {
     this.ChangePasswordForms.reset();
+  };
+
+  switchTheme(value: Event) {
+    const theme = (value.target as HTMLInputElement)
+    this.themeService.currentTheme(theme.value as theme);
   };
 }

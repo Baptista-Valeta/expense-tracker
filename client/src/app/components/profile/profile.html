@@ -31,11 +31,11 @@
 
             <div class="mb-3 fs-6 border-bottom d-flex justify-content-between">
                 <p>Claro</p>
-                <input type="radio" class="form-check-input mt-2 border-dark" name="mod" [checked]="true">
+                <input type="radio" class="form-check-input mt-2 border-dark" value="light" name="mod" [checked]="lightTheme" (click)="switchTheme($event)">
             </div>
             <div class="3 fs-6 border-bottom d-flex justify-content-between">
                 <p>Escuro</p>
-                <input type="radio" class="form-check-input border-dark mt-2" name="mod">
+                <input type="radio" class="form-check-input border-dark mt-2" value="dark" name="mod" [checked]="darkTheme" (click)="switchTheme($event)">
             </div>
         </div>
     </div>
@@ -54,7 +54,7 @@
             <div class="modal fade" id="exampleModalToggle" tabindex="-1" aria-labelledby="exampleModalToggleLabel" data-bs-backdrop="static" aria-hidden="server">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
-                        <div class="modal-header border-0" style="background-color: var(--sidebar); color: var(--text);">
+                        <div class="modal-header border-0" style="background-color: var(--sidebar); color: var(--text-button);">
                             <h1 class="modal-title fs-5" id="exampleModalLabel">Alterar palavra-passe</h1>
                         </div>
                             

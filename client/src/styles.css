@@ -47,7 +47,8 @@
     --layout-border-radius: 15px;
     --bg-layout: #7576778e;
 
-    --transactions: rgba(0, 89, 255, 0.137);}
+    --transactions: rgba(0, 89, 255, 0.137);
+}
 
 body {
     background-color: var(--form-bg-color);
@@ -57,7 +58,6 @@ body {
     padding: 0;
     font-size: var(--font);
 }
-
 
 #container {
     display: flex;
