@@ -3,6 +3,7 @@ import { Component, signal } from '@angular/core';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { ReportService } from '../../../../core/services/report';
+import { ReportsChartDataMouthly } from '../../../../core/models/reports';
 
 @Component({
   selector: 'app-mounthly-chart',
@@ -43,8 +44,9 @@ export class MounthlyChart {
         let chartData: any = [];
         let mounthlyValues: any = [];
         let month: string;
-        data.forEach((values, index) => {
-          // for() {}  // Para ordenar o array de gastos mensais
+        const ascendOrderMonths = this.orderMonths(data);
+
+        ascendOrderMonths.forEach((values, index) => {
           switch(values._id.mounthly) {
             case 1: // Janeiro
               month = 'Janeiro';
@@ -83,15 +85,29 @@ export class MounthlyChart {
               month = 'Dezembro';
               break;
           };
-
-          
           mounthlyValues.push({name: month, value: values.total});
-          // console.log(month)
           chartData.push({name: `Ano ${values._id.year}`, series: mounthlyValues});
         });
+        // console.log('MÊS',mounthlyValues)
         this.results.set(chartData);
-        console.log('Chart-Data-Mounthly', this.results());
+        // console.log('Chart-Data-Mounthly', this.results());
       }
     });
   };  
+
+  orderMonths(months: ReportsChartDataMouthly['data']) {
+    // console.log('Todos os meses', months.length)
+    const ascendOrderMonths = months.map(months => months._id.mounthly).sort();
+    const ascendOrder = [];
+    let currentMonth;
+
+    for (const month of ascendOrderMonths) {
+      currentMonth = months.filter(element => element._id.mounthly === month);
+      ascendOrder.push(currentMonth[0]);
+    };
+    console.log('MESES ORDENADOS', ascendOrder); 
+
+    return ascendOrder;
+  };
+
 };

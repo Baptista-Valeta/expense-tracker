@@ -20,7 +20,7 @@
         </div>
         
         <div class="form-floating">
-          <input type="password" class="form-control" id="floatingPassword" formControlName="password" placeholder="Password">
+          <input type="password" class="form-control" id="floatingPassword" formControlName="password" autocomplete="floatingPassword" placeholder="Password">
           <label for="floatingPassword">Password</label>
           
           @if (login.get('password')?.invalid && (password?.touched || password?.dirty)) {

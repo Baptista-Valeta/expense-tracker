@@ -33,7 +33,7 @@ export class ReportService {
         if (!data.data[0]) {
           return false
         };
-        console.log('Chart category', data)
+        // console.log('Chart category', data)
         return data.data;
       }),
       catchError(error => {
@@ -49,7 +49,7 @@ export class ReportService {
         if(!data.data[0]) {
           return false
         };
-        console.log('Chart mounth', data)
+        // console.log('Chart mounth', data)
         // console.log('Chart-Data-Mounthly',chartData);
         return data.data;
       }),

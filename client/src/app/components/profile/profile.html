@@ -61,7 +61,7 @@
                         <form class="modal-body" [formGroup]="ChangePasswordForms" (ngSubmit)="changePassword()" style="background-color: var(--bg); color: var(--text);">
                             <div class="mb-3">
                                 <label class="fs-6" for="current">Palavra-passe</label>
-                                <input type="password" id="current" class="form-control" formControlName="currentPassword" placeholder="Insira sua palavra passe atual">
+                                <input type="password" id="current" class="form-control" formControlName="currentPassword" autocomplete="current" placeholder="Insira sua palavra passe atual">
                                 @if (current()?.invalid && (current()?.touched || current()?.dirty)) {
                                     @if (current()?.hasError('minlength')) {
                                         <small class="text-danger fs-6">A palavra-passe deve conter pelo menos 4 caracteres</small>
@@ -72,13 +72,13 @@
                             </div>
                             <div class="mb-3">
                                 <label class="fs-6" for="confirm">Confirmar</label>
-                                <input type="password" class="form-control" id="confirm" formControlName="confirm" placeholder="Confirma a palavra passe">
+                                <input type="password" class="form-control" id="confirm" formControlName="confirm" autocomplete="confirm" placeholder="Confirma a palavra passe">
                                 @if (confirm()?.invalid && confirm()?.touched) {
                                     <small class="text-danger fs-6">Este campo é obrigatório</small>
                                 }
                             </div>
                             <div class="mb-3"><label class="fs-6" for="new-password">Nova</label>
-                                <input type="password" class="form-control absolute pe-5" id="new-password" formControlName="newPassword" placeholder="Palavra passe nova">
+                                <input type="password" class="form-control absolute pe-5" id="new-password" formControlName="newPassword" autocomplete="new-password" placeholder="Palavra passe nova">
                                 @if (newPassword()?.invalid && (newPassword()?.touched || newPassword()?.dirty)) {
                                     @if (newPassword()?.hasError('minlength')) {
                                         <small class="text-danger fs-6">A nova palavra-passe deve ter pelo menos 4 caracteres</small>
