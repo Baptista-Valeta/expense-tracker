@@ -8,8 +8,8 @@
 
 header {
     /* background-color: var(--transactions); */
-    border: 1px solid var(--border);
-    border-radius: var(--layout-border-radius);
+    border-bottom: 1px solid var(--border);
+    /* border-radius: var(--layout-border-radius); */
     padding: var(--dashboard-padding);
     align-items: center;
     /* margin: 0 0 10px; */
@@ -65,7 +65,7 @@ header div button:hover {
 
 .transactions-list {
     height: calc(100% - 159.59px);
-    border: 1px solid var(--border);
+    /* border: 1px solid var(--border); */
     padding: var(--dashboard-padding);
     border-radius: var(--layout-border-radius);
     box-shadow: var(--dashboard-shadow);

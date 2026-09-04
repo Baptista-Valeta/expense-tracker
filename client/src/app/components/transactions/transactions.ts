@@ -1,15 +1,16 @@
 import { Component, signal, ViewChild, inject } from '@angular/core';
 import { DatePipe, JsonPipe } from '@angular/common';
+import { Form, FormControl, FormGroup, ReactiveFormsModule, ɵInternalFormsSharedModule } from "@angular/forms";
 
 import * as bootstrap from 'bootstrap';
+import { ToastrService } from 'ngx-toastr';
 
 import { TransactionService } from '../../core/services/transaction';
 import { FormTransactions } from './form-transactions/form-transactions';
-import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../core/services/auth';
 import { AllTransactions } from '../../core/models/transactions';
-import { Form, FormControl, FormGroup, ReactiveFormsModule, ɵInternalFormsSharedModule } from "@angular/forms";
 import { CategoryService } from '../../core/services/category';
+import { ThemeService } from '../../core/services/theme';
 
 @Component({
   selector: 'app-transactions',
@@ -25,6 +26,9 @@ export class Transactions {
   filterCategory: FormControl = new FormControl('', []);
   filterDate: FormControl = new FormControl('', []);
 
+  renderer = inject(ThemeService).renderer
+  rendererFactory = inject(ThemeService).rendererFactory;
+
   constructor(
     protected transactionService: TransactionService,
     protected authService: AuthService,
@@ -33,18 +37,13 @@ export class Transactions {
   ) {};  
 
   ngOnInit() {
+    // console.log(this.renderer, this.rendererFactory)
     this.userData();
     this.transactionService.getTransactions().subscribe((transactions) => {
       this.transactionService.transactions.set(transactions);
-
-      const allDate = transactions.filter(transaction => transaction.date);
-
-      let categories: any = [...new Set(allDate.map(t => t.date))]
-      const dat = new Date().getDate()
       // console.log('Transações',this.transactions())
     });
 
-    // Lista de todas as categorias, para o filtro
     this.categoryService.getAllCategory().subscribe(categories => this.categoryService.categories.set(categories));
   };
 
@@ -111,11 +110,48 @@ export class Transactions {
   };
 
   filters(e: Event) {
+    const valueElement = e.target as HTMLInputElement; 
 
-    console.log('TYPE', this.filterType.value);
-    console.log('DATE', this.filterDate.value);
-    console.log('CATEGORY', this.filterCategory.value);
+    let list_filtered: any;
+    let element: string;
+    this.transactionService.getTransactions().subscribe((transactions) => {
+      this.transactionService.transactions.set(transactions);
+      // Reseta os filtros
+      if(valueElement.value === 'Todos') {
+        this.filterType.setValue('');
+        this.filterCategory.setValue('');
+        this.filterDate.setValue('');
+        return;
+      };
+      
+      // Filtrar por tipo
+      if(this.filterType.value) { 
+        element = this.filterType.value;
+        list_filtered = this.transactionService.transactions()?.filter(transaction => transaction.type === element);
+        this.transactionService.transactions.set(list_filtered)
+        console.log('Por Tipo',list_filtered);
+      };
 
+      // Filtrar por categoria
+      if(this.filterCategory.value) {
+        element = this.filterCategory.value;
+        list_filtered = this.transactionService.transactions()?.filter(transaction => transaction.category === element);
+        
+        console.log('Por categoria',list_filtered.length,list_filtered);
+
+        // Retorna a execução caso não a lista for vazia
+        if(list_filtered.length === 0) {
+          // Ação
+          return;
+        };
+
+        this.transactionService.transactions.set(list_filtered);
+      };
+
+      // Filtrar por data
+      console.log('Fim');
+    });
+    
   };
 
 }

@@ -28,7 +28,7 @@
             <h3>Filtrar</h3>
         </div>
         <div class="filter fs-6">
-            <input type=button class="border rounded-2" value="Todos">
+            <input type=button class="border rounded-2" (click)="filters($event)" value="Todos">
 
             <select class="border" (click)="filters($event)" [formControl]="filterType" required>
                 <option value="" disabled>Tipo</option>
@@ -36,56 +36,55 @@
                 <option value="despesa">Despesa</option>
             </select>
 
-            <select class="border" [formControl]="filterDate" required>
+            <select class="border" (click)="filters($event)" [formControl]="filterCategory" required>
+                <option value="" disabled>Selecione a categoria</option>
+                
+                @for (categories of categoryService.categories(); track $index) {
+                    <option [value]="categories.name"> {{categories.name}} </option>
+                }
+            </select>        
+
+            <select class="border" (click)="filters($event)" [formControl]="filterDate" required>
                 <option value="" disabled>Data</option>
 
                 @for (transactions of transactionService.transactions(); track $index) {
                     <option [value]="transactions.amount"> {{transactions.date}} </option>
                 }
             </select>
-
-            <select class="border" [formControl]="filterCategory" required>
-                <option value="" disabled>Selecione a categoria</option>
-
-                @for (categories of categoryService.categories(); track $index) {
-                    <option [value]="categories.name"> {{categories.name}} </option>
-                }
-            </select>        
         </div>
     </div>
 
     <div class="transactions-list">
         <div class="container-table rounded-3">
         @if (transactionService.transactions()) {
-            <table>
+            <table animate.enter="enter-animation">
                 <thead>
                     <tr class="text-light text-center" style="background-color: var(--sidebar);">
                         <th></th>
-                        <th>Data</th>
                         <th>Categoria</th>
                         <th>Tipo</th>
                         <th>Montante</th>
                         <th>Descrição</th>
+                        <th>Data</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
-                   <!-- <div> {{ transactions() | json }}</div> -->
 
                    @for (transaction of transactionService.transactions(); track $index) {
                        <tr>
                            <!-- <td> {{ $index }} </td> -->
                             <td class="text-center"> {{ (transactionService.transactions()?.length! - $index) }} </td>
-                            <td class="text-center"> {{ transaction.updatedAt | date: 'dd/MM/yyyy' }} </td>
                             <td> {{ transaction.category }} </td>
                             @if(transaction.type === 'receita') {
-                                <td> {{ transaction.type }} <span class="text-success"><i class="bi bi-arrow-up"></i></span> </td>
-                                <td><span class="text-success fw-bold">+{{ transaction.amount }}</span> kz</td>
+                                <td><span class="text-success"><i class="fs-6 bi bi-graph-up-arrow"></i></span> {{ transaction.type }}</td>
+                                <td><span class="text-success">+{{ transaction.amount }}</span> kz</td>
                             }@else {
-                                <td> {{ transaction.type }} <span class="text-danger"><i class="bi bi-arrow-down"></i></span> </td>
-                                <td><span class="text-danger fw-bold">-{{ transaction.amount }}</span> kz</td>
+                                <td><span class="text-danger"><i class="fs-6 bi bi-graph-down-arrow"></i></span> {{ transaction.type }}</td>
+                                <td><span class="text-danger">-{{ transaction.amount }}</span> kz</td>
                             }
                             <td> {{ transaction.description }} </td>
+                            <td class="text-center"> {{ transaction.updatedAt | date: 'dd/MM/yyyy' }} </td>
                             <td class="d-flex justify-content-evenly">
                                 <button (click)="openModal(transaction)" class="border btn" style="color: var(--text);">
                                     <i class="bi bi-pencil"></i>
