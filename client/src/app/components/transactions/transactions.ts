@@ -1,4 +1,4 @@
-import { Component, signal, ViewChild, inject } from '@angular/core';
+import { Component, signal, ViewChild, inject, DOCUMENT, Inject } from '@angular/core';
 import { DatePipe, JsonPipe } from '@angular/common';
 import { Form, FormControl, FormGroup, ReactiveFormsModule, ɵInternalFormsSharedModule } from "@angular/forms";
 
@@ -33,7 +33,8 @@ export class Transactions {
     protected transactionService: TransactionService,
     protected authService: AuthService,
     private toast: ToastrService,
-    protected categoryService: CategoryService
+    protected categoryService: CategoryService,
+    @Inject(DOCUMENT) private document: Document
   ) {};  
 
   ngOnInit() {
@@ -111,9 +112,9 @@ export class Transactions {
 
   filters(e: Event) {
     const valueElement = e.target as HTMLInputElement; 
-
     let list_filtered: any;
     let element: string;
+
     this.transactionService.getTransactions().subscribe((transactions) => {
       this.transactionService.transactions.set(transactions);
       // Reseta os filtros
@@ -124,30 +125,37 @@ export class Transactions {
         return;
       };
       
-      // Filtrar por tipo
+      const containerTable = this.document.querySelector('.container-table');
+      const table = containerTable?.firstElementChild;
+      const newChild = this.document.querySelector('#no-transactions') as HTMLDivElement;
+      // Filtrar por tipo          
       if(this.filterType.value) { 
         element = this.filterType.value;
         list_filtered = this.transactionService.transactions()?.filter(transaction => transaction.type === element);
         this.transactionService.transactions.set(list_filtered)
-        console.log('Por Tipo',list_filtered);
+        // console.log('Por Tipo',list_filtered);
       };
-
+      
       // Filtrar por categoria
       if(this.filterCategory.value) {
         element = this.filterCategory.value;
         list_filtered = this.transactionService.transactions()?.filter(transaction => transaction.category === element);
         
-        console.log('Por categoria',list_filtered.length,list_filtered);
-
         // Retorna a execução caso não a lista for vazia
-        if(list_filtered.length === 0) {
-          // Ação
+        if(list_filtered.length === 0 ) {
+          // Adiciona uma mensagem na tela caso a lista for vazia
+          const text: any = `Sem ${this.filterType.value}s na categoria ${this.filterCategory.value}`;          
+          newChild.textContent = text;
+          this.renderer.addClass(table, 'd-none'); // Oculta a tabela
+          this.renderer.removeClass(newChild, 'd-none');
+          
           return;
         };
 
+        this.renderer.removeClass(table, 'd-none');
+        this.renderer.addClass(newChild, 'd-none');
         this.transactionService.transactions.set(list_filtered);
       };
-
       // Filtrar por data
       console.log('Fim');
     });

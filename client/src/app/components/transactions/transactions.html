@@ -45,7 +45,7 @@
             </select>        
 
             <select class="border" (click)="filters($event)" [formControl]="filterDate" required>
-                <option value="" disabled>Data</option>
+                <option value="" disabled>Mês</option>
 
                 @for (transactions of transactionService.transactions(); track $index) {
                     <option [value]="transactions.amount"> {{transactions.date}} </option>
@@ -97,6 +97,7 @@
                    }
                 </tbody>
             </table>
+            <div id="no-transactions" class="d-none text-center"></div>
         }@else {
             <div class="message">
                 <h2 style="color: var(--primary);">As suas transações apareceram aqui</h2>

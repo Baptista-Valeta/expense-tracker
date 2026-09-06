@@ -190,14 +190,6 @@ export class FormTransactions {
         return;
       };
       
-      // payload = {
-      //   amount:  amount,  
-      //   category: isCategory,
-      //   type: type,
-      //   user: this.authService.user()?._id,
-      //   description: description
-      // };
-      
       console.log('[PAYLOAD]', payload);
       
       // Criar transação quando existe categoria
@@ -244,8 +236,10 @@ export class FormTransactions {
         }
       });
     };
+    this.getUserId(); // Atualiza saldo do usuário      
     this.closeForm();
     this.transactionService.closeModal();
+
     // Atualiza a lista de transações
     this.transactionService.getTransactions().subscribe(data => {
       this.transactionService.transactions.set(data); 
