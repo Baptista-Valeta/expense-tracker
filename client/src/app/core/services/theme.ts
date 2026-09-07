@@ -6,19 +6,15 @@ export type theme = 'light' | 'dark' | 'system';
   providedIn: 'root',
 })
 export class ThemeService {
-  private renderer: Renderer2; // permite modificar elementos do DOM de maneira apropriada no angular
+  public renderer: Renderer2; // permite modificar elementos do DOM de maneira apropriada no angular
   public readonly STORAGE_KEY = 'theme';
 
-  constructor(private rendererFactory: RendererFactory2,  @Inject(DOCUMENT) private document: Document) {
+  constructor(public rendererFactory: RendererFactory2,  @Inject(DOCUMENT) private document: Document) {
     this.renderer = this.rendererFactory.createRenderer(null, null); // criar renderer com RendererFactory2 para manipular o DOM
   };
   
-  ngOnInit() {
-    this.loadTheme();
-  };
-
   currentTheme (theme: theme) {
-    const html = document.documentElement;
+    const html = this.document.documentElement;
     if(theme === 'dark') {
       this.renderer.addClass(html, 'dark-theme');
     }else {

@@ -57,7 +57,6 @@ export class Login {
       next: (token) => {
         // Armazenar token no localStorage
         this.tokenService.setToken(token);
-
         setTimeout(() => {
           console.log('Navegando para dashboard!');
           this.routeService.navigate(['dashboard']);

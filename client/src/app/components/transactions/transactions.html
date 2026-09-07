@@ -35,6 +35,14 @@
                 <option value="receita">Receita</option>
                 <option value="despesa">Despesa</option>
             </select>
+           
+            <select class="border" (click)="filters($event)" [formControl]="filterDate" required>
+                <option value="" disabled>Mês</option>
+                
+                @for (date of dates(); track $index) {
+                    <option [value]="date"> {{date}} </option>
+                }
+            </select>
 
             <select class="border" (click)="filters($event)" [formControl]="filterCategory" required>
                 <option value="" disabled>Selecione a categoria</option>
@@ -43,21 +51,13 @@
                     <option [value]="categories.name"> {{categories.name}} </option>
                 }
             </select>        
-
-            <select class="border" (click)="filters($event)" [formControl]="filterDate" required>
-                <option value="" disabled>Mês</option>
-
-                @for (transactions of transactionService.transactions(); track $index) {
-                    <option [value]="transactions.amount"> {{transactions.date}} </option>
-                }
-            </select>
         </div>
     </div>
 
     <div class="transactions-list">
         <div class="container-table rounded-3">
         @if (transactionService.transactions()) {
-            <table animate.enter="enter-animation">
+            <table>
                 <thead>
                     <tr class="text-light text-center" style="background-color: var(--sidebar);">
                         <th></th>
@@ -84,7 +84,7 @@
                                 <td><span class="text-danger">-{{ transaction.amount }}</span> kz</td>
                             }
                             <td> {{ transaction.description }} </td>
-                            <td class="text-center"> {{ transaction.updatedAt | date: 'dd/MM/yyyy' }} </td>
+                            <td class="text-center"> {{ transaction.date }} </td>
                             <td class="d-flex justify-content-evenly">
                                 <button (click)="openModal(transaction)" class="border btn" style="color: var(--text);">
                                     <i class="bi bi-pencil"></i>
