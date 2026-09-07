@@ -10,20 +10,16 @@ export const authMiddeware = async (req, res, next) => {
             return res.status(400).json({message: "Token não fornecido"});
         };
         
-        console.log(header)
+        // console.log(header)
 
         const token = header.replace('Bearer ', '');
         const decode = tokenVerify(token);
         
-        console.log(token)
-
-        console.log('Token '+token);
-
         if(!decode) {
             return res.status(401).json({message: "Token Inválido", error: err.message});
         };
 
-        const user = await userModel.findById({_id: decode._id});
+        const user = await userModel.findById({_id: decode._id}).select("+password");
 
         req.user = user;
 

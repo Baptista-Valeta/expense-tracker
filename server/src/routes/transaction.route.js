@@ -13,6 +13,7 @@ router.route("/api/transactions")
 router.route("/api/transactions/:id")
     .all(authMiddeware)
     .get(transactionController.getIdTransaction)
+    .put(transactionController.updateTransaction)
     .delete(transactionController.deleteTransaction)
 
 export default router;

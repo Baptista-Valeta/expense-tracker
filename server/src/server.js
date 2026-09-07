@@ -16,7 +16,7 @@ app.use(express.json());
 
 app.set("port", process.env.PORT);
 app.use(cors({
-    origin: 'http://localhost:4200',
+    origin: ['http://localhost:4000', 'https    ://3sszj0v9-4000.uks1.devtunnels.ms/auth/login'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Accept', 'Authorization', 'Content-Type']
 }));
@@ -32,4 +32,4 @@ app.use(reportRoute);
 
 app.listen(app.get("port"), () => {
     console.log(`Servidor rodando em http://localhost:${app.get("port")}/api/`);
-})
+});

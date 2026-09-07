@@ -33,14 +33,30 @@ const categoryController = {
             if(!req.user) return res.status(404).send("Perfil inexistente"); 
 
             categories = await categoryModel.find({user: req.user._id});
-
+            
             if(!categories[0]) {
                 return res.status(404).json({message: `Nenhuma categoria encontrada para ${req.user.name}`,});
             }
             
+            let transactions;
+            let categoriesComplete = [];
+            for (const category of categories) {
+                transactions = await transactionModel.find({category: category._id});
+                categoriesComplete.push({
+                    _id: category._id,
+                    name: category.name,
+                    user: category.user,
+                    transactions: transactions.length > 0 ? transactions.length : 0,
+                    createdAt: category.createdAt,
+                    updatedAt: category.updatedAt
+                });
+            };
+            // console.log(categoriesComplete)  
+            
             console.log(`Categorias encontradas para ${req.user.name}`);
-            return res.status(200).json({categories: categories});
+            return res.status(200).json({categories: categoriesComplete});
         }catch(err) {
+            console.error('Erro ao buscar categorias', err)
             return res.status(500).json({message: "Erro ao buscar categorias", err: err.message});
         };
     },
@@ -55,7 +71,7 @@ const categoryController = {
                 {
                     $match: {
                         user: req.user._id,
-                        type: 'expense'
+                        // type: 'expense'
                     },
                 },
                 {             
@@ -66,10 +82,15 @@ const categoryController = {
                         },
                         transactions: {
                             $count: {}
-                        }
+                        },
+                        qtd: {$sum: 1}
                     }
                 },
+                {
+                    $sort: {gastos: -1}
+                }
             ]);
+            console.info('Transações',transactions);
 
             const categoryData = [];
             for (const transaction of transactions) {
@@ -78,10 +99,9 @@ const categoryController = {
                 categoryData.push({_id: categories._id, name: categories.name, gastos: transaction.gastos, transactions: transaction.transactions})
             };
 
-            console.info('Transações',transactions);
             console.info('Categories', categoryData);
             
-            return res.status(200).json(categoryData);
+            return res.status(200).json({categories: categoryData});
         } catch(err) {
             console.error('Erro ao buscar estatísticas com categoria', err.message);
             return res.status(500).json({message: "Erro ao buscar estatísticas com categoria", err: err.message});
@@ -115,7 +135,7 @@ const categoryController = {
                 return res.status(400).json({message: "informe o nome da categoria"});
             };
 
-            categories = await categoryModel.findByIdAndUpdate(req.params.id, req.body, {new: true});
+            categories = await categoryModel.findByIdAndUpdate(req.params.id, req.body, {returnDocument: 'after'});
 
             if(!categories)
                 return res.status(404).json({message: "Erro ao atualizar. categoria não encontrado"});
@@ -135,7 +155,7 @@ const categoryController = {
             
             if(transactions.length > 0) {
                 console.log('Transações associadas', transactions.length);
-                return res.status(400).send('Transação associada');
+                return res.status(400).json({message: 'Transação associada', transactions: transactions.length});
             };
 
             console.log('Nenhuma transação associada');

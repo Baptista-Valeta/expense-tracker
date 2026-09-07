@@ -8,6 +8,8 @@ const router = Router();
 router.post("/api/auth/register", registerUser);
 router.post("/api/auth/login", loginUser);
 router.get("/api/auth/profile", authMiddeware, (req, res) => {
+    console.log('[GET] /profile');
+
     if (!req.user) {
         return res.status(404).send("Perfil de usuário não encontrado!");
     }

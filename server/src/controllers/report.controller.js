@@ -240,9 +240,6 @@ export const reportComparisonIncome = async (req, res) => {
     try{
         console.log('[GET] /reports/comparison-income');
 
-        const currentMounth = new Date().getMonth() -1;
-        console.log('currentMounth',currentMounth)
-
         const transactions = await transactionModel.aggregate([
             {
                 $addFields: {
@@ -258,7 +255,7 @@ export const reportComparisonIncome = async (req, res) => {
             },
             { // agrupando por mês e ano
                 $group: {
-                    _id: {month: '$month',},
+                    _id: {month: '$month', year: '$year'},
                     total: {
                         $sum: '$amount'
                     }
@@ -268,15 +265,47 @@ export const reportComparisonIncome = async (req, res) => {
                 $project: {
                     _id: 0,
                     month: '$_id.month',
-                    total: 1
+                    year: '$_id.year',
+                    total: 1,
                 }
-            }
+            },
+            {$sort: {month: -1}}
         ]);
 
-        console.log('comparison-income',transactions)
+        console.log('comparison-income',transactions);
+        if(!transactions[0]) {
+            return res.status(404).json({message: 'Nenhum registro para reports de entrada para comparação com mês anterior'});
+        };
 
+        let currentMonth = 0;
+        let prevMonth = 0;
+        if(transactions.length > 1) {
+            currentMonth = transactions[0];
+            prevMonth = transactions[1];
+        }else {
+            currentMonth = transactions[0];
+        };
+        
+        // Processo para encontrar o mês atual e o anterior para comparação de prograsso 
+        // const months = transactions.map(month => month.month);
+        // const maxMonth = Math.max(...months);
+        // if(transactions.length > 1) {
+        //     for(let i = 0; i < transactions.length; i++) {
+        //         if(transactions[i].month === maxMonth) {
+        //             currentMonth = transactions[i];
+        //         }else if(transactions[i].month = (maxMonth - 1)) {
+        //             prevMonth = transactions[i];
+        //         };
+        //     };
+        // }else {
+        //     // Um único mês existente
+        //     console.log('Apenas um mês registrado!');
+        // };
+
+        console.log('MÊS ATUAL',currentMonth, '\nMÊS ANTERIOR', prevMonth);
+        return res.status(200).json({current: currentMonth, prev: prevMonth});
     } catch(error) {
         console.error('Erro ao buscar reports de entrada para comparação com mês anterior', error.message);
         return res.status(500).json({message: 'Erro ao buscar reports de entrada para comparação com mês anterior', error: error.message})
     };
-}
+};
