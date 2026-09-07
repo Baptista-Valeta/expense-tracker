@@ -43,6 +43,7 @@ const transactionController = {
         console.log('[GET] /api/transactions')
         try{
             if(!req.user) return res.status(401).send("Não autorizado"); 
+            console.log(req.user.name)
             transaction = await transactionModel.find({user: req.user._id});
 
             // transaction = await transactionModel.aggregate(
@@ -61,7 +62,8 @@ const transactionController = {
             if(!transaction[0])
                 return res.status(404).json({message: `Nenhuma transação realizada por ${req.user.name}`});
 
-            
+
+            // Organizar e formatar data
             const allDates = transaction.flatMap(obj => {
                 const dates = new Date(obj.date);
                 const day = String(dates.getUTCDate()).padStart(2, '0');
@@ -75,7 +77,7 @@ const transactionController = {
             let transactionsType;
             let newObjectTransactions = [];
             
-            for (let transactionElement of transaction) {
+            for (let [index, transactionElement] of transaction.entries()) {
                 let categoryId = !transactionElement.category ? '_id' : transactionElement.category;
                 // console.log('[ID] categoryID',categoryId);
                 let category = await categoryModel.findById(categoryId);
@@ -95,7 +97,7 @@ const transactionController = {
                         category: categoryName,
                         type: transactionsType,
                         description: transactionElement.description,
-                        date: transactionElement.date,
+                        date: allDates[index],
                         createdAt: transactionElement.createdAt,
                         updatedAt: transactionElement.updatedAt
                     }
@@ -103,7 +105,7 @@ const transactionController = {
             };
             
             
-            // console.log('Transações',newObjectTransactions);
+            // console.log('Transações',newObjectTransactions.toReversed());
             return res.status(200).json({transaction: newObjectTransactions.toReversed()});
         }catch (err) {
             console.error('Erro ao buscar transações:', err.message);
