@@ -60,7 +60,7 @@ const transactionController = {
             // );
 
             if(!transaction[0])
-                return res.status(404).json({message: `Nenhuma transação realizada por ${req.user.name}`});
+                return res.status(200).json({message: `Nenhuma transação realizada por ${req.user.name}`});
 
 
             // Organizar e formatar data

@@ -47,11 +47,13 @@ export class Transactions {
     this.transactionService.getTransactions().subscribe({
       next: (transactions => {
         this.transactionService.transactions.set(transactions);
-        const allDates = this.transactionService.transactions()?.map(dates => dates.date);
-        const formatDates = [...new Set(allDates)];
-        
-        this.dates.set(formatDates);
-        // console.log('Transações',this.transactions())
+        if(transactions) {
+          const allDates = this.transactionService.transactions()?.map(dates => dates.date);
+          const formatDates = [...new Set(allDates)];
+          
+          this.dates.set(formatDates);
+          // console.log('Transações',this.transactions())
+        }
       }),
       error: (error => {
         if(error.status === 404) {

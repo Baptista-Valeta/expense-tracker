@@ -35,7 +35,7 @@ const categoryController = {
             categories = await categoryModel.find({user: req.user._id});
             
             if(!categories[0]) {
-                return res.status(404).json({message: `Nenhuma categoria encontrada para ${req.user.name}`,});
+                return res.status(200).json({message: `Nenhuma categoria encontrada para ${req.user.name}`,});
             }
             
             let transactions;
