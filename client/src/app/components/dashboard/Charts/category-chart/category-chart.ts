@@ -19,6 +19,15 @@ export class CategoryChart {
   legend = true;
   doughnuts = true;
   title = 'Categorias';
+  scheme = {
+    domain: [
+      '#2563eb',
+      '#16a34a',
+      '#dc2626',
+      '#f59e0b',
+      '#8b5cf6'
+    ]
+};
 
   constructor(private reportService: ReportService) {}
 
@@ -30,7 +39,7 @@ export class CategoryChart {
     return this.reportService.getReportsChartDataCategory().subscribe({
       next: (data) => {
         if(data === false) {
-          console.log('Sem dados para construir o gráfico');
+          // console.log('Sem dados para construir o gráfico');
           return;
         };
         let chartData: any = [];

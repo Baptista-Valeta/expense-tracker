@@ -1,7 +1,7 @@
 <h1 class="fs-2 mb-5" style="color: var(--text-title);">Gastos Mensais</h1>
 
 @if (results()) {
-    <ngx-charts-line-chart style="display: flex; flex-direction: column; color: white;"
+    <ngx-charts-line-chart
         [results]="results()"
         [view]="view"
         [legend]="legend"
@@ -13,5 +13,7 @@
         [showGridLines]="showGrideLines"
         [roundDomains]="roundDomais"
         [autoScale]="autoScale"
+
+        class="charts"
     ></ngx-charts-line-chart>
 }

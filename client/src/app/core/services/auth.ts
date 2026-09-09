@@ -28,7 +28,7 @@ export class AuthService {
   getDataUser() {
     return this.http.get<User>(this.apiUrl+'auth/profile').pipe(
       tap(response => {
-        console.log('Dados do usuário: '+ response.user.name);
+        // console.log('Dados do usuário: '+ response.user.name);
       }),
       map(response => {
         return response.user;
@@ -57,7 +57,7 @@ export class AuthService {
   postRegisterUser(payload: any) {
     return this.http.post<User>(this.apiUrl+'auth/register', payload).pipe(
       tap(response => {
-        console.log("Registrado", response.user);
+        // console.log("Registrado", response.user);
       }),
       map(response => {
         return response.user;
@@ -76,7 +76,7 @@ export class AuthService {
   };
 
   logout() {
-    console.log('logout')
+    // console.log('logout');
     return this.tokenService.removeToken();
   };
 };

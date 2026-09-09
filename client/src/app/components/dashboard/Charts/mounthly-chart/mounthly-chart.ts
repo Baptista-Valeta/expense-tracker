@@ -37,7 +37,7 @@ export class MounthlyChart {
     this.reportService.getReportsChartDataMountly().subscribe({
       next: (data) => {
         if(data === false) {
-          console.log('Sem dados para o gráfico!');
+          // console.log('Sem dados para o gráfico!');
           return;
         };
 
@@ -105,7 +105,7 @@ export class MounthlyChart {
       currentMonth = months.filter(element => element._id.mounthly === month);
       ascendOrder.push(currentMonth[0]);
     };
-    console.log('MESES ORDENADOS', ascendOrder); 
+    // console.log('MESES ORDENADOS', ascendOrder); 
 
     return ascendOrder;
   };

@@ -1,7 +1,7 @@
 <h1 class="fs-2 mb-5" style="color: var(--text-title)">Gastos por Categoria</h1>
 
 @if(results()) {
-    <div style="color: white" animate.leave="leave-animate">
+    <div>
         <ngx-charts-pie-chart
         [results]="results()"
         [view]="view"
@@ -10,6 +10,7 @@
         [legend]="legend"
         [legendTitle]="title"
         [doughnut]="doughnuts"
+        class="charts"        
         ></ngx-charts-pie-chart>
     </div>
 }

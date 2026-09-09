@@ -128,6 +128,11 @@ export class Transactions {
   };
 
   filters(e: Event) {
+    if(this.transactionService.transactions() === null) {
+      // Lista vazia
+      return;
+    };
+
     const valueElement = e.target as HTMLInputElement; 
     let list_filtered: any;
     let element: string|Date;

@@ -17,7 +17,7 @@ export class CategoryService {
   createCategory(payload: any) {
     return this.http.post<Categories>(this.apiUrl+'categories', payload).pipe(
       map(category => {
-        console.log('Create Category', category.categories);
+        // console.log('Create Category', category.categories);
         return category.categories;
       }),
       catchError(error => {
@@ -33,7 +33,10 @@ export class CategoryService {
   getAllCategory() {
     return this.http.get<AllCategories>(this.apiUrl+'categories').pipe(
       map(categories => {
-        console.log('Todas as categorias', categories.categories);
+        // console.log('Todas as categorias', categories.categories);
+        if(!categories.categories) {
+          return null;
+        }
         return categories.categories;
       }),
       catchError(error => {
@@ -49,7 +52,7 @@ export class CategoryService {
   getCategoryStatistics() {
     return this.http.get<CategoryStatistics>(this.apiUrl+'categories/statistics').pipe(
       map(categories => {
-        console.log('[Statistics]', categories);
+        // console.log('[Statistics]', categories);
         return categories.categories;
       }),
       catchError(error => {
@@ -61,7 +64,7 @@ export class CategoryService {
   updateCategory(payload: Categories['categories']) {
     return this.http.put<Categories['categories']>(this.apiUrl+'categories/'+payload._id, payload).pipe(
       map(category => {
-        console.log('[PUT] /categories/:id Categoria atualizada', category)
+        // console.log('[PUT] /categories/:id Categoria atualizada', category)
       }),
       catchError(error => {
         let message;
@@ -82,7 +85,7 @@ export class CategoryService {
   deleteCategory(id: string) {
     return this.http.delete(this.apiUrl+'categories/'+id).pipe(
       map(res => {
-        console.log('[DELETE CATEGORY]',res);
+        // console.log('[DELETE CATEGORY]',res);
       }),
       catchError((error) => {
         if(error.status === 400) {

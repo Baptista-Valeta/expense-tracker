@@ -50,7 +50,7 @@ export class ReportsComponent {
 
   incomeCategories() {
     this.reportService.getIncomeCategory().subscribe(data => {
-      console.log('Icome categories', data);
+      // console.log('Icome categories', data);
       this.incomeReports.set(data);
     });
   };
@@ -63,7 +63,7 @@ export class ReportsComponent {
 
   dataUser() {
     this.authService.getDataUser().subscribe(data => {
-      console.log(data)
+      // console.log(data)
       this.authService.user.set(data);
     });
   }
@@ -93,8 +93,8 @@ export class ReportsComponent {
           this.comparisonMounth()[this.indexPrev] = {total: 0};
         };
         
-        console.log('COMPARISON', mounthComp);
-        console.log('length',maxValue, this.indexCurrent, this.indexPrev);
+        // console.log('COMPARISON', mounthComp);
+        // console.log('length',maxValue, this.indexCurrent, this.indexPrev);
     });
   };
 

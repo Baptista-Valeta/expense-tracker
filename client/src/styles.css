@@ -68,6 +68,11 @@ body {
     align-items: center;
 }
 
+/* Mudar a cor do texto dos gráficos svg gerados por ngxCharts */
+.charts text {
+    fill: var(--text);
+}
+
 #form {
     width: 550px;
     height: 550px;

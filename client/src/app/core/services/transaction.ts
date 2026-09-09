@@ -22,6 +22,10 @@ export class TransactionService {
   getTransactions() {
     return this.http.get<AllTransactions>(this.apiUrl+'transactions').pipe(
       map(transactions => {
+        if(!transactions.transaction) {
+          return null;
+        };
+        
         return transactions.transaction;
       }),
       catchError(error => {
