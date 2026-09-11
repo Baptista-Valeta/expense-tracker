@@ -13,6 +13,10 @@
     margin: 0 10px;
 }
 
+#nav-side {
+    display: none;
+}
+
 #sidebar {
     height: calc(100% - 12.5%);
     background: transparent;
@@ -33,4 +37,36 @@
     border-radius: var(--layout-border-radius);
     margin-left: 5px;
     height: 100%;
+}
+
+@media  (max-width: 1790px) {
+    #sidebar-content {
+        width: 220px;
+    }
+}
+
+@media (max-width: 1050px) {
+    #sidebar-content {
+        width: 75px;
+    }
+}
+
+@media (max-width: 970px) {
+    #sidebar-content {
+        display: none;
+    }
+
+    #nav-side {
+        display: flex;
+    }
+}
+
+@media (max-width: 820px) {
+    #navbar h1 span {
+        display: none;
+    }
+
+    #content {
+        padding: 0;
+    }
 }

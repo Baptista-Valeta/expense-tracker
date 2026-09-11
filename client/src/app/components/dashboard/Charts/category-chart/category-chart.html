@@ -1,16 +1,16 @@
-<h1 class="fs-2 mb-5" style="color: var(--text-title)">Gastos por Categoria</h1>
+<div class="chart">
+    <h1 class="fs-2 mb-5" style="color: var(--text-title)">Gastos por Categoria</h1>
 
-@if(results()) {
-    <div>
+    @if(results()) {
         <ngx-charts-pie-chart
-        [results]="results()"
-        [view]="view"
-        [labels]="labels"
-        [animations]="animations"
-        [legend]="legend"
-        [legendTitle]="title"
-        [doughnut]="doughnuts"
-        class="charts"        
+            [results]="results()"
+            [view]="view"
+            [labels]="labels"
+            [animations]="animations"
+            [legend]="legend"
+            [legendTitle]="title"
+            [doughnut]="doughnuts"
+            class="charts"        
         ></ngx-charts-pie-chart>
-    </div>
-}
+    }
+</div>

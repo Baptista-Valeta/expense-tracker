@@ -1,9 +1,27 @@
 <main class="layout">
-    <div class="navbar row rounded-bottom-4" id="navbar">
-        <h1 class="fs-2 d-flex gap-2">
+    <div class="rounded-bottom-4 d-flex justify-content-between p-3" id="navbar">
+        <h1 class="fs-3 d-flex gap-2 p-3">
             <i class="bi bi-credit-card-fill"></i>
             <span><em>Rastreador de <b>Despesas</b></em></span>
         </h1>
+
+        <div class="justify-content-center p-3 gap-5" id="nav-side">
+            <ul class="d-flex gap-4" style="list-style: none;">
+                <a routerLink="/dashboard"><li><i class="bi-house-fill"></i></li></a>
+                <a routerLink="/transactions"><li><i class="bi bi-arrow-left-right"></i></li></a>
+                <a routerLink="/categorires"><li><i class="bi-list-ul"></i></li></a>
+                <a routerLink="/reports"><li><i class="bi-bar-chart-line-fill"></i></li></a>
+            </ul>
+
+            <ul class="d-flex gap-4" style="list-style: none;">
+                <a class="" routerLink="/">
+                    <li><i class="bi bi-person-circle"></i></li>
+                </a>
+                <a routerLink="/">
+                    <li><i class="bi bi-box-arrow-left"></i></li>
+                </a>
+            </ul>
+        </div>
     </div>
     <div class="row" id="sidebar">
         <div class="col-2" id="sidebar-content">

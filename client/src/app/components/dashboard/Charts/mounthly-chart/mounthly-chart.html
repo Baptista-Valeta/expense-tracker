@@ -1,19 +1,21 @@
-<h1 class="fs-2 mb-5" style="color: var(--text-title);">Gastos Mensais</h1>
+<div class="chart">
+    <h1 class="fs-2 mb-5" style="color: var(--text-title);">Gastos Mensais</h1>
 
-@if (results()) {
-    <ngx-charts-line-chart
-        [results]="results()"
-        [view]="view"
-        [legend]="legend"
-        [xAxis]="showXAxis"
-        [yAxis]="showYAxis"
-        [showXAxisLabel]="showXAxisLabel"
-        [showYAxisLabel]="showYAxisLabel"
-        [animations]="animations"
-        [showGridLines]="showGrideLines"
-        [roundDomains]="roundDomais"
-        [autoScale]="autoScale"
-
-        class="charts"
-    ></ngx-charts-line-chart>
-}
+    @if (results()) {
+        <ngx-charts-line-chart
+            [results]="results()"
+            [view]="view"
+            [legend]="legend"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [animations]="animations"
+            [showGridLines]="showGrideLines"
+            [roundDomains]="roundDomais"
+            [autoScale]="autoScale"
+        
+            class="charts"
+        ></ngx-charts-line-chart>
+    }
+</div>
