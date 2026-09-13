@@ -1,32 +1,32 @@
-<div class="categories" style="color: var(--text); padding: var(--dashboard-padding); height: 100%">
+<div class="categories overflow-hidden" style="color: var(--text); height: 100%">
     <header class="mb-2 d-flex justify-content-between">
         <div>
             <h3 style="color: var(--text-title);">CATEGORIAS</h3>    
             <small>Organize suas <span class="fw-bold">movimentações</span> com categorias</small>
         </div>
 
-        <div class="fw-bold">
-            <span>Categoria total</span> <span style="color: var(--primary);">: {{ categoryService.categories()?.length }}</span>
+        <div>
+            <span>Categorias</span> <span style="color: var(--primary);">: {{ categoryService.categories()?.length }}</span>
         </div>
     </header>
 
-    <div class="categories-list p-5" style="overflow-y: auto;">
+    <div class="categories-list " style="overflow-y: auto;">
         @if (categoryService.categories()) {
-        <div class="container-list rounded-3" style="height: 100%;">
+        <div class="container-list row gap-3 justify-content-center w-100" style="height: 100%;">
                 @for (category of categoryService.categories(); track $index) {
-                    <div class="border p-4 rounded-3" style="width: 300px;">
+                    <div class="border p-4  rounded-3 col-12 col-sm-4 col-md-4 col-lg-2" style="min-width: 250px;">
                         <h4 class="text-center pb-3 border-2 border-bottom mb-3"> {{category.name}} </h4>
 
-                        <div class="border-2 border-bottom mb-4">
-                            <small class="d-flex justify-content-between">
+                        <div class="border-2 border-bottom mb-4 ">
+                            <small class="text-nowrap d-flex justify-content-between">
                                 <span>Criação</span>
                                 <span> {{category?.createdAt | date: 'dd-MM-yyyy'}} </span>
                             </small>
-                            <small class="d-flex justify-content-between mb-2 mt-2">
+                            <small class="text-nowrap d-flex justify-content-between mb-2 mt-2">
                                 <span>Atualizado</span>
                                 <span> {{category?.updatedAt | date: 'dd-MM-yyyy'}}</span>
                             </small>
-                            <small class="d-flex justify-content-between">
+                            <small class="text-nowrap d-flex justify-content-between">
                                 <span>Transação</span>
                                 <span> {{category.transactions}} </span>
                             </small>

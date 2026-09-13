@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from '../../core/services/category';
 import { AllCategories, Categories, CategoryStatistics } from '../../core/models/category';
 import { TransactionService } from '../../core/services/transaction';
+import { RouterLinkActive } from "@angular/router";
 
 @Component({
   selector: 'app-categories',
@@ -65,7 +66,7 @@ export class CategoriesComponent {
       payload.name = this.name.value;
       this.categoryService.updateCategory(payload).subscribe({
         next: category => {
-          this.toast.success('Categoria atualizada');
+          this.toast.success('Categoria renomeada');
           // Atualizar a lista de categorias
           this.categoryService.getAllCategory().subscribe(categories => {
             this.categoryService.categories.set(categories);
