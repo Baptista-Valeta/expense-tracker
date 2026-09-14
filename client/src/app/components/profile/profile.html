@@ -1,6 +1,6 @@
 <div class="profile">
-    <div class="h-75 d-flex rounded-top-4 overflow-hidden" style="box-shadow: 1px -7px 15px var(--bg);">
-        <form [formGroup]="editProfile" (ngSubmit)="UpdateProfile()" class="dados h-100 w-25 p-3 fs-6">
+    <div id="preferences" class="h-75 rounded-top-4 overflow-hidden">
+        <form [formGroup]="editProfile" (ngSubmit)="UpdateProfile()" class="dados h-auto p-3 fs-6">
             <div class="mb-5 h-25 w-50 rounded-5 m-auto d-flex justify-content-center" style="align-items: center;">
                 <span class="text-center" style="transform: scale(6); color: var(--border);"><i class="bi bi-person-circle" style="transform: scale(3);"></i></span>
             </div>
@@ -25,7 +25,7 @@
             </div>
         </form>
 
-        <div class="h-100 w-75 p-4" style="border-left: 1px solid var(--border);">
+        <div class="h-auto p-4" style="border-left: 1px solid var(--border);">
             <h3 class="mb-5">PREFERÊNCIAS</h3>
             <p>Aparência</p>
 
@@ -40,7 +40,7 @@
         </div>
     </div>
 
-    <div class="rounded-bottom-4 h-25 p-4" style="border-top: 1px solid; box-shadow: 1px 7px 15px var(--bg);">
+    <div class="rounded-bottom-4 h-25 p-4" style="border-top: 1px solid var(--border); box-shadow: 1px 7px 15px var(--bg);">
         <h3>CONTA</h3>
 
         <div class="mt-4">

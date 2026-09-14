@@ -1,5 +1,4 @@
 .profile {
-    padding: var(--dashboard-padding);
     height: 100%;
     background-color: var();
     color: var(--text);
@@ -18,6 +17,28 @@
     transition: background-color .2s ease;
 }
 
-form * input {
+#preferences {
+    display: flex;
+}
+
+#preferences > div {
+    width: 75%;
+}
+
+.dados * input {
     background-color: var(--border);
+}
+
+@media (max-width: 892px) {
+    #preferences {
+        display: block;
+    }
+
+    #preferences form {
+        margin-top: 5rem;
+    }
+
+    #preferences > div {
+        width: 100%;
+    }
 }
