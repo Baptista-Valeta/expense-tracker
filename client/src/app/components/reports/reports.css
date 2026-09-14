@@ -1,8 +1,21 @@
+.reports {
+    overflow-y: auto;
+}
+
 .comparison p{
     margin-bottom: 7px;
 }
 
-.cards .card{
+header {
+    display: flex;
+}
+
+#reports-card {
+    display: flex;
+    min-width: 75%;
+}
+
+#reports-card .card{
     background-color: var(--bg);
     color: var(--text);
 }
@@ -20,17 +33,68 @@
     border-bottom: 1px solid var(--border);
 }
 
-
-/* Motores Webkit (Chrome, Safari, Edge, Opera) */
-::-webkit-scrollbar {
-  width: 6px;               /* Largura da barra vertical */
+#report-expenses {
+    display: flex;
 }
 
-::-webkit-scrollbar-track {
-  background: var(--bg);       /* Cor de fundo da pista */
+.income, .expense {
+    width: 50%;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #888;          /* Cor do indicador de rolagem */
-  border-radius: 5px;        /* Bordas arredondadas */
+#comp {
+    display: flex;
+}
+
+#comp-first-child {
+    gap: 9px;        
+    display: flex;
+    padding: 2.8rem;
+    border: 1px solid var(--border);
+}
+
+
+@media (max-width: 1420px) {
+    #comp {
+        display: block;
+    }
+
+    #comp-child {
+        margin-top: 9px;
+    }
+}
+
+@media (max-width: 1230px) {
+    #report-expenses {
+        display: block;
+    }
+
+    .income, .expense {
+        width: 100%;
+    }
+
+    .income {
+        margin-top: 35px;
+    }
+}
+
+@media (max-width: 720px) {
+    header {
+        display: block;    
+    }
+
+    #reports-card {
+        width: 100%;
+    }
+}
+
+@media (max-width: 560px) {
+    #comp-first-child {
+        display: block;
+        padding: 5px;
+        border: none;
+    }
+
+    #comp-first-child > div {
+        margin-top: 9px;
+    }
 }
