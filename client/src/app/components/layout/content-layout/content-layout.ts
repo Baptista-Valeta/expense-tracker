@@ -14,4 +14,9 @@ import { User } from '../../../core/models/user';
 })
 export class ContentLayout {
   
+  constructor(protected sidebar: Sidebar) {}
+
+  exportDataTransactions() {
+    this.sidebar.exportDataTransactions()
+  }
 }

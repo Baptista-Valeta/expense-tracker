@@ -91,6 +91,10 @@ export class ReportService {
         return throwError(() => error);
       })
     )
-  }
+  };
+
+  exportTransactions() {
+    return this.http.get(this.apiUrl+'reports/export', {responseType: 'blob'}) // responseType: blob - para lidar com arquivos como pdf, csv...
+  };
 };
  

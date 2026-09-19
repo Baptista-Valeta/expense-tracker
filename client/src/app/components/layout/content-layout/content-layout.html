@@ -6,18 +6,19 @@
         </h1>
 
         <div class="justify-content-center p-3 gap-5" id="nav-side">
-            <ul class="d-flex gap-4" style="list-style: none;">
+            <ul class="d-flex gap-4" style="list-style: none; cursor: pointer;">
                 <a routerLink="/dashboard"><li><i class="bi-house-fill"></i></li></a>
                 <a routerLink="/transactions"><li><i class="bi bi-arrow-left-right"></i></li></a>
-                <a routerLink="/categorires"><li><i class="bi-list-ul"></i></li></a>
+                <a routerLink="/categories"><li><i class="bi-list-ul"></i></li></a>
                 <a routerLink="/reports"><li><i class="bi-bar-chart-line-fill"></i></li></a>
+                <a (click)="exportDataTransactions()"><li><i class="bi bi-download"></i></li></a> 
             </ul>
 
             <ul class="d-flex gap-4" style="list-style: none;">
-                <a class="" routerLink="/">
+                <a class="" routerLink="/profile">
                     <li><i class="bi bi-person-circle"></i></li>
                 </a>
-                <a routerLink="/">
+                <a routerLink="/auth">
                     <li><i class="bi bi-box-arrow-left"></i></li>
                 </a>
             </ul>

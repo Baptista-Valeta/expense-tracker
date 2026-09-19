@@ -6,15 +6,25 @@
     flex-direction: column;
     justify-content: space-around;
     color: var(--text-button);
+    background-color: var(--bg-sidebar);
+    /* border: 3px solid; */
+}
+
+#sidebar2 {
+    display: none;
 }
 
 .sidebar a {
-    width: 100%;
+    /* width: 100%; */
     text-decoration: none;
     cursor: pointer;
     color: var(--text-button);
 }
 
+.sidebar2 {
+    width: 100px;
+    border: 1px solid white;
+}
 
 ul {
     padding: 15px;
@@ -24,7 +34,7 @@ ul {
 li{
     transition: background-color .2s;
     border-radius: 13px;
-    padding: 10px 5px;
+    padding: 10px 3px;
     display: flex;
     gap: 10px;
 }
@@ -35,4 +45,13 @@ li:hover {
 
 .logout {
     border-top: 2px solid;
+}
+
+@media (max-width: 1050px) {
+    #sidebar1 {
+        display: none;
+    }
+    #sidebar2 {
+        display: block;
+    }
 }

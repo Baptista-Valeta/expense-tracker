@@ -1,17 +1,35 @@
-<div class="sidebar fs-6">
+<div class="sidebar fs-6" id="sidebar1">
     <div>
         <ul>
             <a routerLink="/dashboard"><li> <i class="bi-house-fill"></i> Dashboard</li></a>
-            <a routerLink="/transactions"><li><i class="bi bi bi-credit-card-fill"></i> Transação</li></a>
+            <a routerLink="/transactions"><li><i class="bi bi-arrow-left-right"></i> Transação</li></a>
             <a routerLink="/categories"><li> <i class="bi-list-ul"></i> Categoria</li></a>
-            <!-- <a routerLink=""><li>Despesas</li></a>  -->
             <a routerLink="/reports"><li> <i class="bi-bar-chart-line-fill"></i> Relatórios</li></a>
+            <a (click)="exportDataTransactions()"><li><i class="bi bi-download"></i>Exportar dados</li></a> 
+        </ul>
+    </div>
+    <div>
+        <ul>
+            <a routerLink="/expense-tracker/profile"><li> <i class="bi bi-person-circle"></i> Perfil</li></a>
+            <a routerLink="/auth"><li><i class="bi bi-box-arrow-left"></i> Sair</li></a>
+        </ul>
+    </div>
+</div>
+
+<div class="sidebar fs-6 p-0" id="sidebar2">
+    <div>
+        <ul>
+            <a routerLink="/dashboard" title="Dashboard"><li> <i class="bi-house-fill"></i></li></a>
+            <a routerLink="/transactions" title="Transações"><li><i class="bi bi-arrow-left-right"></i></li></a>
+            <a routerLink="/categories" title="Categorias"><li> <i class="bi-list-ul"></i></li></a>
+            <a routerLink="/reports" title="Relatório"><li> <i class="bi-bar-chart-line-fill"></i></li></a>
+            <a (click)="exportDataTransactions()"><li><i class="bi bi-download"></i></li></a> 
         </ul>
     </div>
     <div class="logout">
         <ul>
-            <a routerLink="/expense-tracker/profile"><li> <i class="bi bi-person-circle"></i> Perfil</li></a>
-            <a routerLink="/auth"><li>Sair</li></a>
+            <a routerLink="/expense-tracker/profile" title="Perfil"><li> <i class="bi bi-person-circle"></i></li></a>
+            <a routerLink="/auth" title="Sair"><li><i class="bi bi-box-arrow-left"></i></li></a>
         </ul>
     </div>
 </div>
