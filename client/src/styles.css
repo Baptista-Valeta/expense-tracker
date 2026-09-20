@@ -127,3 +127,52 @@ body {
 #footer-form a:hover {
     text-decoration: underline;
 }
+
+.animate {
+    animation: fadeInput 0.5s;
+}
+
+@keyframes fadeInput {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media  (max-width: 1790px) {
+    #sidebar-content {
+        width: 230px;
+        transition: .3s;
+    }
+}
+
+@media (max-width: 1817px) {
+    .chart {
+        scale: 0.9;
+    }
+}
+
+/* Motores Webkit (Chrome, Safari, Edge, Opera) */
+::-webkit-scrollbar {
+  width: 6px;               /* Largura da barra vertical */
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);       /* Cor de fundo da pista */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;          /* Cor do indicador de rolagem */
+  border-radius: 5px;        /* Bordas arredondadas */
+}
+
+@media screen and (max-width: 1770px) {
+    .chart {
+        width: 100%;
+    }    
+}

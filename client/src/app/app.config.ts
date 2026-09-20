@@ -7,6 +7,7 @@ import { provideToastr } from 'ngx-toastr';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './core/interceptors/auth-interceptor';
 import { Login } from './components/login/login';
+import { Sidebar } from './shared/sidebar/sidebar';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,6 +25,7 @@ export const appConfig: ApplicationConfig = {
 
     provideAnimations(),
     provideNoopAnimations(),
-    Login
+    Login,
+    Sidebar
   ]
 };

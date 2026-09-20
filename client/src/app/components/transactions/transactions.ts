@@ -42,11 +42,13 @@ export class Transactions {
 
   ngOnInit() {
     // console.log(this.renderer, this.rendererFactory)
-    window.location.reload;
+    // window.location.reload;
     this.userData();
     this.transactionService.getTransactions().subscribe({
       next: (transactions => {
         this.transactionService.transactions.set(transactions);
+
+        // console.log('signal', this.transactionService.transactions());
         if(transactions) {
           const allDates = this.transactionService.transactions()?.map(dates => dates.date);
           const formatDates = [...new Set(allDates)];
@@ -57,7 +59,7 @@ export class Transactions {
       }),
       error: (error => {
         if(error.status === 404) {
-          this.transactionService.transactions.set(null);
+          // this.transactionService.transactions.set(null);
         }
       })
     });
@@ -145,7 +147,7 @@ export class Transactions {
       this.transactionService.transactions.set(transactions);
 
       // Reseta os filtros
-      if(valueElement.value === 'Todos') {
+      if(valueElement.value === 'Todos filtros') {
         this.filterType.setValue('');
         this.filterCategory.setValue('');
         this.filterDate.setValue('');

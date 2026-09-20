@@ -1,5 +1,5 @@
 .reports {
-    overflow-y: auto;
+    overflow-y: hidden;
 }
 
 .comparison p{
@@ -54,6 +54,9 @@ header {
 
 
 @media (max-width: 1420px) {
+    .reports {
+        overflow-y: auto;
+    }
     #comp {
         display: block;
     }

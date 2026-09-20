@@ -10,7 +10,7 @@
         </div>
     </header>
 
-    <div class="categories-list " style="overflow-y: auto;">
+    <div class="categories-list animate" style="overflow-y: auto;">
         @if (categoryService.categories()) {
         <div class="container-list row gap-3 justify-content-center w-100" style="height: 100%;">
                 @for (category of categoryService.categories(); track $index) {

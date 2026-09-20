@@ -1,20 +1,21 @@
 <div class="transactions">
     <header class="mb-2 d-flex justify-content-between">
-        <div>
+        <div class="title">
             <h3 style="color: var(--text-title);">TRANSAÇÕES</h3>
             <small>Gerencie todas as suas <span class="fw-bold text-success">receitas</span> e <span class="text-danger fw-bold">despesas</span> </small>
         </div>
 
-        <div class="saldo">
-            <small class="fs-6"><span>Saldo: </span></small>
-            <span class="fw-bold" style="color: var(--primary);">{{authService.user()?.saldo}} kz</span>
-        </div>
-
-        <div class="add-transactions">
-            <!-- Botão do modal -->
-            <button type="button" (click)="openModal(null)" class="btn btn-primary" >
-                Adicionar
-            </button>
+        <div class="d-flex justify-content-between" id="add">
+            <div class="saldo">
+                <small class="fs-6"><span>Saldo: </span></small>
+                <span title="dafa" style="color: var(--primary);">{{authService.user()?.saldo}} kz</span>
+            </div>
+            <div class="add-transactions">
+                <!-- Botão do modal -->
+                <button type="button" (click)="openModal(null)" title="Adicionar" class="btn btn-primary" >
+                    <i class="bi bi-plus-circle-fill"></i>
+                </button>
+            </div>
         </div>
 
         <!-- Modal -->
@@ -23,12 +24,12 @@
         </div>
     </header>
 
-    <div class="filters">
+    <div class="filters animate">
         <div class="ms-4">
-            <h3>Filtrar</h3>
+            <h3>Filtros</h3>
         </div>
-        <div class="filter fs-6">
-            <input type=button class="border rounded-2" (click)="filters($event)" value="Todos">
+        <div class="filter me-4">
+            <input type=button class="border rounded-2" (click)="filters($event)" value="Todos filtros">
 
             <select class="border" (click)="filters($event)" [formControl]="filterType" required>
                 <option value="" disabled>Tipo</option>
@@ -45,7 +46,7 @@
             </select>
 
             <select class="border" (click)="filters($event)" [formControl]="filterCategory" required>
-                <option value="" disabled>Selecione a categoria</option>
+                <option value="" disabled>Categoria</option>
                 
                 @for (categories of categoryService.categories(); track $index) {
                     <option [value]="categories.name"> {{categories.name}} </option>
@@ -54,17 +55,17 @@
         </div>
     </div>
 
-    <div class="transactions-list">
+    <div class="transactions-list animate">
         <div class="container-table rounded-3">
         @if (transactionService.transactions()) {
             <table>
                 <thead>
                     <tr class="text-light text-center" style="background-color: var(--sidebar);">
-                        <th></th>
+                        <th id="hidde-items"></th>
                         <th>Categoria</th>
-                        <th>Tipo</th>
+                        <th id="hidde-items">Tipo</th>
                         <th>Montante</th>
-                        <th>Descrição</th>
+                        <th id="hidde-items">Descrição</th>
                         <th>Data</th>
                         <th>Ações</th>
                     </tr>
@@ -74,16 +75,16 @@
                    @for (transaction of transactionService.transactions(); track $index) {
                        <tr>
                            <!-- <td> {{ $index }} </td> -->
-                            <td class="text-center"> {{ (transactionService.transactions()?.length! - $index) }} </td>
+                            <td id="hidde-items" class="text-center"> {{ (transactionService.transactions()?.length! - $index) }} </td>
                             <td> {{ transaction.category }} </td>
                             @if(transaction.type === 'receita') {
-                                <td><span class="text-success"><i class="fs-6 bi bi-graph-up-arrow"></i></span> {{ transaction.type }}</td>
+                                <td id="hidde-items"><span class="text-success"><i class="fs-6 bi bi-graph-up-arrow"></i></span> {{ transaction.type }}</td>
                                 <td><span class="text-success">+{{ transaction.amount }}</span> kz</td>
                             }@else {
-                                <td><span class="text-danger"><i class="fs-6 bi bi-graph-down-arrow"></i></span> {{ transaction.type }}</td>
+                                <td id="hidde-items"><span class="text-danger"><i class="fs-6 bi bi-graph-down-arrow"></i></span> {{ transaction.type }}</td>
                                 <td><span class="text-danger">-{{ transaction.amount }}</span> kz</td>
                             }
-                            <td> {{ transaction.description }} </td>
+                            <td id="hidde-items"> {{ transaction.description }} </td>
                             <td class="text-center"> {{ transaction.date }} </td>
                             <td class="d-flex justify-content-evenly">
                                 <button (click)="openModal(transaction)" class="border btn" style="color: var(--text);">
@@ -100,9 +101,9 @@
             <div id="no-transactions" class="d-none text-center"></div>
         }@else {
             <div class="message">
-                <h2 style="color: var(--primary);">As suas transações apareceram aqui</h2>
+                <h2>As suas transações apareceram aqui</h2>
             </div>
         }
-        </div>
+    </div>
     </div>
 </div>

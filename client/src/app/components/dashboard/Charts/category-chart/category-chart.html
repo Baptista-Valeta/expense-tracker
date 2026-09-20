@@ -1,7 +1,7 @@
 <div class="chart">
     <h1 class="fs-2 mb-5" style="color: var(--text-title)">Gastos por Categoria</h1>
 
-    @if(results()) {
+    @if(results()?.length > 0) {
         <ngx-charts-pie-chart
             [results]="results()"
             [view]="view"
@@ -12,5 +12,7 @@
             [doughnut]="doughnuts"
             class="charts"        
         ></ngx-charts-pie-chart>
+    }@else {
+        <div style="height: 500px; width: 700px;"></div>
     }
 </div>
