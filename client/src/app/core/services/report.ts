@@ -4,12 +4,13 @@ import { map, catchError, throwError, tap } from 'rxjs';
 
 import { ComparisonMonths, ReportBigExpense, Reports, ReportsChartDataCategory, ReportsChartDataMouthly } from '../../core/models/reports';
 import { AuthService } from './auth';
+import { environments } from '../../../environments/environments';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ReportService {
-  apiUrl = inject(AuthService).apiUrl;
+  apiUrl = environments.URL_BASE;
   reports = signal<Reports['reports']|null>(null);
 
   constructor(private http: HttpClient,) {};

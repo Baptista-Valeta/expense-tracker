@@ -15,9 +15,9 @@ export class CategoryChart {
   style = 'white'
   view: [number, number] = [700, 500];
   animations = true;
-  labels = true;
+  labels = false;
   legend = true;
-  doughnuts = true;
+  doughnuts = false;
   title = 'Categorias';
   scheme = {
     domain: [

@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { FormControl, Validators, ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 
 import * as bootstrap from 'bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -12,7 +12,7 @@ import { RouterLinkActive } from "@angular/router";
 
 @Component({
   selector: 'app-categories',
-  imports: [ɵInternalFormsSharedModule, ReactiveFormsModule, DatePipe],
+  imports: [ɵInternalFormsSharedModule, ReactiveFormsModule, DatePipe, NgIf],
   templateUrl: './categories.html',
   styleUrl: './categories.css',
 })

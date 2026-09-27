@@ -6,7 +6,9 @@
         </div>
 
         <div>
-            <span>Categorias</span> <span style="color: var(--primary);">: {{ categoryService.categories()?.length }}</span>
+            <span>Categorias</span>
+            <span style="color: var(--primary);">: {{ categoryService.categories()?.length }}</span>
+            <span style="color: var(--primary);" *ngIf="!categoryService.categories()?.length">0</span>
         </div>
     </header>
 
@@ -14,7 +16,7 @@
         @if (categoryService.categories()) {
         <div class="container-list row gap-3 justify-content-center w-100" style="height: 100%;">
                 @for (category of categoryService.categories(); track $index) {
-                    <div class="border p-4  rounded-3 col-12 col-sm-4 col-md-4 col-lg-2" style="min-width: 250px;">
+                    <div class="border p-4  rounded-3 col-12 col-sm-4 col-md-4 col-lg-2" style="min-width: 250px; height: 300px;">
                         <h4 class="text-center pb-3 border-2 border-bottom mb-3"> {{category.name}} </h4>
 
                         <div class="border-2 border-bottom mb-4 ">
@@ -40,8 +42,8 @@
                 }
             </div>
         }@else {
-            <div class="text-center m-auto" style="color: var(--primary);">
-                <h2 style="color: var(--primary);">Sem Categorias</h2>
+            <div class="text-center m-auto" style="color: var(--text);">
+                <h2>Sem Categorias</h2>
             </div>
         }
     </div>

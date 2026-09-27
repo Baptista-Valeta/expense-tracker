@@ -4,12 +4,13 @@ import { catchError, map, tap, throwError } from 'rxjs';
 
 import { Categories, AllCategories, CategoryStatistics } from '../../core/models/category';
 import { AuthService } from './auth';
+import { environments } from '../../../environments/environments';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CategoryService {
-  apiUrl = inject(AuthService).apiUrl;
+  apiUrl = environments.URL_BASE;
   categories = signal<AllCategories['categories']|null>(null);
 
   constructor(private http: HttpClient) {};

@@ -1,10 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { BehaviorSubject, catchError, throwError, tap, finalize, map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { User } from '../models/user';
 import { TokenService } from './token';
+import { TransactionService } from './transaction';
+import { environments } from '../../../environments/environments';
+import { CategoryService } from './category';
 
 interface Token {
   token: string
@@ -15,12 +18,14 @@ interface Token {
 })
 
 export class AuthService {
-  apiUrl: string = 'http://localhost:5000/api/';
+  apiUrl: string = environments.URL_BASE;
   user= signal<User['user']|null>(null);
 
   constructor(
     private http: HttpClient, 
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private transactionService: TransactionService,
+    private categoryService: CategoryService
   ) {};
 
   ngOnInit() {}
@@ -77,6 +82,8 @@ export class AuthService {
 
   logout() {
     // console.log('logout');
+    this.transactionService.transactions.set(null); // limpar a variável da lista de transações
+    this.categoryService.categories.set(null) // Limpa a variável da lista de categorias
     return this.tokenService.removeToken();
   };
 };

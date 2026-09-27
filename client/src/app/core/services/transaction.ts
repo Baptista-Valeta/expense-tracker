@@ -8,13 +8,14 @@ import { AuthService } from './auth';
 import { AllTransactions } from '../models/transactions';
 import { AllCategories, Categories} from '../models/category';
 import { Transaction} from '../models/transactions';
+import { environments } from '../../../environments/environments';
 
 @Injectable({
   providedIn: 'root',
 })
 
 export class TransactionService {
-  apiUrl: string = inject(AuthService).apiUrl;
+  apiUrl: string = environments.URL_BASE;
   transactions = signal<AllTransactions['transaction']|null>(null);
   
   constructor(private http: HttpClient) {};
