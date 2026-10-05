@@ -77,7 +77,8 @@ export class CategoriesComponent {
         }
       });
 
-      this.closeForm();
+      console.log('Close modal')
+      this.closeModal();
     };
   };
   
@@ -85,14 +86,16 @@ export class CategoriesComponent {
     this.payload = category;
     this.name.setValue(category.name);
 
-    const formCategory = document.getElementById('formCategory')!;
-    formCategory.style.display = 'block';
+    const modal = new bootstrap.Modal(document.getElementById('updateCategory')!);
+    modal.show();
   };
 
   closeForm(event?: Event) {
-    event?.preventDefault();
-    const formCategory = document.getElementById('formCategory')!;
-    formCategory.style.display = 'none';
+    
   };
 
+  closeModal() {
+    const modal = bootstrap.Modal.getInstance(document.getElementById('updateCategory')!)!;
+    modal.hide();
+  };
 };
