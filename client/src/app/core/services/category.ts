@@ -95,5 +95,5 @@ export class CategoryService {
         return throwError(() => error);
       })
     )
-  }
+  };
 }

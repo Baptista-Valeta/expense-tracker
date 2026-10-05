@@ -86,4 +86,10 @@ export class AuthService {
     this.categoryService.categories.set(null) // Limpa a variável da lista de categorias
     return this.tokenService.removeToken();
   };
+
+  deleteProfile() {
+    return this.http.delete(this.apiUrl+'auth/profile').pipe(
+      catchError(error => throwError(() => error))
+    );
+  }
 };

@@ -10,7 +10,6 @@ import { Login } from '../login/login';
 @Component({
   selector: 'app-register',
   imports: [ReactiveFormsModule, RouterLink],
-  providers: [Login],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })

@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../core/services/auth';
 import { Login } from '../login/login';
 import { theme, ThemeService } from '../../core/services/theme';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -65,7 +66,12 @@ export class Profile {
     return this.ChangePasswordForms.get('newPassword');
   };
   
-  constructor(protected authService: AuthService, private toastr: ToastrService, protected themeService: ThemeService) {};
+  constructor(
+    protected authService: AuthService, 
+    private toastr: ToastrService, 
+    protected themeService: ThemeService,
+    protected router: Router
+  ) {};
   
   ngOnInit() {
     this.authService.getDataUser().subscribe(data => {
@@ -137,5 +143,23 @@ export class Profile {
   switchTheme(value: Event) {
     const theme = (value.target as HTMLInputElement)
     this.themeService.currentTheme(theme.value as theme);
+  };
+
+  deleteAccount() {
+    const confirmDelete = confirm('Tem a certeza que deseja eliminar a sua conta?');
+    if(confirmDelete) {
+      this.authService.deleteProfile().subscribe({
+        next: data => {
+          console.log('DELETE ACCOUNT', data);
+          this.toastr.success('Conta eliminada');
+          this.authService.logout();
+          this.router.navigate(['auth/login']);
+        },
+        error: err => {
+          console.log('DELETE ACCOUNT ERROR', err);
+          this.toastr.error('Ocorreu um erro ao eliminar a conta');
+        }
+      })
+    };
   };
 }

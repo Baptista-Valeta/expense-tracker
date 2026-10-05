@@ -43,11 +43,18 @@
     <div class="rounded-bottom-4 h-25 p-4" style="border-top: 1px solid var(--border); box-shadow: 1px 7px 15px var(--bg);">
         <h3>CONTA</h3>
 
-        <div class="mt-4">
-            <!-- Button trigger modal -->    
-            <div class="btn border-0 text-light" id="profile-btn" (click)="openForm()">Alterar palavra-passe</div >
-            <p class="mt-4 ms-2">********</p>
+        <div class="container my-4">
+            <div class="row g-3">
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="btn border-0 text-light" id="profile-btn" (click)="openForm()">Alterar palavra-passe</div >
+                </div>
+
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="btn border-0 text-light" id="profile-btn" (click)="deleteAccount()">Eliminar conta</div>
+                </div>
+            </div>
         </div>
+
         
         <div>
             <!-- Modal -->

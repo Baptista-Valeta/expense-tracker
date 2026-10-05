@@ -96,7 +96,7 @@ export class MounthlyChart {
   };  
 
   orderMonths(months: ReportsChartDataMouthly['data']) {
-    // console.log('Todos os meses', months.length)
+    // Ordenar os meses de forma ascendente com base no valor de _id.mounthly
     const ascendOrderMonths = months.map(months => months._id.mounthly).sort();
     const ascendOrder = [];
     let currentMonth;
