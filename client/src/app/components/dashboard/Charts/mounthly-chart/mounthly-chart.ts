@@ -44,8 +44,9 @@ export class MounthlyChart {
         let chartData: any = [];
         let mounthlyValues: any = [];
         let month: string;
-        const ascendOrderMonths = this.orderMonths(data);
 
+        const ascendOrderMonths = this.orderMonths(data);
+        // console.log('MESES ORDENADOS', ascendOrderMonths);
         ascendOrderMonths.forEach((values, index) => {
           switch(values._id.mounthly) {
             case 1: // Janeiro
@@ -97,7 +98,7 @@ export class MounthlyChart {
 
   orderMonths(months: ReportsChartDataMouthly['data']) {
     // Ordenar os meses de forma ascendente com base no valor de _id.mounthly
-    const ascendOrderMonths = months.map(months => months._id.mounthly).sort();
+    const ascendOrderMonths = months.map(mon => mon._id.mounthly).sort((a, b) => a - b); // Ordena os meses de forma ascendente com o método sort() e uma função de comparação que compara os valores numéricos dos meses.
     const ascendOrder = [];
     let currentMonth;
 
