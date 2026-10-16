@@ -48,6 +48,6 @@ Aplicação web fullstack para gerenciamento de finanças pessoais. Permite regi
 <img src="./client/public/prints/dashboard_dark"/>
 
 ### Formulário de Nova Transação
-<img src="./client/public/prints/form_transactions.png"/>
+<img src="./client/public/prints/form_transactions"/>
 
 
